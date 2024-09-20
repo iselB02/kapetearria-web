@@ -1,0 +1,101 @@
+/* Container styles */
+#details-container {
+    padding: 25px 0 0 0; /* Removed redundant padding-left */
+    width: 100%;
+    height: 400px;
+    margin-left: 60px;
+}
+
+/* Flexbox columns */
+#col1 {
+    flex: 2;
+    padding: 0;
+}
+
+#col2 {
+    flex: 1;
+}
+
+/* Product image */
+.product-image {
+    width: 250px;
+    margin-left: 300px;
+}
+
+/* List styles */
+ul {
+    margin-top: 15px;
+    list-style-type: none;
+}
+
+li {
+    margin-bottom: 20px;
+    font-size: 17px;
+}
+
+/* Span styling */
+span {
+    color: #522504;
+    font-weight: 700;
+}
+
+/* Store schedule */
+.store-sched {
+    width: 600px;
+    margin-left: 20px;
+}
+
+/* Default button styles */
+.btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+/* Primary button styles */
+.btn-primary {
+    background-color: transparent;
+    color: #522504;
+}
+
+.btn-primary.active,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: #009951;
+    color: white;
+    border-color: #009951;
+}
+
+.btn-primary:hover {
+    background-color: #009951;
+    color: white;
+    border-color: #009951;
+}
+
+/* Specific column styles for primary buttons */
+#col1 .btn-primary {
+    background-color: transparent;
+    color: #522504;
+}
+
+#col1 .btn-primary.active,
+#col1 .btn-primary:active,
+#col1 .btn-primary:focus {
+    background-color: #009951;
+    color: white;
+    border-color: #009951;
+}
+
+#col1 .btn-primary:hover {
+    background-color: #009951;
+    color: white;
+    border-color: #009951;
+}
+
+#btn1 {
+    margin-left: 30px;
+}

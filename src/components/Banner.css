@@ -1,0 +1,9 @@
+.banner-container {
+    width: 100%;
+}
+
+.store-image {
+    width: 100%;  /* Makes the image full width of its container */
+    height: 480px;
+    display: block; /* Removes extra space below image */
+}
