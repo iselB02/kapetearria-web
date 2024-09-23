@@ -1,9 +1,11 @@
 /* Container styles */
 #details-container {
-    padding: 25px 0 0 0; /* Removed redundant padding-left */
-    width: 100%;
-    height: 400px;
-    margin-left: 60px;
+    padding: 25px 0 0 0; /* Removed redundant padding-left #FFFAD9*/
+    max-width: 100%;
+    height: 550px;
+    align-self: center;
+    background-color: #FFFAD9;
+    padding: 30px 100px 30px 100px;
 }
 
 /* Flexbox columns */

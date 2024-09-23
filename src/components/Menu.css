@@ -1,0 +1,108 @@
+:root {
+    --Color: #5E2D26; /* Defining the color variable */
+}
+
+.container1 {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.menu-row {
+    width: 100%;
+}
+
+.menu-col {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-btn {
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    padding: 0;
+    position: relative;
+    width: 300px;
+    height: 400px;
+    overflow: hidden;
+    transition: transform 0.4s ease-in-out; /* Animation on hover */
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.menu-btn:hover {
+    transform: scale(1.1); /* Smooth scale-up on hover */
+}
+
+.menu-btn img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out; /* Smooth image zoom on hover */
+}
+
+.menu-btn:hover img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.menu-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.menu-text {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    font-style: normal;
+    line-height: normal;
+    text-align: center;
+    color: var(--Color, #5E2D26);
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #FFF;
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out; /* Animation for text appearance */
+}
+
+.menu-btn:hover .menu-text {
+    opacity: 0.9; /* Slight fade-in effect for text on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .menu-btn {
+        width: 150px;
+        height: 250px;
+    }
+
+    .menu-text {
+        font-size: 30px; /* Smaller text size for mobile */
+        -webkit-text-stroke-width: 3px; /* Thinner outline for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .menu-btn {
+        width: 120px;
+        height: 200px;
+    }
+
+    .menu-text {
+        font-size: 24px; /* Even smaller text size for very small screens */
+        -webkit-text-stroke-width: 2px;
+    }
+}

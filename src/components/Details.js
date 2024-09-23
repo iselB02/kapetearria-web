@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import './Details.css';
+import Menu from './Menu';
+import Storehours from './Storehours';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 function Details() {
   // State to manage which section is visible
@@ -28,34 +34,29 @@ function Details() {
           >
             Store Hours
           </button>
+              {/* <Form inline>
+            <Row>
+              <Col xs="auto">
+                <Form.Control
+                  type="text"
+                  placeholder="Search"
+                  className=" mr-sm-2"
+                />
+              </Col>
+              <Col xs="auto">
+                <Button type="submit">Submit</Button>
+              </Col>
+            </Row>
+          </Form> */}
 
           {/* Conditionally render the content based on the activeSection state */}
           {activeSection === 'details' && (
-            <ul>
-              <li><span>Delivery Radius: </span> 5 km</li>
-              <li><span>Delivery Fee: </span> PHP 70</li>
-              <li><span>Estimated Delivery Time: </span> 30 minutes</li>
-              <li><span>Pick-Up Time: </span> Not Applicable</li>
-              <li><span>Accepted Payment Methods: </span> Cash only</li>
-              <li><span>Additional Notes: </span> The delivery fee is subject to change based on your specific location.</li>
-            </ul>
+            <Menu/>
           )}
 
           {activeSection === 'hours' && (
-            <img 
-              src='image/store-sched.png' 
-              className="store-sched" 
-              alt="store-schedule" 
-            />
+            <Storehours/>
           )}
-        </div>
-        
-        <div className="col" id='col2'>
-          <img 
-            src='image/product-banner.png' 
-            className="product-image" 
-            alt="product-image" 
-          />
         </div>
       </div>
     </div>

@@ -1,6 +1,11 @@
+/* Add this to ensure the nav background color is applied */
+.navbar {
+  background-color: #FFFAD9 !important; /* Use !important if necessary */
+}
+
 .container-fluid {
-  height: 150px;
-  background-color: white;
+  height: 150px; 
+  background-color: transparent; /* Keep it transparent */
   display: flex;
   align-items: center;
   padding: 0 70px;
