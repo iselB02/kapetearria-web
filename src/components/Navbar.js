@@ -4,8 +4,7 @@ import './Navbar.css';
 
 function Navbar() {
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
         <div className="container-fluid">
           <img src='image/logo.png' className="logo" alt="store-logo" />
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +28,6 @@ function Navbar() {
           </div>
         </div>
       </nav>
-    </div>
   );
 }
 

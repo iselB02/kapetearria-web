@@ -1,3 +1,29 @@
+
 div {
-    background-color: #FFFAD9;
+  background-color: white; /*#FFFAD9*/
 }
+
+/* App.css */
+body {
+    margin: 0; /* Remove default body margin */
+    padding: 0; /* Remove default body padding */
+    overflow: hidden; /* Hide the scrollbar */
+  }
+  
+.scrollable {
+  overflow-x: hidden;
+    overflow-y: scroll; /* Allow vertical scrolling on a specific container */
+    height: 100vh; /* Set height to full viewport */
+  }
+  
+
+/* Hide scrollbar for Webkit browsers */
+.scrollable::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+  
+  /* Hide scrollbar for Firefox */
+  .scrollable {
+    scrollbar-width: none; /* Firefox */
+  }
+  

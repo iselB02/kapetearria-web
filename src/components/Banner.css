@@ -1,10 +1,13 @@
-.banner-container {
+/* Banner.css */
+.custom-video-container {
+    width: 100%; /* Maintain full width */
+    height: 100%; /* Set a fixed height as desired */ 
+    overflow: hidden; 
+  }
+  
+  .custom-video-container video {
     width: 100%;
-    background-color: #FFFAD9;
-}
-
-.store-image {
-    width: 100%;  /* Makes the image full width of its container */
-    height: 480px;
-    display: block; /* Removes extra space below image */
-}
+    height: 100%;
+    object-fit: cover;
+  }
+  

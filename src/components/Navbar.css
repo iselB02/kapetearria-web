@@ -1,18 +1,19 @@
-/* Add this to ensure the nav background color is applied */
 .navbar {
-  background-color: #FFFAD9 !important; /* Use !important if necessary */
+   /* background-color: #FFFAD9 !important; */
+   background-color: white !important;  /*#FFFAD9*/
+
 }
 
 .container-fluid {
-  height: 150px; 
-  background-color: transparent; /* Keep it transparent */
+  height: 70px; 
+  background: rgba(255, 255, 255, 0) !important; /* Fully transparent */
   display: flex;
   align-items: center;
-  padding: 0 70px;
+  padding: 15px 15px 15px 15px;
 }
 
 img {
-  width: 50px;
+  width: 30px;
   height: auto;
 }
 
@@ -21,7 +22,7 @@ a {
 }
 
 .logo {
-  width: 330px;
+  width: 200px;
   height: auto;
 }
 
@@ -32,6 +33,11 @@ a {
   gap: 15px;
   padding: 0;
   list-style: none;
+  
+}
+
+#navbarNav {
+  background: rgba(255, 255, 255, 0) !important; 
 }
 
 .nav-item {
