@@ -1,0 +1,54 @@
+.schedule-container {
+    padding: 20px;
+}
+
+.schedule-columns {
+    display: flex;
+    width: 700px;
+    padding-left: 40px;
+}
+
+.schedule-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 48%; /* Adjust width as needed */
+}
+
+li {
+    display: flex; /* Use flexbox to align icon and text */
+    align-items: flex-start; /* Align items to start */
+    margin: 10px 0;
+    font-size: 25px;
+    font-weight: bold;
+    color: #02542D;
+}
+
+.icon {
+    display: inline-block;
+    width: 50px;      /* Adjust size as needed */
+    height: 50px;     /* Adjust size as needed */
+    border: 3px solid #02542D; /* Border color */
+    border-radius: 50%; /* Round border */
+    text-align: center; /* Center the icon */
+    line-height: 45px; /* Align icon text vertically */
+    margin-right: 10px; /* Space between icon and text */
+    margin-top: 5px;
+}
+
+.day-info {
+    display: flex;
+    flex-direction: column; /* Stack day name and hours vertically */
+}
+
+.day-name {
+    font-size: 20px; /* Adjust size as needed */
+}
+
+.day-hours {
+    font-size: 20px; /* Smaller font for hours */
+}
+
+.highlight {
+    color: #DD5932; /* Highlight color for the current day */
+}

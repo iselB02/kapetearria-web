@@ -53,6 +53,7 @@ a {
   padding: 0.5rem;
 }
 
+
 .icon {
   width: 24px;
   height: 24px;
@@ -62,6 +63,7 @@ a {
 .text {
   font-size: 14px;
   text-align: center;
+  color: #5E2D26 !important;
 }
 
 @media (max-width: 767px) {

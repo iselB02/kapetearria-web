@@ -3,6 +3,8 @@ import Banner from './components/Banner';
 import Navbar from './components/Navbar';
 import Details from './components/Details';
 import Tagline from './components/Tagline';
+import Faqs from './components/Faqs';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
         <Banner />
         <Details />
         <Tagline />
+        <Faqs/>
+        <Footer/>
       </div>
     </div>
   );

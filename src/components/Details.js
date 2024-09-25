@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Details.css';
 import Menu from './Menu';
-import Storehours from './Storehours';
+import StoreSchedule from './StoreSchedule';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -68,7 +68,7 @@ function Details() {
   
         {/* Conditionally render the content based on the activeSection state */}
         {activeSection === 'details' && <Menu />}
-        {activeSection === 'hours' && <Storehours />}
+        {activeSection === 'hours' && <StoreSchedule/>}
       </div>
     </div>
   </div>
