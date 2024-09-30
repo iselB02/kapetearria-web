@@ -7,7 +7,7 @@ function Faqs() {
   return (
         <div className='faqs-container'>
             <h1>Frequently Asked Questions</h1>
-            <Accordion flush>
+            <Accordion flush >
                 <Accordion.Item eventKey="0">
                 <Accordion.Header>What is the store’s delivery radius and fees?</Accordion.Header>
                 <Accordion.Body>
