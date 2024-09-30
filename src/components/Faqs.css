@@ -1,5 +1,6 @@
 .faqs-container {
     padding: 20px 50px 20px 50px;
+    
 }
 
 h1 {
@@ -7,5 +8,11 @@ h1 {
     font-weight: 700;
     color: #5E2D26;
     padding: 0px 10px 10px 0px;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #5e2d26;
 }
 
