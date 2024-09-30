@@ -30,7 +30,7 @@ export default function Tagline() {
     <div className='main-container' ref={taglineRef}>
         <div className={`text-container ${isVisible ? 'fade-in' : ''}`}>
             <div className='text-content'>
-                <span>"Endless Rice, Endless Flavor -</span>
+                <span className='span-bold'>"Endless Rice, Endless Flavor -</span>
                 <span className='span'>Enjoy unlimited Kanin and Soup</span>
                 <span className='span'>with Every Silog and Korean Meal!”</span>
             </div>

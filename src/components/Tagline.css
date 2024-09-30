@@ -35,6 +35,9 @@
 
 .span {
     margin-left: 50px;
+}
+
+.span-bold {
     font-weight: 500;
 }
 
