@@ -1,13 +1,13 @@
 /* General Page Layout */
-.drinks-page {
+.snacks-page {  /* Changed from drinks-page to snacks-page */
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
     font-family: 'Arial', sans-serif;
 }
 
-/* Adjust the size and spacing for the "Our Drinks" heading */
-.drinks-page h1 {
+/* Adjust the size and spacing for the "Our Snacks" heading */
+.snacks-page h1 {  /* Changed from drinks-page to snacks-page */
     font-size: 2rem;  /* Adjusted to look better and more prominent */
     color: #5E2D26;
     text-align: center;
@@ -15,12 +15,12 @@
     line-height: 1.2;  /* Adjust line-height for better readability */
 }
 
-/* Category headers */
-.drink-category {
+/* Snack category headers */
+.snack-category {  /* Changed from drink-category to snack-category */
     margin-bottom: 40px;
 }
 
-.drink-category h2 {
+.snack-category h2 {  /* Changed from drink-category to snack-category */
     font-size: 1.6rem; /* Reduced size for better balance */
     color: #5E2D26;
     margin-bottom: 20px;
@@ -31,19 +31,20 @@
     padding-bottom: 5px;
 }
 
-/* Drink items grid */
-.drink-items {
+/* Snack items grid */
+.snack-items {  /* Changed from drink-items to snack-items */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Clean grid layout */
     gap: 20px;
     justify-items: center;
 }
 
-/* Drink card styling */
-.drink-item {
+/* Snack card styling */
+.snack-item {  /* Changed from drink-item to snack-item */
     background-image: url('./image/rectangle.png'); /* Replace with the path to your background image */
-
     background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-size: cover; /* Cover the entire item area */
     border: none; /* Remove border if needed */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -54,16 +55,16 @@
     transition: transform 0.3s ease;
     width: 100%;
     max-width: 350px;
-    height: 120px;
+    height: 120px; /* Adjust height to accommodate content */
     overflow: hidden; /* Prevents content overflow */
 }
 
-.drink-item:hover {
+.snack-item:hover {  /* Changed from drink-item to snack-item */
     transform: translateY(-5px);
 }
 
-/* Drink image styling */
-.drink-img {
+/* Snack image styling */
+.snack-img {  /* Changed from drink-img to snack-img */
     width: 70px;
     height: 70px;
     object-fit: cover;
@@ -71,8 +72,8 @@
     margin-right: 20px;
 }
 
-/* Drink info and price alignment */
-.drink-info {
+/* Snack info and price alignment */
+.snack-info {  /* Changed from drink-info to snack-info */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,13 +81,13 @@
     min-width: 0;
 }
 
-.drink-name-price {
+.snack-name-price {  /* Changed from drink-name-price to snack-name-price */
     display: flex;
     flex-direction: column;
 }
 
-/* Adjusted Drink name */
-.drink-name {
+/* Adjusted Snack name */
+.snack-name {  /* Changed from drink-name to snack-name */
     font-size: 1.4rem; /* Slightly increased for clarity */
     font-weight: bold;
     color: #3B1C18;
@@ -95,14 +96,14 @@
     text-overflow: ellipsis; /* Handles long text */
 }
 
-/* Adjusted Drink price */
-.drink-price {
-    font-size: 1.1rem; /* Balanced with the drink name */
+/* Adjusted Snack price */
+.snack-price {  /* Changed from drink-price to snack-price */
+    font-size: 1.1rem; /* Balanced with the snack name */
     color: #351916;
     margin-top: 5px;
 }
 
-/* button styles */
+/* Button styles */
 .add-btn {
     background-color: #5A2103;  /* Dark brown background color */
     color: whitesmoke;  /* Lighter orange for the plus sign */
@@ -125,36 +126,35 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Stronger shadow on hover */
 }
 
-
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
-    .drinks-page {
+    .snacks-page {  /* Changed from drinks-page to snacks-page */
         padding: 20px;
     }
 
-    .drink-category h2 {
+    .snack-category h2 {  /* Changed from drink-category to snack-category */
         font-size: 1.4rem; /* Reduced for tablet */
     }
 
-    .drink-items {
+    .snack-items {  /* Changed from drink-items to snack-items */
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 15px;
     }
 
-    .drink-item {
+    .snack-item {  /* Changed from drink-item to snack-item */
         height: 110px;
     }
 
-    .drink-img {
+    .snack-img {  /* Changed from drink-img to snack-img */
         width: 60px;
         height: 60px;
     }
 
-    .drink-name {
+    .snack-name {  /* Changed from drink-name to snack-name */
         font-size: 1.1rem; /* Reduced for tablet */
     }
 
-    .drink-price {
+    .snack-price {  /* Changed from drink-price to snack-price */
         font-size: 0.9rem; /* Reduced for tablet */
     }
 
@@ -166,33 +166,33 @@
 }
 
 @media (max-width: 480px) {
-    .drinks-page {
+    .snacks-page {  /* Changed from drinks-page to snacks-page */
         padding: 15px;
     }
 
-    .drink-category h2 {
+    .snack-category h2 {  /* Changed from drink-category to snack-category */
         font-size: 1.2rem; /* Reduced for mobile */
     }
 
-    .drink-items {
+    .snack-items {  /* Changed from drink-items to snack-items */
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
         gap: 10px;
     }
 
-    .drink-item {
-        height: 100px;
+    .snack-item {  /* Changed from drink-item to snack-item */
+        height: 100px; /* Adjusted height for mobile */
     }
 
-    .drink-img {
+    .snack-img {  /* Changed from drink-img to snack-img */
         width: 50px;
         height: 50px;
     }
 
-    .drink-name {
+    .snack-name {  /* Changed from drink-name to snack-name */
         font-size: 1rem; /* Reduced for mobile */
     }
 
-    .drink-price {
+    .snack-price {  /* Changed from drink-price to snack-price */
         font-size: 0.8rem; /* Reduced for mobile */
     }
 
@@ -201,7 +201,7 @@
         height: 30px;
         font-size: 0.8rem; /* Adjusted button for mobile */
     }
-} 
+}
 
 /* Footer.css */
 #footer {
