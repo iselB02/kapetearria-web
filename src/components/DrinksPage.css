@@ -41,8 +41,9 @@
 
 /* Drink card styling */
 .drink-item {
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-image: url('./image/rectangle.png'); /* Replace with the path to your background image */
+    background-position: center; /* Centers the image */
+    border: none; /* Remove border if needed */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;

@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import './DrinksPage.css'; 
 
-
-
 const drinksData = [
     { category: 'Iced Coffee', drinks: [
         { name: 'Cappuccino', price: 89.00 },
@@ -63,8 +61,6 @@ const DrinksPage = () => {
                 <img src="/image/storeimage.jpg" alt="Kape Tearria Store" className="store-image" />
             </header>
 
-
-            
             <div className="drinks-page">
                 <h1>Our Drinks</h1>
                 {drinksData.map((category, index) => (
