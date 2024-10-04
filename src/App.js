@@ -5,18 +5,20 @@ import Details from './components/Details';
 import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
 import Footer from './components/Footer';
+import Login from './components/Login';
 import './App.css';
 
 function App() {
   return (
     <div style={{ width: '100%' }}>
       <div className="scrollable">
-        <Navbar />  
+        <Login/>
+        {/* <Navbar />  
         <Banner />
         <Details />
         <Tagline />
         <Faqs/>
-        <Footer/>
+        <Footer/> */}
       </div>
     </div>
   );
