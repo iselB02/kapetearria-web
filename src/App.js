@@ -7,6 +7,7 @@ import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
 import Footer from './components/Footer';
 import DrinksPage from './components/DrinksPage';  // Import the DrinksPage
+import SnacksPage from './components/Snacks';  // Make sure this path is correct
 import './App.css';
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         <Navbar />  {/* Navbar stays on top */}
         <div className="scrollable">
           <Routes>
-            {/* Default route - your homepage */}
+            {/* Default route for homepage */}
             <Route
               path="/"
               element={
@@ -31,6 +32,8 @@ function App() {
             />
             {/* Route for the drinks page */}
             <Route path="/drinks" element={<DrinksPage />} />
+            {/* Route for the snacks page */}
+            <Route path="/snacks" element={<SnacksPage />} />
           </Routes>
         </div>
       </div>

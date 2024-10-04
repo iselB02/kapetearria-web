@@ -20,13 +20,16 @@ function Menu() {
           </Link>
         </Col>
         <Col className='menu-col'>
-          <button className='menu-btn'>
-            <div className="menu-content">
-              <span className="menu-text">Snacks</span>
-              <img src='image/snacks.png' alt="Snacks" className="menu-img"/>
-            </div>
-          </button>
+          <Link to="/snacks">  {/* Add Link to Snacks page */}
+            <button className='menu-btn'>
+              <div className="menu-content">
+                <span className="menu-text">Snacks</span>
+                <img src='image/snacks.png' alt="Snacks" className="menu-img"/>
+              </div>
+            </button>
+          </Link> {/* Closing tag added */}
         </Col>
+
         <Col className='menu-col'>
           <button className='menu-btn'>
             <div className="menu-content">
