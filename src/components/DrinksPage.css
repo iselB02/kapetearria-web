@@ -1,0 +1,199 @@
+/* General Page Layout */
+.drinks-page {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Adjust the size and spacing for the "Our Drinks" heading */
+.drinks-page h1 {
+    font-size: 2rem;  /* Adjusted to look better and more prominent */
+    color: #333;
+    text-align: center;
+    margin: 20px 0 30px 0;  /* Ensure space above and below */
+    line-height: 1.2;  /* Adjust line-height for better readability */
+}
+
+/* Category headers */
+.drink-category {
+    margin-bottom: 40px;
+}
+
+.drink-category h2 {
+    font-size: 1.6rem; /* Reduced size for better balance */
+    color: #333;
+    margin-bottom: 20px;
+    text-align: left;
+    font-weight: bold;
+    padding-left: 10px;
+    border-bottom: 2px solid #d3d3d3;
+    padding-bottom: 5px;
+}
+
+/* Drink items grid */
+.drink-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Clean grid layout */
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Drink card styling */
+.drink-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between; /* Ensures image, text, and button are separated */
+    align-items: center; /* Vertically center all items */
+    padding: 15px; /* More padding for better spacing */
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 350px;
+    height: 120px;
+    overflow: hidden; /* Prevents content overflow */
+}
+
+.drink-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Drink image styling */
+.drink-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+/* Drink info and price alignment */
+.drink-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.drink-name-price {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Adjusted Drink name */
+.drink-name {
+    font-size: 1.4rem; /* Slightly increased for clarity */
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Handles long text */
+}
+
+/* Adjusted Drink price */
+.drink-price {
+    font-size: 1.1rem; /* Balanced with the drink name */
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Add button styling */
+.add-btn {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem; /* Keep this size for balance */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the '+' */
+    width: 40px;
+    height: 40px; /* Circular button */
+    flex-shrink: 0; /* Prevent the button from shrinking */
+}
+
+.add-btn:hover {
+    background-color: #333;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .drinks-page {
+        padding: 20px;
+    }
+
+    .drink-category h2 {
+        font-size: 1.4rem; /* Reduced for tablet */
+    }
+
+    .drink-items {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+    .drink-item {
+        height: 110px;
+    }
+
+    .drink-img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .drink-name {
+        font-size: 1.1rem; /* Reduced for tablet */
+    }
+
+    .drink-price {
+        font-size: 0.9rem; /* Reduced for tablet */
+    }
+
+    .add-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem; /* Adjusted button for tablet */
+    }
+}
+
+@media (max-width: 480px) {
+    .drinks-page {
+        padding: 15px;
+    }
+
+    .drink-category h2 {
+        font-size: 1.2rem; /* Reduced for mobile */
+    }
+
+    .drink-items {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+        gap: 10px;
+    }
+
+    .drink-item {
+        height: 100px;
+    }
+
+    .drink-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .drink-name {
+        font-size: 1rem; /* Reduced for mobile */
+    }
+
+    .drink-price {
+        font-size: 0.8rem; /* Reduced for mobile */
+    }
+
+    .add-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem; /* Adjusted button for mobile */
+    }
+}
