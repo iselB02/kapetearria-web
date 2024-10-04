@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
 import './DrinksPage.css'; 
+import Footer from './Footer'; // Import Footer component
 
 const drinksData = [
     { category: 'Iced Coffee', drinks: [
@@ -83,6 +84,7 @@ const DrinksPage = () => {
                     </div>
                 ))}
             </div>
+            <Footer /> {/* Add Footer component here */}
         </>
     );
 };

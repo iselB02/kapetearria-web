@@ -42,6 +42,7 @@
 /* Drink card styling */
 .drink-item {
     background-image: url('./image/rectangle.png'); /* Replace with the path to your background image */
+
     background-position: center; /* Centers the image */
     border: none; /* Remove border if needed */
     border-radius: 10px;
@@ -201,3 +202,47 @@
         font-size: 0.8rem; /* Adjusted button for mobile */
     }
 } 
+
+/* Footer.css */
+#footer {
+    background-color: #5E2D26; /* Set a background color */
+    padding: 20px; /* Add padding for spacing */
+}
+
+.footer-container {
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Stack items vertically on small screens */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+}
+
+#footer-img {
+    max-width: 100%; /* Make image responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.social {
+    display: flex; /* Flexbox for social icons */
+    justify-content: center; /* Center icons */
+    margin: 10px 0; /* Add margin for spacing */
+}
+
+.icons svg {
+    margin: 0 10px; /* Space between icons */
+}
+
+h2 {
+    color: white; /* Footer heading color */
+}
+
+/* Media Queries for responsiveness */
+@media (min-width: 768px) {
+    .footer-container {
+        flex-direction: row; /* Stack items horizontally on larger screens */
+        justify-content: space-between; /* Distribute space evenly */
+    }
+    
+    .social {
+        margin: 0; /* Remove margin on larger screens */
+    }
+}
