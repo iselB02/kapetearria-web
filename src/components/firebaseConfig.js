@@ -1,14 +1,14 @@
-// firebaseConfig.js
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-import { getDatabase } from 'firebase/database';
+// Import the functions you need from the Firebase SDKs
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth"; // Import Firebase Authentication
 
-
+// Firebase configuration (keep your credentials secure)
 const firebaseConfig = {
   apiKey: "AIzaSyDxWeTAIBYM9_WdaMrdQB0QoSCsKEAwEk4",
   authDomain: "kapetearria-web-1a21c.firebaseapp.com",
+  databaseURL: "https://kapetearria-web-1a21c-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "kapetearria-web-1a21c",
   storageBucket: "kapetearria-web-1a21c.appspot.com",
   messagingSenderId: "873295670671",
@@ -18,9 +18,11 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const firestore = getFirestore(app);
-const storage = getStorage(app);
-const database = getDatabase(app);
 
-export { auth, firestore, storage, database };
+// Initialize services
+const analytics = getAnalytics(app);
+const database = getFirestore(app);
+const auth = getAuth(app); // Initialize Firebase Authentication
+
+// Export the initialized services
+export { app, analytics, database, auth };
