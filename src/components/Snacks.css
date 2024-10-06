@@ -1,5 +1,5 @@
 /* General Page Layout */
-.snacks-page {  /* Changed from drinks-page to snacks-page */
+.snacks-page {
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -7,21 +7,55 @@
 }
 
 /* Adjust the size and spacing for the "Our Snacks" heading */
-.snacks-page h1 {  /* Changed from drinks-page to snacks-page */
-    font-size: 2rem;  /* Adjusted to look better and more prominent */
+.snacks-page h1 {
+    font-size: 2rem;
     color: #5E2D26;
     text-align: center;
-    margin: 20px 0 30px 0;  /* Ensure space above and below */
-    line-height: 1.2;  /* Adjust line-height for better readability */
+    margin: 20px 0 30px 0;
+    line-height: 1.2;
+}
+
+/* Scrollable Category Navigation */
+.category-nav-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.category-item {
+    display: inline-block;
+    background-color: #f4f4f4;
+    color: #5E2D26;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+    border: 1px solid transparent;
+}
+
+/* Highlight the active category */
+.category-item.active {
+    background-color: #5E2D26;
+    color: white;
+    border-color: #5E2D26;
+}
+
+.category-item:hover {
+    background-color: #d3d3d3;
+    border-color: #5E2D26;
 }
 
 /* Snack category headers */
-.snack-category {  /* Changed from drink-category to snack-category */
+.snack-category {
     margin-bottom: 40px;
 }
 
-.snack-category h2 {  /* Changed from drink-category to snack-category */
-    font-size: 1.6rem; /* Reduced size for better balance */
+.snack-category h2 {
+    font-size: 1.6rem;
     color: #5E2D26;
     margin-bottom: 20px;
     text-align: left;
@@ -32,39 +66,38 @@
 }
 
 /* Snack items grid */
-.snack-items {  /* Changed from drink-items to snack-items */
+.snack-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Clean grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     justify-items: center;
 }
 
 /* Snack card styling */
-.snack-item {  /* Changed from drink-item to snack-item */
-    background-image: url('./image/rectangle.png'); /* Replace with the path to your background image */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
-    background-size: cover; /* Cover the entire item area */
-    border: none; /* Remove border if needed */
+.snack-item {
+    background-image: url('./image/rectangle.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between; /* Ensures image, text, and button are separated */
-    align-items: center; /* Vertically center all items */
-    padding: 15px; /* More padding for better spacing */
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
     transition: transform 0.3s ease;
     width: 100%;
     max-width: 350px;
-    height: 120px; /* Adjust height to accommodate content */
-    overflow: hidden; /* Prevents content overflow */
+    height: 120px;
+    overflow: hidden;
 }
 
-.snack-item:hover {  /* Changed from drink-item to snack-item */
+.snack-item:hover {
     transform: translateY(-5px);
 }
 
 /* Snack image styling */
-.snack-img {  /* Changed from drink-img to snack-img */
+.snack-img {
     width: 70px;
     height: 70px;
     object-fit: cover;
@@ -73,7 +106,7 @@
 }
 
 /* Snack info and price alignment */
-.snack-info {  /* Changed from drink-info to snack-info */
+.snack-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -81,168 +114,122 @@
     min-width: 0;
 }
 
-.snack-name-price {  /* Changed from drink-name-price to snack-name-price */
+.snack-name-price {
     display: flex;
     flex-direction: column;
 }
 
-/* Adjusted Snack name */
-.snack-name {  /* Changed from drink-name to snack-name */
-    font-size: 1.4rem; /* Slightly increased for clarity */
+.snack-name {
+    font-size: 1.4rem;
     font-weight: bold;
     color: #3B1C18;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Handles long text */
+    text-overflow: ellipsis;
 }
 
-/* Adjusted Snack price */
-.snack-price {  /* Changed from drink-price to snack-price */
-    font-size: 1.1rem; /* Balanced with the snack name */
+.snack-price {
+    font-size: 1.1rem;
     color: #351916;
     margin-top: 5px;
 }
 
 /* Button styles */
 .add-btn {
-    background-color: #5A2103;  /* Dark brown background color */
-    color: whitesmoke;  /* Lighter orange for the plus sign */
+    background-color: #5A2103;
+    color: whitesmoke;
     border: none;
     padding: 10px 15px;
-    border-radius: 10px;  /* Rounded corners */
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1.5rem;  /* Size of the plus sign */
-    width: 50px;  /* Width and height to make it a square */
+    font-size: 1.5rem;
+    width: 50px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for a bit of depth */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Add hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .add-btn:hover {
-    transform: translateY(-2px);  /* Lift the button slightly on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Stronger shadow on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
-    .snacks-page {  /* Changed from drinks-page to snacks-page */
+    .snacks-page {
         padding: 20px;
     }
 
-    .snack-category h2 {  /* Changed from drink-category to snack-category */
-        font-size: 1.4rem; /* Reduced for tablet */
+    .snack-category h2 {
+        font-size: 1.4rem;
     }
 
-    .snack-items {  /* Changed from drink-items to snack-items */
+    .snack-items {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 15px;
     }
 
-    .snack-item {  /* Changed from drink-item to snack-item */
+    .snack-item {
         height: 110px;
     }
 
-    .snack-img {  /* Changed from drink-img to snack-img */
+    .snack-img {
         width: 60px;
         height: 60px;
     }
 
-    .snack-name {  /* Changed from drink-name to snack-name */
-        font-size: 1.1rem; /* Reduced for tablet */
+    .snack-name {
+        font-size: 1.1rem;
     }
 
-    .snack-price {  /* Changed from drink-price to snack-price */
-        font-size: 0.9rem; /* Reduced for tablet */
+    .snack-price {
+        font-size: 0.9rem;
     }
 
     .add-btn {
         width: 35px;
         height: 35px;
-        font-size: 0.9rem; /* Adjusted button for tablet */
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
-    .snacks-page {  /* Changed from drinks-page to snacks-page */
+    .snacks-page {
         padding: 15px;
     }
 
-    .snack-category h2 {  /* Changed from drink-category to snack-category */
-        font-size: 1.2rem; /* Reduced for mobile */
+    .snack-category h2 {
+        font-size: 1.2rem;
     }
 
-    .snack-items {  /* Changed from drink-items to snack-items */
+    .snack-items {
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
         gap: 10px;
     }
 
-    .snack-item {  /* Changed from drink-item to snack-item */
-        height: 100px; /* Adjusted height for mobile */
+    .snack-item {
+        height: 100px;
     }
 
-    .snack-img {  /* Changed from drink-img to snack-img */
+    .snack-img {
         width: 50px;
         height: 50px;
     }
 
-    .snack-name {  /* Changed from drink-name to snack-name */
-        font-size: 1rem; /* Reduced for mobile */
+    .snack-name {
+        font-size: 1rem;
     }
 
-    .snack-price {  /* Changed from drink-price to snack-price */
-        font-size: 0.8rem; /* Reduced for mobile */
+    .snack-price {
+        font-size: 0.8rem;
     }
 
     .add-btn {
         width: 30px;
         height: 30px;
-        font-size: 0.8rem; /* Adjusted button for mobile */
-    }
-}
-
-/* Footer.css */
-#footer {
-    background-color: #5E2D26; /* Set a background color */
-    padding: 20px; /* Add padding for spacing */
-}
-
-.footer-container {
-    display: flex; /* Use Flexbox for layout */
-    flex-direction: column; /* Stack items vertically on small screens */
-    align-items: center; /* Center items horizontally */
-    text-align: center; /* Center text */
-}
-
-#footer-img {
-    max-width: 100%; /* Make image responsive */
-    height: auto; /* Maintain aspect ratio */
-}
-
-.social {
-    display: flex; /* Flexbox for social icons */
-    justify-content: center; /* Center icons */
-    margin: 10px 0; /* Add margin for spacing */
-}
-
-.icons svg {
-    margin: 0 10px; /* Space between icons */
-}
-
-h2 {
-    color: white; /* Footer heading color */
-}
-
-/* Media Queries for responsiveness */
-@media (min-width: 768px) {
-    .footer-container {
-        flex-direction: row; /* Stack items horizontally on larger screens */
-        justify-content: space-between; /* Distribute space evenly */
-    }
-    
-    .social {
-        margin: 0; /* Remove margin on larger screens */
+        font-size: 0.8rem;
     }
 }

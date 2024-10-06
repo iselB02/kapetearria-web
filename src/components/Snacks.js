@@ -1,8 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import './Snacks.css'; 
+import React, { useState } from 'react';
+import './Snacks.css';
 import Footer from './Footer'; // Import Footer component
 
+// Full Snacks Data
 const snacksData = [
     { 
         category: 'Finger Lickn Snacks', 
@@ -29,35 +29,58 @@ const snacksData = [
 ];
 
 const SnacksPage = () => {
+    const [activeCategory, setActiveCategory] = useState('Finger Lickn Snacks'); // Track active category
+
+    // Function to handle category selection
+    const selectCategory = (category) => {
+        setActiveCategory(category); // Set the clicked category as active
+    };
+
+    // Get the currently active category data
+    const activeCategoryData = snacksData.find(category => category.category === activeCategory);
+
     return (
         <>
-            {/* Store Image Section */}
             <header className="store-header">
                 <img src="/image/storeimage.jpg" alt="Kape Tearria Store" className="store-image" />
             </header>
 
             <div className="snacks-page">
                 <h1>Our Snacks</h1>
-                {snacksData.map((category, index) => (
-                    <div key={index} className="snack-category">
-                        <h2>{category.category}</h2>
-                        <div className="snack-items">
-                            {category.snacks.map((snack, i) => (
-                                <div key={i} className="snack-item">
-                                    <img src={snack.src} alt={snack.name} className="snack-img"/>
-                                    <div className="snack-info">
-                                        <div className="snack-name-price">
-                                            <p className="snack-name">{snack.name}</p>
-                                            <p className="snack-price">₱{snack.price.toFixed(2)}</p>
-                                        </div>
+
+                {/* Scrollable Category Navigation */}
+                <div className="category-nav-wrapper">
+                    {snacksData.map((category, index) => (
+                        <button
+                            key={index}
+                            className={`category-item ${activeCategory === category.category ? 'active' : ''}`}
+                            onClick={() => selectCategory(category.category)}
+                        >
+                            {category.category}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Snack List Section */}
+                <div className="snack-category">
+                    <h2>{activeCategoryData.category}</h2>
+                    <div className="snack-items">
+                        {activeCategoryData.snacks.map((snack, i) => (
+                            <div key={i} className="snack-item">
+                                <img src={snack.src} alt={snack.name} className="snack-img" />
+                                <div className="snack-info">
+                                    <div className="snack-name-price">
+                                        <p className="snack-name">{snack.name}</p>
+                                        <p className="snack-price">₱{snack.price.toFixed(2)}</p>
                                     </div>
-                                    <button className="add-btn">+</button>
                                 </div>
-                            ))}
-                        </div>
+                                <button className="add-btn">+</button>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
+
             <Footer /> {/* Add Footer component here */}
         </>
     );

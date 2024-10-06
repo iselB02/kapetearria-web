@@ -4,65 +4,217 @@
     max-width: 1200px;
     margin: 0 auto;
     font-family: 'Arial', sans-serif;
+    text-align: center; 
 }
 
-/* Adjust the size and spacing for the "Our Drinks" heading */
-.drinks-page h1 {
-    font-size: 2rem;  /* Adjusted to look better and more prominent */
+/* Search Bar Styling */
+.search-container {
+    display: flex;
+    justify-content: flex-end;   /* Align search bar to the right */
+    margin-top: 80px;            /* Increase margin to push the search bar lower */
+    margin-right: 20px;          /* Right padding */
+    position: relative;
+    margin-bottom: 15px;         /* Space between the search bar and the order history */
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    border: 2px solid #2E7D32;  /* Green border */
+    border-radius: 50px;
+    padding: 8px 15px;          /* Adjusted padding to make the search bar smaller */
+    width: 250px;               /* Set the width for the search bar */
+    background-color: white;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    font-size: 1.1rem;          /* Slightly smaller font size */
+    flex-grow: 1;
+    color: #D2691E;             /* Brownish text */
+}
+
+.search-bar .search-btn {
+    background: none;
+    border: none;
+    font-size: 1.3rem;          /* Slightly smaller icon size */
+    cursor: pointer;
+    color: #5E2D26;             /* Darker color for icon */
+}
+
+
+/* Order History Section */
+.order-history {
+    background-color: #f3e9e7;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    margin: 60px auto;  /* Increased margin from 40px to 60px */
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: auto;
+}
+
+/* Order History Header */
+.order-history-header {
+    width: 100%;
+    text-align: left; /* Align the heading to the left */
+}
+
+/* Order History Heading with Dots */
+.order-history h2 {
     color: #5E2D26;
-    text-align: center;
-    margin: 20px 0 30px 0;  /* Ensure space above and below */
-    line-height: 1.2;  /* Adjust line-height for better readability */
-}
-
-/* Category headers */
-.drink-category {
-    margin-bottom: 40px;
-}
-
-.drink-category h2 {
-    font-size: 1.6rem; /* Reduced size for better balance */
-    color: #5E2D26;
-    margin-bottom: 20px;
-    text-align: left;
+    font-size: 1.9rem;
     font-weight: bold;
-    padding-left: 10px;
-    border-bottom: 2px solid #d3d3d3;
-    padding-bottom: 5px;
+    display: inline-flex; /* Ensure h2 and the dots stay on the same line */
+    align-items: center; /* Vertically center the dots */
+    margin-bottom: 5px;
+}
+
+/* Three-Dot Menu Icon */
+.order-history-menu {
+    font-size: 1.8rem; /* Size of the dots */
+    color: #5E2D26;
+    margin-left: 10px; /* Space between "Order History" and the dots */
+    cursor: pointer;
+}
+
+/* Order History Items */
+.order-history-items {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    max-width: 100%;
+    justify-content: center;
+}
+
+/* Order Item Styling */
+.order-item {
+    background-image: url('./image/rectangle.png');
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    min-width: 160px;
+    height: 110px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.order-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Order Image */
+.order-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+/* Order Information */
+.order-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.order-name {
+    font-size: 1.1rem;
+    color: #3B1C18;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+}
+
+.order-price {
+    font-size: 0.95rem;
+    color: #351916;
+    margin-top: 4px;
+}
+
+/* Scrollable Category Navigation */
+.category-nav-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    justify-content: center;
+}
+
+.category-nav {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    max-width: 90%;
+    padding: 10px 0;
+}
+
+.category-item {
+    display: inline-block;
+    background-color: #f4f4f4;
+    color: #5E2D26;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    transition: background-color 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.category-item.active {
+    background-color: #5E2D26;
+    color: #fff;
+    border-color: #5E2D26;
+}
+
+.category-item:hover {
+    background-color: #d3d3d3;
+    border-color: #5E2D26;
 }
 
 /* Drink items grid */
 .drink-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Clean grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
     justify-items: center;
 }
 
 /* Drink card styling */
 .drink-item {
-    background-image: url('./image/rectangle.png'); /* Replace with the path to your background image */
-
-    background-position: center; /* Centers the image */
-    border: none; /* Remove border if needed */
+    background-image: url('./image/rectangle.png');
+    background-position: center;
+    border: none;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
-    justify-content: space-between; /* Ensures image, text, and button are separated */
-    align-items: center; /* Vertically center all items */
-    padding: 15px; /* More padding for better spacing */
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
     transition: transform 0.3s ease;
     width: 100%;
     max-width: 350px;
     height: 120px;
-    overflow: hidden; /* Prevents content overflow */
+    overflow: hidden;
 }
 
 .drink-item:hover {
     transform: translateY(-5px);
 }
 
-/* Drink image styling */
 .drink-img {
     width: 70px;
     height: 70px;
@@ -71,7 +223,6 @@
     margin-right: 20px;
 }
 
-/* Drink info and price alignment */
 .drink-info {
     display: flex;
     flex-direction: column;
@@ -85,55 +236,47 @@
     flex-direction: column;
 }
 
-/* Adjusted Drink name */
 .drink-name {
-    font-size: 1.4rem; /* Slightly increased for clarity */
+    font-size: 1.4rem;
     font-weight: bold;
     color: #3B1C18;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Handles long text */
+    text-overflow: ellipsis;
 }
 
-/* Adjusted Drink price */
 .drink-price {
-    font-size: 1.1rem; /* Balanced with the drink name */
+    font-size: 1.1rem;
     color: #351916;
     margin-top: 5px;
 }
 
-/* button styles */
 .add-btn {
-    background-color: #5A2103;  /* Dark brown background color */
-    color: whitesmoke;  /* Lighter orange for the plus sign */
+    background-color: #5A2103;
+    color: whitesmoke;
     border: none;
     padding: 10px 15px;
-    border-radius: 10px;  /* Rounded corners */
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1.5rem;  /* Size of the plus sign */
-    width: 50px;  /* Width and height to make it a square */
+    font-size: 1.5rem;
+    width: 50px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for a bit of depth */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Add hover effects */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .add-btn:hover {
-    transform: translateY(-2px);  /* Lift the button slightly on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  /* Stronger shadow on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-
-/* Media Queries for Responsiveness */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .drinks-page {
         padding: 20px;
-    }
-
-    .drink-category h2 {
-        font-size: 1.4rem; /* Reduced for tablet */
     }
 
     .drink-items {
@@ -151,27 +294,23 @@
     }
 
     .drink-name {
-        font-size: 1.1rem; /* Reduced for tablet */
+        font-size: 1.1rem;
     }
 
     .drink-price {
-        font-size: 0.9rem; /* Reduced for tablet */
+        font-size: 0.9rem;
     }
 
     .add-btn {
         width: 35px;
         height: 35px;
-        font-size: 0.9rem; /* Adjusted button for tablet */
+        font-size: 0.9rem;
     }
 }
 
 @media (max-width: 480px) {
     .drinks-page {
         padding: 15px;
-    }
-
-    .drink-category h2 {
-        font-size: 1.2rem; /* Reduced for mobile */
     }
 
     .drink-items {
@@ -189,60 +328,16 @@
     }
 
     .drink-name {
-        font-size: 1rem; /* Reduced for mobile */
+        font-size: 1rem;
     }
 
     .drink-price {
-        font-size: 0.8rem; /* Reduced for mobile */
+        font-size: 0.8rem;
     }
 
     .add-btn {
         width: 30px;
         height: 30px;
-        font-size: 0.8rem; /* Adjusted button for mobile */
-    }
-} 
-
-/* Footer.css */
-#footer {
-    background-color: #5E2D26; /* Set a background color */
-    padding: 20px; /* Add padding for spacing */
-}
-
-.footer-container {
-    display: flex; /* Use Flexbox for layout */
-    flex-direction: column; /* Stack items vertically on small screens */
-    align-items: center; /* Center items horizontally */
-    text-align: center; /* Center text */
-}
-
-#footer-img {
-    max-width: 100%; /* Make image responsive */
-    height: auto; /* Maintain aspect ratio */
-}
-
-.social {
-    display: flex; /* Flexbox for social icons */
-    justify-content: center; /* Center icons */
-    margin: 10px 0; /* Add margin for spacing */
-}
-
-.icons svg {
-    margin: 0 10px; /* Space between icons */
-}
-
-h2 {
-    color: white; /* Footer heading color */
-}
-
-/* Media Queries for responsiveness */
-@media (min-width: 768px) {
-    .footer-container {
-        flex-direction: row; /* Stack items horizontally on larger screens */
-        justify-content: space-between; /* Distribute space evenly */
-    }
-    
-    .social {
-        margin: 0; /* Remove margin on larger screens */
+        font-size: 0.8rem;
     }
 }

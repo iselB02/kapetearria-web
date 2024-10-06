@@ -9,6 +9,7 @@ function Footer() {
       <Container className='footer-container'>
         <img src='image/footer.png' id='footer-img' alt="Footer Logo"/>
         <div className='social'>
+          <h2>Follow us on</h2>
           <div className='icons'>
             <a href="https://www.facebook.com/search/top?q=kapetearria%20-%20san%20antonio%20bi%C3%B1an%20branch" target="_blank" rel="noopener noreferrer">
               <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" className="bi bi-facebook" viewBox="0 0 16 16">
@@ -26,7 +27,6 @@ function Footer() {
               </svg>
             </a>
           </div>
-          <h2>Follow us on</h2>
         </div>
         <img src='image/contacts.png' id='footer-contacts' alt="Contact Info"/>
       </Container>
