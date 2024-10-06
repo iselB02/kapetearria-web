@@ -68,9 +68,9 @@ const SearchBar = ({ query, onSearch }) => {
         <div className="search-bar">
             <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search Drinks"
                 value={query}
-                onChange={(e) => onSearch(e.target.value)} // Capture user input
+                onChange={(e) => onSearch(e.target.value)}
             />
             <button className="search-btn"></button>
         </div>
@@ -107,12 +107,73 @@ const OrderHistory = ({ orderHistory, searchQuery }) => {
     );
 };
 
+// Modal Component for Product Customization
+const ProductModal = ({ product, isVisible, onClose }) => {
+    if (!isVisible) return null; // Don't render the modal if not visible
+
+    return (
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <button className="modal-close-btn" onClick={onClose}>X</button>
+                <h2>{product.name}</h2>
+                <p>A delicious blend of {product.name}.</p>
+                
+                {/* Sizes */}
+                <div className="sizes-section">
+                    <h3>Sizes</h3>
+                    <div className="size-options">
+                        <button className="size-option">12oz - ₱79.00</button>
+                        <button className="size-option">8oz - ₱59.00</button>
+                    </div>
+                </div>
+
+                {/* Add Ons */}
+                <div className="add-ons-section">
+                    <h3>Add Ons</h3>
+                    <div className="add-ons-options">
+                        <button className="addon-option">Espresso Shot - ₱30.00</button>
+                        <button className="addon-option">Coffee Jelly - ₱20.00</button>
+                        <button className="addon-option">Popping Boba - ₱20.00</button>
+                        <button className="addon-option">Pearl - ₱20.00</button>
+                    </div>
+                </div>
+
+                {/* Sugar Level */}
+                <div className="sugar-level-section">
+                    <h3>Sugar Level</h3>
+                    <div className="sugar-options">
+                        <button className="sugar-option">25%</button>
+                        <button className="sugar-option">50%</button>
+                        <button className="sugar-option">75%</button>
+                        <button className="sugar-option">100%</button>
+                    </div>
+                </div>
+
+                <button className="add-to-cart-btn">Add to Cart</button>
+                <button className="cancel-btn" onClick={onClose}>Cancel</button>
+            </div>
+        </div>
+    );
+};
+
 const DrinksPage = () => {
     const [activeCategory, setActiveCategory] = useState('Iced Coffee'); // Track active category
     const [searchQuery, setSearchQuery] = useState(''); // State for search query
+    const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
+    const [selectedProduct, setSelectedProduct] = useState(null); // Product selected for customization
 
     const selectCategory = (category) => {
-        setActiveCategory(category); // Set the clicked category as active
+        setActiveCategory(category);
+    };
+
+    const openModal = (product) => {
+        setSelectedProduct(product); // Set selected product
+        setIsModalVisible(true); // Show modal
+    };
+
+    const closeModal = () => {
+        setIsModalVisible(false); // Close modal
+        setSelectedProduct(null); // Clear selected product
     };
 
     const activeCategoryData = drinksData.find(category => category.category === activeCategory);
@@ -160,12 +221,19 @@ const DrinksPage = () => {
                                         <p className="drink-price">₱{drink.price.toFixed(2)}</p>
                                     </div>
                                 </div>
-                                <button className="add-btn">+</button>
+                                <button className="add-btn" onClick={() => openModal(drink)}>+</button>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+
+            {/* Modal Pop-up for product customization */}
+            <ProductModal 
+                product={selectedProduct}
+                isVisible={isModalVisible}
+                onClose={closeModal}
+            />
 
             <Footer /> {/* Add Footer component here */}
         </>
