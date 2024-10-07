@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import Footer from './Footer';
 import { auth, database } from './firebaseConfig';
 import {
     createUserWithEmailAndPassword,
-    signOut,
+    signInWithEmailAndPassword,
     setPersistence,
     browserSessionPersistence,
-    RecaptchaVerifier,
-    signInWithPhoneNumber,
+    sendPasswordResetEmail,
+    fetchSignInMethodsForEmail,
 } from 'firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
@@ -17,100 +16,109 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
     const [alertMessage, setAlertMessage] = useState('');
     const [alertType, setAlertType] = useState('');
-    const [verificationCode, setVerificationCode] = useState('');
-    const [isCodeSent, setIsCodeSent] = useState(false);
+    const [passwordError, setPasswordError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
+    const [emailError, setEmailError] = useState('');
     const navigate = useNavigate();
 
-    const handleCloseAlert = () => {
-        setAlertMessage('');
+    const validateEmail = (email) => {
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
     };
 
-    const setupRecaptcha = () => {
-        // Ensure recaptchaVerifier is reset each time
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-            size: 'invisible', // Use 'normal' if you want the reCAPTCHA to be visible
-            callback: (response) => {
-                // reCAPTCHA solved - will proceed with sending the verification code
-                handleSendCode();
-            },
-            'expired-callback': () => {
-                // Response expired. Ask user to solve reCAPTCHA again.
-            }
-        }, auth);
+    const validatePassword = (password) => {
+        const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordRequirements.test(password);
     };
 
-    const handleSendCode = (e) => {
-        e.preventDefault();
-
-        // Convert local phone number (e.g., 09XXXXXXXX) to E.164 format (+63XXXXXXXX)
-        const fullPhoneNumber = phone.startsWith('09') ? `+63${phone.slice(1)}` : phone;
-
-        // Validate phone number format
-        const phoneRegex = /^\+63\d{10}$/; // Check if the number matches E.164 format
-        if (!phoneRegex.test(fullPhoneNumber)) {
-            setAlertMessage('Please enter a valid phone number starting with 09.');
-            setAlertType('error');
-            return; // Exit if the phone number is invalid
-        }
-
-        setupRecaptcha();
-        
-        // Send the verification code
-        signInWithPhoneNumber(auth, fullPhoneNumber, window.recaptchaVerifier)
-            .then((confirmationResult) => {
-                setIsCodeSent(true);
-                window.confirmationResult = confirmationResult;
-            }).catch((error) => {
-                console.error('SMS not sent:', error);
-                setAlertMessage('Failed to send verification code. Please try again.');
-                setAlertType('error');
-            });
-    };
-
-    const handleVerifyCode = async (e) => {
-        e.preventDefault();
-        try {
-            const confirmationResult = window.confirmationResult;
-            await confirmationResult.confirm(verificationCode);
-            handleSignup(); // Proceed with signup after verification
-        } catch (error) {
-            console.error('Error verifying code:', error);
-            setAlertMessage('Invalid verification code. Please try again.');
-            setAlertType('error');
-        }
+    const validatePhoneNumber = (phone) => {
+        const phonePattern = /^09\d{9}$/;
+        return phonePattern.test(phone);
     };
 
     const handleSignup = async () => {
         setAlertMessage('');
+        setPasswordError('');
+        setPhoneError('');
+        setEmailError('');
+        let hasError = false;
+
+        if (!email || !validateEmail(email)) {
+            setEmailError('Please enter a valid email address.');
+            hasError = true;
+        }
+
+        if (!validatePassword(password)) {
+            setPasswordError('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.');
+            hasError = true;
+        }
+
+        if (!validatePhoneNumber(phone)) {
+            setPhoneError('Invalid Phone Number (09xxxxxxxxx)');
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         try {
+            const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+
+            if (signInMethods.length > 0) {
+                setEmailError('An account with this email already exists.');
+                return;
+            }
+
             await setPersistence(auth, browserSessionPersistence);
+
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Store user data in Firestore
             await addDoc(collection(database, 'users'), {
                 uid: user.uid,
                 email,
                 phone,
             });
 
-            await signOut(auth);
+            await signInWithEmailAndPassword(auth, email, password);
 
-            // Clear input fields
             setEmail('');
             setPhone('');
             setPassword('');
-            setVerificationCode('');
 
-            navigate('/login');
+            navigate('/home');
         } catch (err) {
             console.error('Signup error:', err);
-            setAlertMessage('Failed to sign up. Please try again.');
+            setAlertMessage(err.message);
             setAlertType('error');
         }
+    };
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+        if (emailError) {
+            setEmailError('');
+        }
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (passwordError) {
+            setPasswordError('');
+        }
+    };
+
+    const handlePhoneChange = (e) => {
+        setPhone(e.target.value);
+        if (phoneError) {
+            setPhoneError('');
+        }
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword); // Toggle the visibility state
     };
 
     return (
@@ -118,10 +126,9 @@ function Signup() {
             {alertMessage && (
                 <div className={`alert ${alertType}`}>
                     {alertMessage}
-                    <span className="close-alert" onClick={handleCloseAlert}>&times;</span>
+                    <span className="close-alert" onClick={() => setAlertMessage('')}>&times;</span>
                 </div>
             )}
-            <div id="recaptcha-container"></div>
             <div className='main-body'>
                 <div className='icon-side'>
                     <img src='image/singin-signup-logo.png' alt='signin-signup-logo' />
@@ -130,45 +137,48 @@ function Signup() {
                 <div className='login-side'>
                     <div className="login-form">
                         <h2>Sign up</h2>
-                        {!isCodeSent ? (
-                            <form onSubmit={handleSendCode}>
-                                <div className='email'>
-                                    <label>Email:</label>
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Enter your email"
-                                        required
-                                    />
-                                </div>
-                                <div className='phone'>
-                                    <label>Phone Number:</label>
-                                    <input
-                                        type="text"
-                                        value={phone}
-                                        onChange={(e) => setPhone(e.target.value)}
-                                        placeholder="Enter your phone number"
-                                        required
-                                    />
-                                </div>
-                                <button type="submit">Send Verification Code</button>
-                            </form>
-                        ) : (
-                            <form onSubmit={handleVerifyCode}>
-                                <div className='verification-code'>
-                                    <label>Verification Code:</label>
-                                    <input
-                                        type="text"
-                                        value={verificationCode}
-                                        onChange={(e) => setVerificationCode(e.target.value)}
-                                        placeholder="Enter verification code"
-                                        required
-                                    />
-                                </div>
-                                <button type="submit">Verify Code</button>
-                            </form>
-                        )}
+                        <div className='email'>
+                            <label>Email:</label>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={handleEmailChange}
+                                placeholder="Enter your email"
+                                required
+                            />
+                            {emailError && <div className="error-banner">{emailError}</div>}
+                        </div>
+                        <div className='phone'>
+                            <label>Phone Number:</label>
+                            <input
+                                type="text"
+                                value={phone}
+                                onChange={handlePhoneChange}
+                                placeholder="Enter your phone number"
+                            />
+                            {phoneError && <div className="error-banner">{phoneError}</div>}
+                        </div>
+                        <div className='password'>
+                            <label>Password:</label>
+                            <div className="password-input-container">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                    placeholder="Enter a password"
+                                    required
+                                />
+                                <button
+                                    type="button"
+                                    className="toggle-password"
+                                    onClick={toggleShowPassword}
+                                >
+                                    {showPassword ? <img src='image/hide.svg'/> : <img src='image/show.svg'/>}
+                                </button>
+                            </div>
+                            {passwordError && <div className="error-banner">{passwordError}</div>}
+                        </div>
+                        <button type="submit" onClick={handleSignup}>Sign up</button>
                         <div className='div-border'></div>
                         <button className='google-btn'>
                             <img src='image/google-icon.png' alt='google-icon' />Sign in with Google
@@ -176,11 +186,12 @@ function Signup() {
                         <button className='signup' onClick={() => navigate('/login')}>
                             Already have an account? Sign in now
                         </button>
-                        <button className='forgot-pass'>Forgot your password</button>
+                        <button className='forgot-pass' onClick={() => navigate('/forgot-password')}>
+                            Forgot your password?
+                        </button>
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

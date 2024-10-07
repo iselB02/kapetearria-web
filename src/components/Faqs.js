@@ -1,10 +1,12 @@
 import React from 'react'
 import Accordion from 'react-bootstrap/Accordion';
+import Footer from './Footer';
 import './Faqs.css'
 
 
 function Faqs() {
   return (
+    <div className='main-container'>
         <div className='faqs-container'>
             <h1>Frequently Asked Questions</h1>
             <Accordion flush >
@@ -57,6 +59,10 @@ function Faqs() {
                 </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
+        </div>
+        <div className='footer'>
+                <Footer/>
+            </div>
         </div>
   )
 }

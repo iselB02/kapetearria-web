@@ -1,4 +1,3 @@
-// App.js
 import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -15,48 +14,64 @@ import Faqs from './components/Faqs';
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state for auth
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false); // Set loading to false after checking auth state
     });
 
     return () => unsubscribe();
   }, []);
 
-  // Show loading indicator while auth state is being determined
-  if (loading) {
-    return <p>Loading...</p>; // Or a better loading component
-  }
+  useEffect(() => {
+    const handleScroll = (event) => {
+      event.preventDefault(); // Prevent default scroll behavior
+      const sections = document.querySelectorAll('.full-page .section');
+      const totalSections = sections.length;
+      let currentSection = Math.round(window.scrollY / window.innerHeight);
+
+      if (event.deltaY > 0) {
+        currentSection = Math.min(currentSection + 1, totalSections - 1);
+      } else {
+        currentSection = Math.max(currentSection - 1, 0);
+      }
+
+      window.scrollTo({
+        top: currentSection * window.innerHeight,
+        behavior: 'smooth', // Smooth scroll transition
+      });
+    };
+
+    window.addEventListener('wheel', handleScroll, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, []);
 
   return (
     <Router>
-      <div style={{ width: '100%' }}>
+      <div className="full-page">
+        {user && <Navbar />}
+        
         <div className="scrollable">
-          {/* Only render Navbar if user is authenticated */}
-          {user && <Navbar />}
-
           <Routes>
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
-            {/* Protect the /home route */}
-            <Route path="/home" element={user ? (
+            <Route path="/home" element={
               <>
-                <Banner />
-                <Details />
-                <Tagline />
-                <Faqs />
-                <Footer />
+                <div><Navbar /></div>
+                <div className="section"><Banner /></div>
+                <div className="section"><Details /></div>
+                <div className="section"><Tagline /></div>
+                <div className="section"><Faqs /></div>
               </>
-            ) : (
-              <Navigate to="/login" />
-            )} />
-            {/* Optionally, add a redirect for other routes */}
-            <Route path="/" element={<Navigate to={user ? "/home" : "/login"} />} />
+            } />
+            <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
           </Routes>
         </div>
+        
+        <Footer />
       </div>
     </Router>
   );

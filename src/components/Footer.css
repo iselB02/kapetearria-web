@@ -1,13 +1,13 @@
 #footer{
     background-color: #5C8F4C!important;
-    height: 80px;
-    padding: 10px;
+    height: auto;
+    padding: 0;
 }
 
 .footer-container{
     background-color: #5C8F4C !important;
     padding-right: 30px;
-    max-width: 100%;
+    max-width: 100% !important;
 }
 
 #footer-img{
@@ -30,7 +30,7 @@
     margin-top: 5px;
 }
 
-h2{
+.social h2{
     font-size: 15px;
     text-align: center;
     color: white;

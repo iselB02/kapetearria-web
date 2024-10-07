@@ -1,6 +1,6 @@
 .main {
   width: 100%;
-  height: 100%;
+  height: 100px;
 }
 
 .main-body {
@@ -8,7 +8,7 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  height: 89%;
+  height: 100% !important;
 }
 
 .login-side{
@@ -16,7 +16,8 @@
   justify-content: center;
   align-items: center;
   width: 50%;
-  height: 100%;
+  height: 100% !important;
+  margin-top: 1.5%;
 }
 
 .icon-side {
@@ -27,6 +28,8 @@
   align-items: center;
   width: 50%;
   height: 100%;
+  padding-top: 5%;
+  margin-top: 1.5%;
 }
 
 .icon-side img {
