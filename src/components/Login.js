@@ -22,6 +22,7 @@ function Login() {
   const [resetEmail, setResetEmail] = useState('');
   const [resetError, setResetError] = useState(null);
   const [isReset, setIsReset] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
   const navigate = useNavigate();
   const db = getFirestore();
 
@@ -137,6 +138,10 @@ function Login() {
     }
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword); // Toggle the visibility state
+  };
+
   return (
     <div className='main'>
       {error && <div className="error-banner">{error}</div>}
@@ -180,13 +185,22 @@ function Login() {
                     </div>
                     <div className='password'>
                       <label>Password:</label>
-                      <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
-                        required={!isPhone}
-                      />
+                      <div className="password-input-container">
+                        <input
+                          type={showPassword ? 'text' : 'password'}
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="Enter your password"
+                          required={!isPhone}
+                        />
+                        <button
+                          type="button"
+                          className="toggle-password"
+                          onClick={toggleShowPassword}
+                        >
+                          {showPassword ? <img src='image/hide.svg'/> : <img src='image/show.svg'/>}
+                        </button>
+                      </div>
                     </div>
                     <button type="submit">Login</button>
                   </form>
@@ -218,7 +232,7 @@ function Login() {
           </div>
         </div>
       </div>
-          </div>
+    </div>
   );
 }
 
