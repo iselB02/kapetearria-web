@@ -1,29 +1,34 @@
-
-div {
-  background-color: white; /*#FFFAD9*/
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; 
 }
 
-/* App.css */
-body {
-    margin: 0; /* Remove default body margin */
-    padding: 0; /* Remove default body padding */
-    overflow: hidden; /* Hide the scrollbar */
-  }
-  
-.scrollable {
-  overflow-x: hidden;
-    overflow-y: scroll; /* Allow vertical scrolling on a specific container */
-    height: 100vh; /* Set height to full viewport */
-  }
-  
+.full-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
 
-/* Hide scrollbar for Webkit browsers */
-.scrollable::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+.scrollable {
+  overflow-x: hidden; 
+  overflow-y: scroll; 
+  flex: 1; 
+  scroll-behavior: smooth;
+
+  /* Hide scrollbar for WebKit browsers */
+  &::-webkit-scrollbar {
+    display: none; 
   }
-  
+
   /* Hide scrollbar for Firefox */
-  .scrollable {
-    scrollbar-width: none; /* Firefox */
-  }
-  
+  scrollbar-width: none; 
+}
+
+.section {
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}

@@ -2,12 +2,12 @@
 #details-container {
     background-color: #ffffff;
     max-width: 100%;
-    height: 600px;
+    height: 100vh;
 }
 
 /* Flexbox and button styles */
 .row {
-    padding-top: 50px;
+    padding-top: 80px;
     background-color: transparent !important;
 }
 

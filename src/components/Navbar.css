@@ -83,3 +83,27 @@ a {
     margin: 10px 0;
   }
 }
+
+#dropdown-basic {
+  background-color: white !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+#dropdown-basic img {
+  width: 33px;
+  /* margin-bottom: 4px; */
+}
+
+.custom-dropdown-item {
+  color: #5E2D26;
+}
+
+.custom-dropdown-item:hover {
+  background-color: transparent; 
+  color: rgb(20, 197, 40);
+}

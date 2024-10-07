@@ -7,8 +7,8 @@
     justify-content: center;
     align-content: center;
     max-width: 100%;
-    height: 400px;
-    background-color: transparent !important;
+    height: 100vh;
+    background-color: rgb(255, 255, 255) !important;
     /* position: relative; Allow absolute positioning for buttons */
 }
 
@@ -26,28 +26,10 @@
     align-content: center;
     justify-content: center;
     width: auto;
-    background-color: transparent !important;
+    background-color: white !important;
     border-radius: 50%; /* Optional: make it circular */
     /* position: absolute; Allow absolute positioning for each button */
 }
-
-/* Adjust positions to create an arc with 4 buttons
-.menu-col:nth-child(1) { 
-    left: 0%; 
-    bottom: -5%; 
-}
-.menu-col:nth-child(2) { 
-    left: 25%; 
-    bottom: 20%; 
-}
-.menu-col:nth-child(3) { 
-    left: 51%; 
-    bottom: 20%;
-}
-.menu-col:nth-child(4) { 
-    left: 76%; 
-    bottom: -5%; 
-} */
 
 /* Button styles */
 .menu-btn {
@@ -120,23 +102,6 @@
         -webkit-text-stroke-width: 1px;
         -webkit-text-stroke-color: #FFF;
     }
-        /* Adjust positions to create an arc with 4 buttons */
-    /* .menu-col:nth-child(1) { 
-        left: 0%; 
-        bottom: 17%; 
-    }
-    .menu-col:nth-child(2) { 
-        left: 25%; 
-        bottom: 25%; 
-    }
-    .menu-col:nth-child(3) { 
-        left: 51%; 
-        bottom: 25%; 
-    }
-    .menu-col:nth-child(4) { 
-        left: 76%; 
-        bottom: 17%; 
-    } */
 }
 
 @media (max-width: 480px) {
