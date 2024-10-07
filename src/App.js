@@ -11,7 +11,7 @@ import Banner from './components/Banner';
 import Details from './components/Details';
 import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
-
+//RECENT 10/07/2024
 const App = () => {
   const [user, setUser] = useState(null);
 
