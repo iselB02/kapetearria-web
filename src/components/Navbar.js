@@ -39,12 +39,14 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
+          <Link to="/home">
             <li className="nav-item">
               <a className="nav-link active" aria-current="page" href="#">
                 <img src='image/home.svg' className="home" alt="home-icon" />
                 <span className="text">Home</span>
               </a>
             </li>
+            </Link>
             <li className="nav-item">
               <a className="nav-link" href="#">
                 <img src='image/my-order.svg' className="my-order" alt="myorder-icon" />
@@ -52,10 +54,42 @@ function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                <img src='image/my-cart.svg' className="my-cart" alt="mycart-icon" />
-                <span className="text">My cart</span>
-              </a>
+                <Dropdown >
+                  <Dropdown.Toggle variant="success" id="dropdown-basic" className="d-flex align-items-center">
+                    <img src='image/my-cart.svg' className="my-cart" alt="mycart-icon" />
+                    <span className="text">My cart</span>
+                  </Dropdown.Toggle>  
+
+                  <Dropdown.Menu align="end" className="custom-dropdown-menu"  id="cart-dropdown"> {/* Align menu to the left */}
+                    <div className='cart-main'>
+                        <div className='cart-header'>
+                          <h2>My Cart</h2>
+                          <p>Note that Order History are only visible weekly </p>
+                        </div>
+                        <div className='cart-container'>
+                          <Dropdown.Item  className="custom-dropdown-item" id='drop-list'>
+                            <div className='product'>
+                                  <div className='img-div'><img src='image/drink1.png'/></div>
+                                  <div className='product-info'>
+                                    <div className='row1'>
+                                        <h2 className='prod-name'>Coffe Latte</h2>
+                                        <h3 className='quantity'>2x</h3>
+                                    </div>
+                                    <div className='row2'>
+                                        <h3 className='price'>₱89.00</h3>
+                                        <h3 className='total-price'>₱178.00</h3>
+                                    </div>
+                                    <div className='row3'>
+                                        <button className='addquan-btn'>+</button>
+                                        <button className='remove-btn'>-</button>
+                                    </div>
+                                  </div>
+                            </div>
+                          </Dropdown.Item>
+                        </div>
+                    </div>
+                  </Dropdown.Menu>
+                </Dropdown>
             </li>
             {user ? ( // Render the Account dropdown if user is logged in
               <li className="nav-item">

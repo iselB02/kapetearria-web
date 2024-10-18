@@ -11,6 +11,7 @@ import {
 import { auth } from './firebaseConfig';
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 
 function Login() {
   const [input, setInput] = useState('');
@@ -232,6 +233,9 @@ function Login() {
           </div>
         </div>
       </div>
+      <div className='footer'>
+            <Footer />
+            </div>
     </div>
   );
 }

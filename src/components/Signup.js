@@ -11,6 +11,7 @@ import {
 import { collection, addDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
+import Footer from './Footer';
 
 function Signup() {
     const [email, setEmail] = useState('');
@@ -191,6 +192,9 @@ function Signup() {
                         </button>
                     </div>
                 </div>
+            </div>
+            <div className='footer'>
+            <Footer />
             </div>
         </div>
     );

@@ -25,4 +25,5 @@ const database = getFirestore(app);
 const auth = getAuth(app); // Initialize Firebase Authentication
 
 // Export the initialized services
-export { app, analytics, database, auth };
+export { app, analytics, database, auth }; // Correct export statement
+export default app; 

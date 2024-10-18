@@ -3,14 +3,15 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import './App.css';
 import { auth } from './components/firebaseConfig';
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from 'firebase/auth';
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Banner from './components/Banner';
 import Details from './components/Details';
 import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
+import Drinks from './components/Drinks';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -23,8 +24,22 @@ const App = () => {
     return () => unsubscribe();
   }, []);
 
+  return (
+    <Router>
+      <Content user={user} />
+    </Router>
+  );
+};
+
+const Content = ({ user }) => {
+  const location = useLocation(); // Now it's inside the Router context
+
   useEffect(() => {
     const handleScroll = (event) => {
+      if (location.pathname === '/drinks') {
+        return; // Normal scrolling for drinks page
+      }
+
       event.preventDefault(); // Prevent default scroll behavior
       const sections = document.querySelectorAll('.full-page .section');
       const totalSections = sections.length;
@@ -38,43 +53,73 @@ const App = () => {
 
       window.scrollTo({
         top: currentSection * window.innerHeight,
-        behavior: 'smooth', // Smooth scroll transition
+        behavior: 'smooth',
       });
     };
 
-    window.addEventListener('wheel', handleScroll, { passive: false });
+    if (location.pathname !== '/drinks') {
+      window.addEventListener('wheel', handleScroll, { passive: false });
+    }
 
     return () => {
       window.removeEventListener('wheel', handleScroll);
     };
-  }, []);
+  }, [location.pathname]);
 
   return (
-    <Router>
-      <div className="full-page">
-        {user && <Navbar />}
-        
-        <div className="scrollable">
-          <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
-            <Route path="/home" element={
+    <div className="full-page">
+      {user && <Navbar />}
+
+      <div className={`scrollable ${location.pathname === '/drinks' ? 'normal-scroll' : ''}`}>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
+          <Route path="/Drinks" element={<Drinks/>} />
+          <Route
+            path="/home"
+            element={
               <>
-                <div><Navbar /></div>
-                <div className="section"><Banner /></div>
-                <div className="section"><Details /></div>
-                <div className="section"><Tagline /></div>
-                <div className="section"><Faqs /></div>
+                <div>
+                  <Navbar />
+                </div>
+                <div className="section">
+                  <Banner />
+                </div>
+                <div className="section">
+                  <Details />
+                </div>
+                <div className="section">
+                  <Tagline />
+                </div>
+                <div className="section">
+                  <Faqs />
+                </div>
               </>
-            } />
-            <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
-          </Routes>
-        </div>
-        
-        <Footer />
+            }
+            
+          />
+          {/* <Route
+            path="/drinks"
+            element={
+              <>
+                <div>
+                  <Navbar />
+                </div>
+                <div className="section">
+                  <Banner />
+                </div>
+                <div className="section">
+                  <Drinks />
+                </div>
+              </>
+            }
+            
+          /> */}
+          <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
+        </Routes>
       </div>
-    </Router>
+    </div>
   );
-}
+};
 
 export default App;
