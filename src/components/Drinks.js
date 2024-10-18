@@ -43,7 +43,7 @@ const SearchBar = ({ query, onSearch }) => {
         <div className="search-bar">
             <input
                 type="text"
-                placeholder="Search Drinks"
+                placeholder=" Search Drinks "
                 value={query}
                 onChange={(e) => onSearch(e.target.value)}
             />
