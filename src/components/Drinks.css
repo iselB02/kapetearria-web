@@ -54,20 +54,37 @@
     padding: 50px;
 }
 
-.category-list {
-    display: flex;
-    gap: 10px;
-}
-
+/* Category list*/
+/* Navigation Tabs Styling */
 .category-list button {
-    border: none;
-    background-color: transparent;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    background-color: #f9f9f9;
+    color: #5E2D26;
+    border: 2px solid transparent; /* Add border for the hover effect */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
-
 
 .category-list button:hover {
-    text-decoration: underline;
+    background-color: #5E2D26; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    border-color: #5E2D26; /* Add border to match the hover effect */
 }
+
+.category-list .active {
+    background-color: #5E2D26; /* Active tab background color */
+    color: white; /* Active tab text color */
+    border-color: #5E2D26; /* Active tab border */
+}
+
+/* Optional: Add subtle box-shadow when hovering for a modern look */
+.category-list button:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
 
 .search-bar {
     display: flex;
