@@ -3,18 +3,45 @@
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    height: 500px;
     width: 100%;
     margin-top: 100px;
+    overflow-y: auto; /* Allow vertical scrolling */
+    flex-grow: 1; /* Ensure the container grows to fill available space */
+    max-height: calc(100vh - 100px); /* Ensure the container height adapts to the viewport */
+}
 
+/* Hide the scrollbar for WebKit browsers (like Chrome, Safari) */
+.menu-maincontainer::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar */
+}
+
+/* Hide scrollbar for Firefox */
+.menu-maincontainer {
+    scrollbar-width: none; /* Hides the scrollbar */
+}
+
+/* Optional: Customize scrolling appearance */
+.menu-maincontainer {
+    -ms-overflow-style: none; /* Hides the scrollbar for IE and Edge */
 }
 
 .others-container {
-    background-color: #007743;
-    height: auto;
+    /* background-color: #007743; */
+    height: auto !important;
     width: 100%;
     z-index: 999; /* Ensure it’s below the modal overlay */
     position: relative; /* Needed for z-index to take effect */
+}
+
+/* Optional: Update the drink list container */
+.drink-list {
+    display: flex;
+    flex-direction: column;
+    height: auto; /* Allow the list to grow naturally */
+    width: 75%;
+    padding: 10px;
+    /* background-color: #007743; */
+    flex-grow: 1; /* Ensure the drink-list fills available space */
 }
 
 
@@ -199,6 +226,7 @@
     height: auto;
     width: 75%;
     padding: 10px;
+    /* background-color: #007743; */
 }
 
 /*menu*/
@@ -206,27 +234,44 @@
 /* Drink items grid */
 .drink-items {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    row-gap: 0px;
+    column-gap: 10px;
     justify-items: center;
+    /* background-color: #007743; */
+    padding: 10px;
 }
 
 /* Drink card styling */
 .drink-item {
-    background-image: url('./image/rectangle.png');
-    background-position: center;
     border: none;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    /* padding: 10px 15px 35px 15px; */
     transition: transform 0.3s ease;
     width: 100%;
-    max-width: 350px;
-    height: 120px;
+    max-width: 550px;
+    height: 180px;
     overflow: hidden;
+    /* background-color: red; */
+}
+
+.main-item {
+    background-image: url('./image/rectangle.png');
+    background-position: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px px 5px;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    width: 400px;
+    height: 110px;
+    padding-top: 35px;
+    border-radius: 15px
+
+    
 }
 
 .drink-item:hover {
@@ -235,10 +280,11 @@
 
 .drink-img {
     width: 110px;
-    height: 110px;
+    height: 160px;
     object-fit: cover;
-    border-radius: 10px;
-    margin-right: 20px;
+    /* padding-bottom: 15px; */
+    /* border-radius: 10px; */
+    /* background-color: #351916; */
 }
 
 .drink-info {
@@ -246,8 +292,11 @@
     flex-direction: column;
     justify-content: center;
     height: 100px;
-    width: 200px;
-    padding-top: 10px;
+    width: 190px;
+    padding-bottom: 10px;
+    margin-right: 10px;
+    /* padding-top: 10px; */
+    /* background-color: #4CAF50; */
 }
 
 .drink-name-price {
@@ -256,11 +305,12 @@
 }
 
 .drink-name {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: #3B1C18;
     font-weight: bold;
-    width: 190px;
+    width: 200px;
     line-height: 1.2;
+    /* background-color: #007743; */
 }
 
 .drink-price {
@@ -342,7 +392,7 @@
 }
 
 /* Size and Add-ons section */
-.sizes-section h3, .add-ons-section h3, .sugar-level-section h3 {
+.sizes-section h3, .add-ons-section h3, .sugar-level-section h3, .quantity-section h3 {
     font-size: 1.2rem;
     color: #5E2D26;
 }
@@ -377,6 +427,11 @@
     color: white;
     border-color: #4CAF50; /* Match border color */
 }
+
+.quantity-section {
+    padding-bottom: 15px;
+}
+
 
 
 .modal-buttons {

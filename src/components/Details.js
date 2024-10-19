@@ -46,24 +46,6 @@ function Details() {
             </button>
           </div>
   
-          {/* Search Form */}
-          {/* Search Form */}
-            <Form onSubmit={handleSearchSubmit} className='search-form'>
-              <Row className='search-row'>
-                <Col xs="auto">
-                  <Form.Control
-                    type="text"
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={handleSearchChange}
-                    className="me-2"
-                  />
-                </Col>
-                <Col xs="auto">
-                  <Button type="submit" className="btn-search">Search</Button>
-                </Col>
-              </Row>
-            </Form>
         </div>
   
         {/* Conditionally render the content based on the activeSection state */}

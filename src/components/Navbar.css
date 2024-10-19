@@ -95,17 +95,22 @@ a {
 }
 
 .cart-main {
+  background-image: url('./image/cofee-bg.png');
+  background-size:     cover;                     
+  background-repeat:   no-repeat;
+  background-position: center center;  
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 450px;
   height: auto;
-  background-color: #5E2D26;
   border-radius: 30px;
   align-items: center;
+  background-color: #5E2D26;
 }
 
 #cart-dropdown {
+
   width: auto;
   height: auto;
   background-color: transparent;
@@ -123,7 +128,7 @@ a {
   margin-top: 10px;
   padding: 10px 15px 0px 15px;
   margin: none;
-  background-color: #5E2D26; 
+  /* background-color: #5E2D26;  */
 }
 
 .cart-header h2 {
@@ -138,11 +143,21 @@ a {
 .cart-container {
   background-color: white;
   height: auto;
+  max-height: 300px;
   width: 100%;
   padding: 10px 30px 15px 0px;
   border-radius: 0px 0px 30px 30px;
+  overflow-y: auto;
+  overflow-x: hidden;
   margin: none !important;
+  /* background-image: url('./image/cofee-bg.png');
+  background-size:     cover;                     
+  background-repeat:   no-repeat;
+  background-position: center center;  */
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
+
+
 
 #drop-list{
   display:  flex;
@@ -155,10 +170,16 @@ a {
 .product {
   display: flex;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
   height: 110px;
   width: 320px;
+  padding-right: 10px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  border-radius: 10px;
+}
 
+.product:hover {
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  transition: box-shadow 0.3s ease-out;
 }
 
 .img-div {
@@ -201,13 +222,13 @@ a {
 }
 
 #drop-list:hover{
-  background-color: white; 
+  background-color: transparent; 
   color: #5E2D26 !important;
 
 }
 
 .product-info h2 {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
 } 
 
@@ -217,6 +238,32 @@ a {
 
 .img-div img {
   width: 115%;
+}
+
+.checkout-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  padding: 0px 10px 0px 10px;
+  /* background-color: #5E2D26; */
+  margin-left: 3.5%;
+  padding-top: 10px;
+}
+
+.checkout-btn {
+  border: 1px solid #5E2D26;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+}
+
+.checkout-div h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #5E2D26;
 }
 
 #dropdown-basic img {
@@ -231,4 +278,7 @@ a {
 .custom-dropdown-item:hover {
   background-color: transparent; 
   color: rgb(20, 197, 40);
+}
+#dropdown-basic:hover{
+  cursor: pointer;
 }

@@ -28,7 +28,7 @@ body {
 /* Normal scrolling for the Drinks page */
 .normal-scroll {
   overflow-y: auto; /* Show scrollbars */
-  scroll-behavior: auto; /* Disable smooth scrolling */
+  scroll-behavior: smooth;
 }
 
 .section {

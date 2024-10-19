@@ -12,6 +12,9 @@ import Details from './components/Details';
 import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
 import Drinks from './components/Drinks';
+import { useParams } from 'react-router-dom';
+
+
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -30,6 +33,7 @@ const App = () => {
     </Router>
   );
 };
+
 
 const Content = ({ user }) => {
   const location = useLocation(); // Now it's inside the Router context
@@ -66,15 +70,18 @@ const Content = ({ user }) => {
     };
   }, [location.pathname]);
 
+  const { type } = useParams();
+
   return (
     <div className="full-page">
       {user && <Navbar />}
 
-      <div className={`scrollable ${location.pathname === '/drinks' ? 'normal-scroll' : ''}`}>
+      <div className={`scrollable ${type ? 'normal-scroll' : ''}`}>
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
-          <Route path="/Drinks" element={<Drinks/>} />
+          {/* Pass the 'type' (e.g., drinks, snacks, desserts) as a route parameter */}
+          <Route path="/:type" element={<Drinks />} />
           <Route
             path="/home"
             element={
@@ -121,5 +128,20 @@ const Content = ({ user }) => {
     </div>
   );
 };
+
+// App.js
+
+// import React from "react";
+// import UploadMenuComponent from "./upload"; // Path to your UploadMenuComponent
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <h1>Menu Data Uploader</h1>
+//       <UploadMenuComponent />
+//     </div>
+//   );
+// }
+
 
 export default App;
