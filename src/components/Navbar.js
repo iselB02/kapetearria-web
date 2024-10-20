@@ -72,6 +72,7 @@ function Navbar() {
     event.stopPropagation(); // Prevent dropdown from closing
     const userCartRef = doc(database, 'cart_info', cartItem.id); // Reference to the specific cart item document
     const updatedQuantity = cartItem.quantity - 1;
+    const addOns = cartItem?.add_ons ? cartItem.add_ons.split(',') : [];
 
     if (updatedQuantity > 0) {
       const updatedTotalPrice = cartItem.price * updatedQuantity;
@@ -128,6 +129,7 @@ function Navbar() {
     }
   };
 
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div className="container-fluid">
@@ -174,8 +176,8 @@ function Navbar() {
                 <Dropdown.Menu align="end" className="custom-dropdown-menu" id="cart-dropdown">
                   <div className="cart-main">
                     <div className="cart-header">
-                      <h2>My Cart</h2>
-                      <p>Note that Order History is only visible weekly</p>
+                        <img src="image/my-cart.svg" className="my-cart" alt="mycart-icon" />
+                        <h2>My Cart</h2>
                     </div>
                     <div className="cart-container">
                       {cartItems.length > 0 ? (
@@ -183,7 +185,7 @@ function Navbar() {
                           <Dropdown.Item key={index} className="custom-dropdown-item" id="drop-list">
                             <div className="product">
                               <div className="img-div">
-                                <img src={item.image} alt={item.productName} />
+                                <img src={item.image} alt={item.productName} className='prod-img'/>
                               </div>
                               <div className="product-info">
                                 <div className="row1">
@@ -191,8 +193,15 @@ function Navbar() {
                                   <h3 className="quantity">{item.quantity}x</h3>
                                 </div>
                                 <div className="row2">
-                                  <h3 className="price">₱{item.price.toFixed(2)}</h3>
-                                  <h3 className="total-price">₱{item.totalPrice.toFixed(2)}</h3>
+                                  <h3 className="addons"> {item.selectedAddOns.map((addOns, index) => (
+                                      <span key={index}>
+                                        {addOns} {/* Assuming each add-on has a 'name' property */}
+                                      </span>
+                                    ))}
+                                      <span>{item.selectedSize}</span>
+                                      <span>{item.selectedSugar}</span>
+                                    </h3>
+                        
                                 </div>
                                 <div className="row3">
                                   <button
@@ -201,6 +210,7 @@ function Navbar() {
                                   >
                                     +
                                   </button>
+                                  <h3 className="price">₱{item.price.toFixed(2)}</h3>
                                   <button
                                     className="remove-btn"
                                     onClick={(e) => handleRemoveQuantity(item, e)}
@@ -210,16 +220,21 @@ function Navbar() {
                                 </div>
                               </div>
                             </div>
+                        
                           </Dropdown.Item>
                         ))
                       ) : (
-                        <p>Your cart is empty.</p>
+                        <p className='empty'>Your cart is empty.</p>
                       )}
                       {/* Conditionally render the checkout section */}
+                      <div className='divider'></div>
                       {cartItems.length > 0 && (
                         <div className='checkout-div'>
+                          <div className='total-price'>
+                               <h3>Total</h3>
+                              <h3>₱{totalPrice.toFixed(2)}</h3>
+                          </div>
                           <button className='checkout-btn' onClick={handleCheckout}>Proceed to Checkout</button>
-                          <h3>Total: ₱{totalPrice.toFixed(2)}</h3>
                         </div>
                       )}
                     </div>
