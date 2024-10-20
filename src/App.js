@@ -11,11 +11,7 @@ import Banner from './components/Banner';
 import Details from './components/Details';
 import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
-import Drinks from './components/Drinks';
-import { useParams } from 'react-router-dom';
-
-
-
+//RECENT 10/07/2024
 const App = () => {
   const [user, setUser] = useState(null);
 
