@@ -95,22 +95,20 @@ a {
 }
 
 .cart-main {
-  background-image: url('./image/cofee-bg.png');
-  background-size:     cover;                     
-  background-repeat:   no-repeat;
-  background-position: center center;  
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 450px;
+  width: 550px;
   height: auto;
   border-radius: 30px;
   align-items: center;
-  background-color: #5E2D26;
+  background-color: #FFFEF6;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  ;
 }
 
-#cart-dropdown {
 
+#cart-dropdown {
   width: auto;
   height: auto;
   background-color: transparent;
@@ -120,11 +118,11 @@ a {
 
 .cart-header {
   display: flex;
-  flex-direction: column;
-  gap: 0px;
+  flex-direction: row;
+  gap: 10px;
   height: auto;
   width: 90%;
-  color: white;
+  color:#5E2D26;
   margin-top: 10px;
   padding: 10px 15px 0px 15px;
   margin: none;
@@ -141,7 +139,7 @@ a {
 }
 
 .cart-container {
-  background-color: white;
+  background-color: #FFFEF6;
   height: auto;
   max-height: 300px;
   width: 100%;
@@ -154,9 +152,28 @@ a {
   background-size:     cover;                     
   background-repeat:   no-repeat;
   background-position: center center;  */
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.cart-container::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar */
+  height: 0; /* Hide scrollbar */
+}
+
+/* Hide scrollbar for Firefox */
+.cart-container {
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for IE and Edge */
+.cart-container {
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.empty {
+  margin-left: 10%;
+  color: #5E2D26;
+}
 
 
 #drop-list{
@@ -169,9 +186,9 @@ a {
 
 .product {
   display: flex;
-  background-color: white;
+  background-color: #FFFEF6;
   height: 110px;
-  width: 320px;
+  width: 420px;
   padding-right: 10px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border-radius: 10px;
@@ -182,14 +199,43 @@ a {
   transition: box-shadow 0.3s ease-out;
 }
 
-.img-div {
+/* .img-div {
   height: 100%;
   width: 25%;
-  padding: 10px;
+  background-color: red;
+} */
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.modal-content::-webkit-scrollbar {
+    width: 0; /* Hide scrollbar */
+    height: 0; /* Hide scrollbar */
+}
+
+/* Hide scrollbar for Firefox */
+.modal-content {
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for IE and Edge */
+.modal-content {
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.prod-img {
+  width: 70px !important;
+  height: 120px !important;
+  padding-bottom: 15px;
+  object-fit: cover;
+}
+
+
+.total-price {
+  font-size: 15px !important;
+  margin-top: 5px;
 }
 
 .product-info {
-  width: 75%;
+  width: 100%;
   padding: 5px;
   height: auto;
 }
@@ -201,20 +247,44 @@ a {
 }
 
 .row3 {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 10px;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: end !important;
+  align-items: center;
+  gap: 5px;
+  /* background-color: aqua; */
+  /* background-color: #5E2D26; */
 }
 
 .row3 button {
-  width: 50px;
+  width: 25px;
+  height: 25px;
   background-color: #5E2D26;
   color: white;
+  font-size: 10px;
   font-weight: bold;
-  padding: 2px;
+  /* padding: 2px; */
   border: solid;
   border-radius: 5px;
+}
+
+.row2 h3 {
+  width: 300px;
+  text-overflow: ellipsis;
+  /* background-color: red; */
+  display: inline-block;
+  /* white-space: nowrap; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px; /* Adjust the width as necessary */
+}
+
+.row2 h3 span {
+  margin-right: 5px;
+}
+
+.addons{
+  font-size: 15px !important;
 }
 
 .row3 button:hover {
@@ -242,7 +312,7 @@ a {
 
 .checkout-div {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   height: auto;
@@ -253,17 +323,37 @@ a {
   padding-top: 10px;
 }
 
+.total-price {
+  display: flex;
+  /* background-color: red; */
+  width: 90%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .checkout-btn {
-  border: 1px solid #5E2D26;
+  border: none;
   border-radius: 10px;
-  background-color: white;
+  background-color: #5E2D26;
   padding: 5px;
+  color: white;
+  height: 40px;
+  width: 90%;
+  font-weight: bold;
 }
 
 .checkout-div h3 {
   font-size: 20px;
   font-weight: bold;
   color: #5E2D26;
+}
+
+.divider {
+  background-color: rgba(0, 0, 0, 0.119);
+  margin-top: 10px;
+  margin-left: 9.7%;
+  height: 1px;
+  width: 87%;
 }
 
 #dropdown-basic img {
