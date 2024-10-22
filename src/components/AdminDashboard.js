@@ -4,6 +4,7 @@ import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiLogOut } from 'r
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 import { IoMdNotificationsOutline } from 'react-icons/io';
+import { BsExclamationCircle, BsCheckCircle, BsInfoCircle } from 'react-icons/bs';
 
 const AdminDashboard = () => {
     return (
@@ -46,10 +47,48 @@ const AdminDashboard = () => {
                     <button className="profile-btn">Profile</button>
                 </div>
 
+                {/* Card Section */}
+                <div className="dashboard-overview">
+                    <div className="overview-card alert">
+                        <BsExclamationCircle className="card-icon" />
+                        <div className="card-content">
+                            <p>LOW INVENTORY</p>
+                            <p>Inventory Level is LOW. Contact Manager now.</p>
+                            <a href="/">Learn more &gt;</a>
+                        </div>
+                    </div>
+
+                    <div className="overview-card success">
+                        <BsCheckCircle className="card-icon" />
+                        <div className="card-content">
+                            <p>BOBA MILKTEA</p>
+                            <p>67 Customers bought this item. Keep up!</p>
+                            <a href="/">Learn more &gt;</a>
+                        </div>
+                    </div>
+
+                    <div className="overview-card info">
+                        <BsInfoCircle className="card-icon" />
+                        <div className="card-content">
+                            <p>NET WORTH</p>
+                            <p>Daily income of the store</p>
+                            <a href="/">Learn more &gt;</a>
+                        </div>
+                    </div>
+
+                    <div className="overview-card warning">
+                        <BsExclamationCircle className="card-icon" />
+                        <div className="card-content">
+                            <p>DELIVERY PENDING</p>
+                            <p>1 Matcha Latte, 1 Carrot Cake</p>
+                            <a href="/">Learn more &gt;</a>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Visitor Chart (Placeholder for chart.js or similar library) */}
                 <div className="visitor-chart">
                     <h2>Daily Visitors</h2>
-                   
                     <div className="chart-placeholder">
                         <p>Chart Placeholder</p>
                     </div>
