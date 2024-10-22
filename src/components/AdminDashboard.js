@@ -46,45 +46,10 @@ const AdminDashboard = () => {
                     <button className="profile-btn">Profile</button>
                 </div>
 
-                <div className="dashboard-overview">
-                    <div className="overview-card alert">
-                        <div className="card-header">
-                            <p>LOW INVENTORY</p>
-                            <button>X</button>
-                        </div>
-                        <p>Inventory Level is LOW. Contact Manager now.</p>
-                        <a href="/">Learn more &gt;</a>
-                    </div>
-                    <div className="overview-card success">
-                        <div className="card-header">
-                            <p>BOBA MILKTEA</p>
-                            <button>X</button>
-                        </div>
-                        <p>67 Customers bought this item. Keep up!</p>
-                        <a href="/">Learn more &gt;</a>
-                    </div>
-                    <div className="overview-card info">
-                        <div className="card-header">
-                            <p>NET WORTH</p>
-                            <button>X</button>
-                        </div>
-                        <p>Daily income of the store</p>
-                        <a href="/">Learn more &gt;</a>
-                    </div>
-                    <div className="overview-card warning">
-                        <div className="card-header">
-                            <p>DELIVERY PENDING</p>
-                            <button>X</button>
-                        </div>
-                        <p>1 Matcha Latte, 1 Carrot Cake</p>
-                        <a href="/">Learn more &gt;</a>
-                    </div>
-                </div>
-
                 {/* Visitor Chart (Placeholder for chart.js or similar library) */}
                 <div className="visitor-chart">
                     <h2>Daily Visitors</h2>
-                    {/* Chart would go here, you can use libraries like Chart.js */}
+                   
                     <div className="chart-placeholder">
                         <p>Chart Placeholder</p>
                     </div>
