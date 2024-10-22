@@ -13,8 +13,7 @@ import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
 import Drinks from './components/Drinks';
 import { useParams } from 'react-router-dom';
-
-
+import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -34,9 +33,8 @@ const App = () => {
   );
 };
 
-
 const Content = ({ user }) => {
-  const location = useLocation(); // Now it's inside the Router context
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -103,45 +101,14 @@ const Content = ({ user }) => {
                 </div>
               </>
             }
-            
           />
-          {/* <Route
-            path="/drinks"
-            element={
-              <>
-                <div>
-                  <Navbar />
-                </div>
-                <div className="section">
-                  <Banner />
-                </div>
-                <div className="section">
-                  <Drinks />
-                </div>
-              </>
-            }
-            
-          /> */}
+          {/* Add the Admin Dashboard route */}
+          <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
         </Routes>
       </div>
     </div>
   );
 };
-
-// App.js
-
-// import React from "react";
-// import UploadMenuComponent from "./upload"; // Path to your UploadMenuComponent
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <h1>Menu Data Uploader</h1>
-//       <UploadMenuComponent />
-//     </div>
-//   );
-// }
-
 
 export default App;
