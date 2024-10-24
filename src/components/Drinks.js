@@ -4,6 +4,7 @@
     import { database, auth } from './firebaseConfig'; // Import your Firebase configuration
     import { useParams  } from 'react-router-dom'; // Import useNavigate for redirection
     import './Drinks.css';
+    import { Link } from 'react-router-dom';  // Import Link for navigation
     import Navbar from './Navbar';
     import Banner from './Banner';
     import Footer from './Footer';
@@ -304,6 +305,40 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
                     <Navbar/>
                     <Banner />
                 </div>
+                <div className='menu-selections'>
+                    <div className='menu-selections-btn'>
+                    <Link to="/drinks"><button className={`menuselect-btn ${type === 'drinks' ? 'active-btn' : ''}`}>Drinks</button></Link>
+                    <Link to="/snacks"><button className={`menuselect-btn ${type === 'snacks' ? 'active-btn' : ''}`}>Snacks</button></Link>
+                    <Link to="/meals"><button className={`menuselect-btn ${type === 'meals' ? 'active-btn' : ''}`}>Meals</button></Link>
+                    <Link to="/desserts"><button className={`menuselect-btn ${type === 'desserts' ? 'active-btn' : ''}`}>Desserts</button></Link>
+                    </div>
+                    <div className="search-bar">
+                        <SearchBar query={searchQuery} onSearch={setSearchQuery} />
+                    </div>
+                </div>
+
+                <div className='order-history'>
+                    <div className='order-history-content'>
+                        <div className='order-history-header'>
+                            <h2>Order History</h2>
+                            <button>...</button>
+                        </div>
+                        <div className='order-history-items'>
+                            <div className="order-item-container">
+                                <div className='order-item'>
+                                        <img src='image/drink1.png' alt='' className="order-img" />
+                                    <div className="order-info">
+                                        <div className="history-name-price">
+                                            <p className="order-name">Iced Caramel Latte</p>
+                                            <p className="order-price">₱100.0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="selections">
                     {/* Drink Categories for selection (like Hot Coffee, Iced Coffee, etc.) */}
                     <div className="category-list">
@@ -316,9 +351,6 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
                                 {category}
                             </button>
                         ))}
-                    </div>
-                    <div className="search-bar">
-                        <SearchBar query={searchQuery} onSearch={setSearchQuery} />
                     </div>
                 </div>
     
