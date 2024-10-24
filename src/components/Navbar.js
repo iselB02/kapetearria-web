@@ -133,7 +133,9 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div className="container-fluid">
-        <img src="image/logo.png" className="logo" alt="store-logo" />
+        <Link to="/home">
+          <img src="image/logo.png" className="logo" alt="store-logo" />
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -173,7 +175,13 @@ function Navbar() {
                   <span className="text">My cart</span>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu align="end" className="custom-dropdown-menu" id="cart-dropdown">
+                <Dropdown.Menu
+                  align="end"
+                  className="custom-dropdown-menu"
+                  id="cart-dropdown"
+                  onWheel={(e) => e.stopPropagation()}  // Stop scroll event from propagating to the parent
+                >
+
                   <div className="cart-main">
                     <div className="cart-header">
                         <img src="image/my-cart.svg" className="my-cart" alt="mycart-icon" />

@@ -40,11 +40,14 @@ const Content = ({ user }) => {
 
   useEffect(() => {
     const handleScroll = (event) => {
-      if (location.pathname === '/drinks') {
-        return; // Normal scrolling for drinks page
+      // List of routes that should have normal scrolling
+      const normalScrollRoutes = ['/meals', '/drinks', '/snacks', '/desserts'];
+
+      if (normalScrollRoutes.includes(location.pathname)) {
+        return; // Normal scrolling for specific routes
       }
 
-      event.preventDefault(); // Prevent default scroll behavior
+      event.preventDefault(); // Prevent default scroll behavior for other routes
       const sections = document.querySelectorAll('.full-page .section');
       const totalSections = sections.length;
       let currentSection = Math.round(window.scrollY / window.innerHeight);
@@ -61,7 +64,9 @@ const Content = ({ user }) => {
       });
     };
 
-    if (location.pathname !== '/drinks') {
+    // Add event listener only if not on normal scroll routes
+    const normalScrollRoutes = ['/meals', '/drinks', '/snacks', '/desserts'];
+    if (!normalScrollRoutes.includes(location.pathname)) {
       window.addEventListener('wheel', handleScroll, { passive: false });
     }
 
@@ -103,25 +108,7 @@ const Content = ({ user }) => {
                 </div>
               </>
             }
-            
           />
-          {/* <Route
-            path="/drinks"
-            element={
-              <>
-                <div>
-                  <Navbar />
-                </div>
-                <div className="section">
-                  <Banner />
-                </div>
-                <div className="section">
-                  <Drinks />
-                </div>
-              </>
-            }
-            
-          /> */}
           <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
         </Routes>
       </div>

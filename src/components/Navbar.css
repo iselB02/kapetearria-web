@@ -26,6 +26,10 @@ a {
   height: auto;
 }
 
+.logo:hover {
+  cursor: pointer;
+}
+
 .navbar-nav {
   margin-left: auto;
   display: flex;
@@ -113,6 +117,7 @@ a {
   height: auto;
   background-color: transparent;
   border: none;
+  z-index: 1000;
 }
 
 
