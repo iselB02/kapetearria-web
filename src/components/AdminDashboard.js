@@ -5,6 +5,8 @@ import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BsExclamationCircle, BsCheckCircle, BsInfoCircle } from 'react-icons/bs';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 const AdminDashboard = () => {
     return (
@@ -43,9 +45,13 @@ const AdminDashboard = () => {
             {/* Main Content */}
             <main className="main-content">
                 <div className="top-bar">
-                    <input type="text" placeholder="Search" className="search-bar" />
+                    <input type="text" placeholder="Search" className="adminsearch-bar" />
                     <button className="profile-btn">Profile</button>
                 </div>
+     {/* Rectangle Image */}
+     <div className="rectangle-container">
+        <img className="rectangle" alt="Rectangle" src="/image/Rectangle 193.png" />
+    </div>
 
                 {/* Card Section */}
                 <div className="dashboard-overview">
