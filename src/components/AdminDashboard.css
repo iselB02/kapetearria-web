@@ -133,18 +133,24 @@
 
 .rectangle-container {
     position: relative; 
+    display: flex;
     width: 100%;
     height: 50%;
     margin-bottom: 5%; /* Space between the rectangle and the cards */
 }
 
 .rectangle {
-    position: absolute; /* Position it above the cards */
-    top: 0;
-    left: 0 ;
-    z-index: 2; /* Ensure it's above the cards */
-    width: 15%; /* Adjust the width of the rectangle */
-    height: auto; /* Maintain aspect ratio */
+    width: 200px; /* Adjust the width as needed */
+    height: 50px; /* Adjust the height as needed */
+    background-color: #68a45d; /* Set the background color */
+    color: white; /* Text color */
+    display: flex;
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    border-radius: 15px; /* Rounded corners */
+    font-size: 16px; /* Adjust font size */
+    font-weight: bold; /* Bold text */
+    text-align: center;
 }
 
 .dashboard-overview {

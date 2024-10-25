@@ -48,10 +48,11 @@ const AdminDashboard = () => {
                     <input type="text" placeholder="Search" className="adminsearch-bar" />
                     <button className="profile-btn">Profile</button>
                 </div>
-     {/* Rectangle Image */}
-     <div className="rectangle-container">
-        <img className="rectangle" alt="Rectangle" src="/image/Rectangle 193.png" />
-    </div>
+                <div className="rectangle-container">
+             <div className="rectangle">
+                 Dashboard
+            </div> 
+            </div> 
 
                 {/* Card Section */}
                 <div className="dashboard-overview">
