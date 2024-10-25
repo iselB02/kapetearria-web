@@ -19,7 +19,7 @@ const AdminDashboard = () => {
         datasets: [
             {
                 label: 'Visitors',
-                data: [50, 100, 75, 150, 200, 175, 225],
+                data: [0, 1000, 2000, 3000, 4000, 5000, 6000],
                 borderColor: 'rgba(75, 192, 192, 1)',
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 fill: true,
@@ -37,6 +37,11 @@ const AdminDashboard = () => {
             title: {
                 display: true,
                 text: 'Daily Visitors',
+                font: {
+                    size: 20, 
+                     weight: 'bold'
+
+                }
             },
         },
     };

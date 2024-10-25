@@ -262,3 +262,7 @@
         grid-template-columns: 1fr; /* Single column layout for mobile */
     }
 }
+
+.visitor-chart canvas {
+    max-height: 300px; /* Adjust the height on smaller screens */
+}
