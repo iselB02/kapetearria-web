@@ -105,7 +105,7 @@
     background-color: #f8f8f8; /* Background color (optional) */
 }
 .adminsearch-bar {
-    width: 70%;
+    width: 83%;
     height: 40px; 
     padding: 10px 20px; 
     text-align: center;
@@ -235,6 +235,8 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    display: flex;
 }
 
 .chart-placeholder {
@@ -246,6 +248,12 @@
     border-radius: 10px;
     color: #888;
     margin-top: 10px;
+}
+
+/* Chart Container */
+.visitor-chart canvas {
+    width: 100% !important; /* Ensure chart takes full width */
+    height: auto !important; /* Adjust height automatically */
 }
 
 /* Responsive adjustments */
