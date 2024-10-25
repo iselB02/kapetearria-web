@@ -141,7 +141,7 @@
 
 .rectangle {
     width: 200px; 
-    height: 45px; 
+    height: 40px; 
     background-color: #68a45d; 
     color: white; /* Text color */
     display: flex;
@@ -235,7 +235,8 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    margin-top: 25px;
+    margin-bottom: 20px;
     display: flex;
 }
 
