@@ -107,6 +107,10 @@ const Content = ({ user }) => {
               </>
             }
           />
+
+           {/* Admin Dashboard Route */}
+           <Route path="/admin" element={<AdminDashboard />} />
+           
           <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
         </Routes>
       </div>
