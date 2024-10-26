@@ -219,10 +219,32 @@
 
 .info {
     border-left: 4px solid #2196f3;
+    position: static !important; /* Force to prevent absolute positioning */
+    z-index: 1; /* Ensure it's not behind other elements */
+    width: auto; /* Ensure no forced width from signup.css */
+    padding: 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    display: flex;
 }
 
 .warning {
     border-left: 4px solid #ff9800;
+    position: static !important; /* Force to prevent absolute positioning */
+    z-index: 1; /* Ensure it's not behind other elements */
+    width: auto; /* Ensure no forced width from signup.css */
+    padding: 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    display: flex;
 }
 
 .card-icon {
