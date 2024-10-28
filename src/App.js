@@ -12,6 +12,7 @@ import Details from './components/Details';
 import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
 import Drinks from './components/Drinks';
+import Checkout from './components/Checkout';
 import { useParams } from 'react-router-dom';
 import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
 
@@ -85,6 +86,7 @@ const Content = ({ user }) => {
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
           {/* Pass the 'type' (e.g., drinks, snacks, desserts) as a route parameter */}
           <Route path="/:type" element={<Drinks />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route
             path="/home"
             element={

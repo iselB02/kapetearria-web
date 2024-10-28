@@ -479,9 +479,12 @@
 }
 
 .modal-content {
-    background: #fff;
+    /* background: red; */
+    background-image: url('./image/modal-bg.png');
+    background-position: center;
+    background-size: cover;
     margin-top: 20px;
-    padding: 20px;
+    padding: 45px;
     border-radius: 12px;
     height: 520px; /* Use lowercase 'px' for consistency */
     max-width: 500px;
@@ -509,13 +512,137 @@
 }
 
 
-.modal-content h2 {
-    color: #5E2D26;
-    font-size: 1.8rem;
+.modal-div {
+    align-self: stretch; 
+    background: #D9D9D9;
+    min-height: 1.2px; /* Forces it to show */
     margin-bottom: 10px;
+    border-radius: var(--Radius-200, 8px);
 }
 
-/* Size and Add-ons section */
+
+.modal-content h2 {
+    color: #3B1C18;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: Inter;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.prod-desc {
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.add-ons-options {
+    display: flex;
+    flex-direction: column; /* Display rows vertically */
+    gap: 10px; /* Add space between rows */
+    min-width: 350px !important;
+}
+
+.addon-option {
+    flex: 1; /* Allow flexibility for the buttons to grow */
+    min-width: 100px; /* Minimum width for the add-on buttons */
+    max-width: 150px; /* Maximum width for the add-on buttons */
+    padding: 10px 15px;
+    text-align: center;
+    background-color: #FFFEF6;
+    border: 2px solid #5E2D26;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #5E2D26;
+    font-weight: 500;
+}
+
+.add-ons-row {
+    display: flex;
+    justify-content: start;
+    gap: 10px; /* Add space between add-on buttons in each row */
+}
+
+
+.size-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.size-row {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.size-option {
+    flex: 1; /* Allow flexibility for the buttons to grow */
+    min-width: 100px; /* Minimum width for the size buttons */
+    max-width: 150px; /* Maximum width for the size buttons */
+    padding: 10px 15px;
+    text-align: center;
+    background-color: #FFFEF6;
+    border: 2px solid #5E2D26;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #5E2D26;
+    font-weight: 500;
+}
+
+.size-option:hover {
+    background-color: #ddd;
+}
+
+.size-option.selected {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+.sugar-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sugar-row {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.sugar-option {
+    flex: 1; /* Allow flexibility for the buttons to grow */
+    min-width: 100px; /* Minimum width for the sugar level buttons */
+    max-width: 150px; /* Maximum width for the sugar level buttons */
+    padding: 10px 15px;
+    text-align: center;
+    background-color: #FFFEF6;
+    border: 2px solid #5E2D26;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #5E2D26;
+    font-weight: 500;
+}
+
+.sugar-option:hover {
+    background-color: #ddd;
+}
+
+.sugar-option.selected {
+    background-color: #4CAF50;
+    color: white;
+    border-color: #4CAF50;
+}
+
+
 .sizes-section h3, .add-ons-section h3, .sugar-level-section h3, .quantity-section h3 {
     font-size: 1.2rem;
     color: #5E2D26;
@@ -553,7 +680,46 @@
 }
 
 .quantity-section {
-    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-controls h3 {
+    padding-top: 3px;
+}
+
+.quantity-btn {
+    background-color: #5E2D26; /* Button color */
+    color: white;
+    border: none;
+    /* padding: 10px; */
+    padding-bottom: 5px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    width: 25px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.quantity-btn:hover {
+    background-color: #4c1f1b; /* Darken on hover */
+}
+
+.quantity-value {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #3B1C18;
+    width: 30px; /* Ensure space for the number */
+    text-align: center;
 }
 
 
@@ -564,6 +730,7 @@
 }
 
 .add-to-cart-btn, .cancel-btn {
+    font-family: Inter;
     background-color: #5E2D26;
     color: white;
     padding: 10px;
@@ -572,10 +739,12 @@
     cursor: pointer;
     width: 100%;
     margin-bottom: 10px;
+    font-weight: 500;
 }
 
 .cancel-btn {
-    background-color: #e8ddd9;
+    background-color: #FFFEF6;
+    border: 2px solid #5A2103;
     color: #5E2D26;
 }
 

@@ -57,6 +57,8 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
         const [selectedSize, setSelectedSize] = useState('');
         const [selectedSugar, setSelectedSugar] = useState('');
         const [quantity, setQuantity] = useState(1);
+        const sizesPerRow = 3;
+        const sugarPerRow = 3; 
     
         const sizes = product?.sizes ? product.sizes.split(',') : [];
         const addOns = product?.add_ons ? product.add_ons.split(',') : [];
@@ -155,79 +157,93 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
             <div className="modal-overlay">
                 <div className="modal-content">
                     <h2>{product.product_name}</h2>
-                    <p>{product.description}.</p>
+                    <p className='prod-desc'>{product.description}.</p>
+                    <div className="modal-div"></div>
                     <p>Price: ₱{product.price.toFixed(2)}</p>
     
+                    
                     {/* Sizes */}
                     {sizes.length > 0 && (
                         <div className="sizes-section">
-                            <h3>Sizes</h3>
-                            <div className="size-options">
-                                {sizes.map((size, index) => (
-                                    <button
-                                        key={index}
-                                        className={`size-option ${selectedSize === size ? 'selected' : ''}`}
-                                        onClick={() => setSelectedSize(size)}
-                                    >
-                                        {size}
-                                    </button>
-                                ))}
-                            </div>
+                        <h3>Sizes</h3>
+                        <div className="size-options">
+                            {Array.from({ length: Math.ceil(sizes.length / sizesPerRow) }, (_, rowIndex) => (
+                                <div key={rowIndex} className="size-row">
+                                    {sizes.slice(rowIndex * sizesPerRow, rowIndex * sizesPerRow + sizesPerRow).map((size, index) => (
+                                        <button
+                                            key={index}
+                                            className={`size-option ${selectedSize === size ? 'selected' : ''}`}
+                                            onClick={() => setSelectedSize(size)}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            ))}
                         </div>
+                    </div>
                     )}
     
                     {/* Add Ons */}
                     {addOns.length > 0 && (
                         <div className="add-ons-section">
-                            <h3>Add Ons</h3>
-                            <div className="add-ons-options">
-                                {addOns.map((addOn, index) => (
-                                    <button
-                                        key={index}
-                                        className={`addon-option ${selectedAddOns.includes(addOn) ? 'selected' : ''}`}
-                                        onClick={() => {
-                                            if (selectedAddOns.includes(addOn)) {
-                                                setSelectedAddOns(selectedAddOns.filter(item => item !== addOn));
-                                            } else {
-                                                setSelectedAddOns([...selectedAddOns, addOn]);
-                                            }
-                                        }}
-                                    >
-                                        {addOn}
-                                    </button>
-                                ))}
-                            </div>
+                        <h3>Add Ons</h3>
+                        <div className="add-ons-options">
+                            {Array.from({ length: Math.ceil(addOns.length / 3) }, (_, rowIndex) => (
+                                <div key={rowIndex} className="add-ons-row">
+                                    {addOns.slice(rowIndex * 3, rowIndex * 3 + 3).map((addOn, index) => (
+                                        <button
+                                            key={index}
+                                            className={`addon-option ${selectedAddOns.includes(addOn) ? 'selected' : ''}`}
+                                            onClick={() => {
+                                                if (selectedAddOns.includes(addOn)) {
+                                                    setSelectedAddOns(selectedAddOns.filter(item => item !== addOn));
+                                                } else {
+                                                    setSelectedAddOns([...selectedAddOns, addOn]);
+                                                }
+                                            }}
+                                        >
+                                            {addOn}
+                                        </button>
+                                    ))}
+                                </div>
+                            ))}
                         </div>
+                    </div>
                     )}
     
                     {/* Sugar Level */}
                     {sugarLevels.length > 0 && (
                         <div className="sugar-level-section">
-                            <h3>Sugar Level</h3>
-                            <div className="sugar-options">
-                                {sugarLevels.map((level, index) => (
-                                    <button
-                                        key={index}
-                                        className={`sugar-option ${selectedSugar === level ? 'selected' : ''}`}
-                                        onClick={() => setSelectedSugar(level)}
-                                    >
-                                        {level}
-                                    </button>
-                                ))}
-                            </div>
+                        <h3>Sugar Level</h3>
+                        <div className="sugar-options">
+                            {Array.from({ length: Math.ceil(sugarLevels.length / sugarPerRow) }, (_, rowIndex) => (
+                                <div key={rowIndex} className="sugar-row">
+                                    {sugarLevels.slice(rowIndex * sugarPerRow, rowIndex * sugarPerRow + sugarPerRow).map((level, index) => (
+                                        <button
+                                            key={index}
+                                            className={`sugar-option ${selectedSugar === level ? 'selected' : ''}`}
+                                            onClick={() => setSelectedSugar(level)}
+                                        >
+                                            {level}
+                                        </button>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
                         </div>
                     )}
     
                     {/* Quantity Input */}
                     <div className="quantity-section">
-                        <h3>Quantity</h3>
-                        <input
-                            type="number"
-                            min="1"
-                            value={quantity}
-                            onChange={(e) => setQuantity(Number(e.target.value))}
-                        />
+                        <div className="quantity-controls">
+                            <h3>Quantity</h3>
+                            <button className="quantity-btn" onClick={() => setQuantity(quantity + 1)}>+</button>
+                            <span className="quantity-value">{quantity}</span>
+                            <button className="quantity-btn" onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}>-</button>
+                        </div>
                     </div>
+
     
                     <div className='modal-buttons'>
                         <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to Cart</button>
