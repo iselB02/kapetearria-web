@@ -5,8 +5,47 @@ import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BsExclamationCircle, BsCheckCircle, BsInfoCircle } from 'react-icons/bs';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
+// Registering Chart.js components
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const AdminDashboard = () => {
+
+    // Dummy data for the chart
+    const data = {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [
+            {
+                label: 'Visitors',
+                data: [0, 1000, 2000, 3000, 4000, 5000, 6000],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.4
+            }
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Daily Visitors',
+                font: {
+                    size: 20, 
+                     weight: 'bold'
+
+                }
+            },
+        },
+    };
+
     return (
         <div className="admin-container">
             {/* Sidebar */}
@@ -43,8 +82,14 @@ const AdminDashboard = () => {
             {/* Main Content */}
             <main className="main-content">
                 <div className="top-bar">
-                    <input type="text" placeholder="Search" className="search-bar" />
+                    <input type="text" placeholder="Search" className="adminsearch-bar" />
                     <button className="profile-btn">Profile</button>
+                </div>
+
+                <div className="rectangle-container">
+                    <div className="rectangle">
+                        Dashboard
+                    </div>
                 </div>
 
                 {/* Card Section */}
@@ -86,12 +131,9 @@ const AdminDashboard = () => {
                     </div>
                 </div>
 
-                {/* Visitor Chart (Placeholder for chart.js or similar library) */}
+                {/* Visitor Chart with Chart.js */}
                 <div className="visitor-chart">
-                    <h2>Daily Visitors</h2>
-                    <div className="chart-placeholder">
-                        <p>Chart Placeholder</p>
-                    </div>
+                    <Line data={data} options={options} />
                 </div>
             </main>
         </div>
