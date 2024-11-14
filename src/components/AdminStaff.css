@@ -3,7 +3,8 @@
     border-radius: 11px;
     background: #5C8F4C;
     margin-bottom: 20px;
-    width: 1257px;
+    width: 90%;
+    max-width:100%;
     height: 36px;
     color: azure;
     justify-self: center;
@@ -13,7 +14,7 @@
 
 .headtext{
     display: flex;
-    width: 100px;
+    width: auto;
     font-weight:bold;
     font-size: larger;
     align-items: center;
@@ -24,16 +25,17 @@
 
 .second{
     margin: 0 30px;
-    height: 50px;
+    height: 50px;   
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 50%;
+    gap: 53%;
 }
 
 .search{
     margin: 10px 0px;
-    width: 400px;
+    width: 80%;
+    max-width: 400px;
     border-radius: 50px;
     border: 1px solid black;
     background-color: rgb(226, 226, 226);
@@ -47,7 +49,7 @@
 
 .btn{
     margin: 5px 0;
-    width: 200px;
+    width: 200px; /* prob5 sa responsiveness */
     height: 40px ;
     color: white;
     background-color: #5C8F4C;
@@ -63,20 +65,88 @@
     
 }
 
-.staff{
+.staff {
+    display: block;
+    justify-self: center;
     height: 500px;
-    margin: 20px 30px;
-    
+    width: 100%;
+    max-width: 90rem;
+    margin: 10px 30px;
 }
 
- .table{
-    border: 2px solid black !important;
-    border-radius: 20px !important;
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border: 2px solid black ;
+    border-radius: 10px !important;
+    border-collapse:separate;
+}
 
-    
- }
-
- .header-staff{
+.table th{
     background-color: #3a1c17 !important;
-    color: white !important ;
- }
+    color: white !important;
+    text-align: center;
+    padding: 10px;
+    border: none;
+    text-align: center;
+    font-weight: bolder !important;
+}
+
+.table td{
+    border: none;
+    padding: 10px 30px;
+}
+
+.table td:not(:first-child) {
+    text-align: left;
+
+}
+
+.table th:first-child, .table td:first-child {
+    width: 60px;
+
+}
+
+
+.tr1 th:first-child {
+    border-top-left-radius: 7px;
+}
+
+.tr1 th:last-child {
+    border-top-right-radius: 7px;
+}
+
+
+
+
+ @media (max-width: 768px) {
+    .head {
+        height: auto;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .second {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .headtext {
+        font-size: medium;
+    }
+    
+    .search {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .staff {
+        width: 100%;
+        margin: 10px auto;
+    }
+}

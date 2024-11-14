@@ -10,7 +10,7 @@ const AdminStaff = () => {
         <div className="admin-container">
             {/* Sidebar */}
             <aside className="sidebar2">
-                <div className="sidebar-header">
+               <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
                     <h6>ADMIN</h6>
                 </div>
@@ -68,44 +68,109 @@ const AdminStaff = () => {
                 </div> 
                 <nav className='addstaff'>
                 <form className='addbutton'>
-                    <button class="btn" type="button">Add Staff</button>
+                    <button className="btn" type="button">Add Staff</button>
                 </form>
                 </nav>
 
             </div>
 
-            <div className='staff'>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                    <th className='header-staff' scope="col">#</th>
-                    <th className='header-staff' scope="col">First</th>
-                    <th className='header-staff' scope="col">Last</th>
-                    <th className='header-staff' scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div className="staff">
+                <table className="table">
+                    <thead>
+                        <tr className='tr1'>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Job Title</th>
+                            <th>DTR</th>
+                            <t>Status</t>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody className='tablebody'>
+                        <tr className='tr2'>
+                            <td >1</td>
+                            <td>Mark Otto</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr3'>
+                            <td>2</td>
+                            <td>Jacob Batungbakal</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr4'>
+                            <td >3</td>
+                            <td>DingDong Dantes</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr5'>
+                            <td >4</td>
+                            <td>Anna Curtis</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr6'>
+                            <td >5</td>
+                            <td>Johny Johny yes</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr7'>
+                            <td >6</td>
+                            <td>James Reid</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr8'> 
+                            <td >7</td>
+                            <td>Ariana Grande</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr9'>
+                            <td >8</td>
+                            <td>Ed Sheeran</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr10'>
+                            <td >9</td>
+                            <td>Taylor Swift</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                        <tr className='tr11'>
+                            <td >10</td>
+                            <td>Charlie Chaplin</td>
+                            <td>Barista</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Action</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
 
 
         </div>
