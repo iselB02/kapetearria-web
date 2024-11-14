@@ -176,6 +176,7 @@ const Content = () => {
            <Route path="/sales" element={<AdminSales />} />
            <Route path="/staff" element={<AdminStaff/>} />
            <Route path='/uam' element={<AdminUAM/>}/>
+           <Route path='/chat-support' element={<AdminChat/>}/>
         </Routes>
       </div>
 
