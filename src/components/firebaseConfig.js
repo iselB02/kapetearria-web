@@ -1,8 +1,8 @@
 // Import the functions you need from the Firebase SDKs
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth"; // Import Firebase Authentication
+import { getAnalytics } from "firebase/analytics";
 
 // Firebase configuration (keep your credentials secure)
 const firebaseConfig = {
@@ -20,10 +20,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize services
-const analytics = getAnalytics(app);
+let analytics;
+if (typeof window !== 'undefined') {
+  analytics = getAnalytics(app);
+}
 const database = getFirestore(app);
 const auth = getAuth(app); // Initialize Firebase Authentication
 
 // Export the initialized services
-export { app, analytics, database, auth }; // Correct export statement
-export default app; 
+export { app, analytics, database, auth };
+export default app;
