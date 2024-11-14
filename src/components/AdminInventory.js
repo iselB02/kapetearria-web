@@ -9,7 +9,7 @@ const AdminInventory = () => {
     const [products, setProducts] = useState([
         {
             id: 1,
-            image: "/images/product1.png", // Example image path
+            image: "public\image\drink1.png",
             name: "Nachos",
             category: "Snacks",
             price: "₱99.00",
@@ -17,11 +17,38 @@ const AdminInventory = () => {
         },
         {
             id: 2,
-            image: "/images/product2.png",
+            image: "public\image\drink1.png",
             name: "Latte",
             category: "Beverages",
             price: "₱150.00",
             status: true,
+        },
+
+        {
+            id: 3,
+            image: "public\image\drink1.png",
+            name: "Spanish Latte",
+            category: "Beverages",
+            price: "₱150.00",
+            status: true,
+        },
+
+        {
+            id: 4,
+            image: "public\image\drink1.png",
+            name: "Strawberry Drink",
+            category: "Beverages",
+            price: "₱150.00",
+            status: true,
+        },
+
+        {
+            id: 5,
+            image: "public\image\drink1.png",
+            name: "Strawberry Milkshake",
+            category: "Beverages",
+            price: "₱150.00",
+            status: false,
         },
     ]);
 
@@ -115,30 +142,9 @@ const AdminInventory = () => {
             <main className="inventory-content">
                 <div className="inventory-header">
                     <h2>INVENTORY</h2>
-                    <div className="add-product-form">
-                        <input
-                            type="text"
-                            placeholder="Product Name"
-                            value={newProduct.name}
-                            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-                        />
-                        <input
-                            type="text"
-                            placeholder="Category"
-                            value={newProduct.category}
-                            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
-                        />
-                        <input
-                            type="number"
-                            placeholder="Price"
-                            value={newProduct.price}
-                            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-                        />
-                        <input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
-                        <button className="add-product-btn" onClick={handleAddProduct}>
-                            + Add Product
-                        </button>
-                    </div>
+                    <button className="add-product-btn" onClick={handleAddProduct}>
+                        + Add Product
+                    </button>
                 </div>
                 <div className="inventory-table">
                     <table>

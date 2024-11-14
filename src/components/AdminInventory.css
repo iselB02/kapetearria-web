@@ -4,7 +4,6 @@
     font-size: 13px; 
     margin-top: 5px;
 }
-
 /* Sidebar Styling */
 .sidebar2 {
     width: 260px; /* Reduce sidebar width */
@@ -93,6 +92,8 @@
 .menu-link:hover {
     color: #333; /* Or any color you want for hover */
 }
+
+
 /* Inventory Section */
 .inventory-content {
     flex-grow: 1;
@@ -110,13 +111,6 @@
     font-size: 24px;
 }
 
-.add-product-form input {
-    margin-right: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
 .add-product-btn {
     background-color: #68a45d;
     color: white;
@@ -126,29 +120,35 @@
     cursor: pointer;
 }
 
+.add-product-btn:hover {
+    background-color: #568c4b;
+}
+
+/* Table */
 .inventory-table table {
     width: 100%;
     border-collapse: collapse;
 }
 
 thead {
-    background-color: #f5f5dc;
-    font-weight: bold;
+    background-color: #e8f4e8;
 }
 
 th,
 td {
-    padding: 12px 10px;
+    padding: 12px;
     border-bottom: 1px solid #ddd;
     text-align: center;
 }
 
 .product-image {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
+    border-radius: 4px;
 }
 
+/* Toggle Switch */
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -172,10 +172,44 @@ td {
     transition: 0.4s;
 }
 
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    background-color: white;
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: 0.4s;
+}
+
 input:checked + .slider {
     background-color: #68a45d;
 }
 
 input:checked + .slider:before {
     transform: translateX(20px);
+}
+
+/* Action Buttons */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    transition: color 0.3s ease;
+}
+
+.edit-btn {
+    color: #68a45d;
+}
+
+.delete-btn {
+    color: #d9534f;
+}
+
+.action-btn:hover {
+    opacity: 0.7;
 }
