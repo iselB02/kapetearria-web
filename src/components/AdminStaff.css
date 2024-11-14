@@ -1,15 +1,103 @@
+/* Sidebar Styling */
+.sidebar {
+    width: 260px; /* Reduce sidebar width */
+    background-color: #fff;
+    border-right: 1px solid #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 10px; /* Reduce padding */
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    margin-bottom: 20px; /* Reduce margin */
+}
+
+.sidebar-header .logo {
+    width: 2; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 5px; /* Add space between logo and Admin text */
+}
+
+.sidebar-header h6 {
+    font-size: 12px; /* Make the Admin text smaller */
+    color: #333; /* Dark color for better readability */
+    margin-top: 5px; /* Add space between logo and Admin text */
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0; /* Increase padding for a cleaner look */
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 13px; /* Slightly larger font size for menu items */
+    justify-content: flex-start; /* Align the icons and text to the left */
+}
+
+.menu-item .icon {
+    font-size: 10px; 
+    margin-right: 10px; /* Adjust spacing if necessary */
+    border: none; /* Remove any borders */
+    border-radius: 0; /* Ensure there's no border-radius */
+    height: 20px;
+}
+
+.menu-item.active {
+    background-color: #8B443A; /* Subtle green hover background */
+    color: rgb(216, 216, 216); /* Match text color with theme */
+    border-radius: 8px;
+}
+
+.menu-item:hover{
+    background-color: #e8f4e8; /* Subtle green hover background */
+    color: #5c8f4c; /* Match text color with theme */
+    border-radius: 8px;
+}
+
+.settings-section {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #333;
+    padding-top: 15px; 
+    border-top: 1px solid #e6e6e6; 
+}
+
+.settings-section .icon {
+    margin-right: 8px;
+    font-size: 18px;
+    border: none; 
+    border-radius: 0; 
+    height: 20px;
+}
+
+/* */
+
 .head{
     display: flex;
     border-radius: 11px;
     background: #5C8F4C;
     margin-bottom: 20px;
-    width: 90%;
+    width: 100%;
     max-width:100%;
     height: 36px;
     color: azure;
     justify-self: center;
     margin-top: 10px;
     justify-content: center ;
+    align-self: center;
 }
 
 .headtext{
@@ -100,12 +188,10 @@
 
 .table td:not(:first-child) {
     text-align: left;
-
 }
 
 .table th:first-child, .table td:first-child {
     width: 60px;
-
 }
 
 

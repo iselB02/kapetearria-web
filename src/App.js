@@ -21,6 +21,7 @@ import AdminStaff from './components/AdminStaff';
 import './App.css';
 import ChatBot from "react-chatbotify";
 import "../node_modules/react-chatbotify/dist/style.css";
+import AdminUAM from './components/AdminUAM';
 
 
 const config = {
@@ -174,6 +175,7 @@ const Content = () => {
            {/*  Admin Sales Report Route*/}
            <Route path="/sales" element={<AdminSales />} />
            <Route path="/staff" element={<AdminStaff/>} />
+           <Route path='/uam' element={<AdminUAM/>}/>
         </Routes>
       </div>
 

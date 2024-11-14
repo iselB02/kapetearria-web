@@ -105,7 +105,7 @@ const AdminInventory = () => {
                        </Link>
                    </li>
                    <li className="menu-item">
-                       <Link to="/user-account-management" className="menu-link">
+                       <Link to="/uam" className="menu-link">
                            <RiAccountCircleLine className="icon" /> User Account Management
                        </Link>
                    </li>

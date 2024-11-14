@@ -93,8 +93,8 @@
 }
 
 .menu-item:hover, .menu-item.active {
-    background-color: #e8f4e8; /* Subtle green hover background */
-    color: #5c8f4c; /* Match text color with theme */
+    background-color: #000000; /* Subtle green hover background */
+    color: rgb(216, 216, 216); /* Match text color with theme */
     border-radius: 8px;
 }
 

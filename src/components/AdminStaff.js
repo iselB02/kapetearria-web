@@ -8,51 +8,52 @@ import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 const AdminStaff = () => {
     return (
         <div className="admin-container">
-            {/* Sidebar */}
-            <aside className="sidebar2">
+           {/* Sidebar */}
+           <aside className="sidebar2">
                <div className="sidebar-header">
-                    <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
-                    <h6>ADMIN</h6>
-                </div>
-                <ul className="sidebar-menu">
-                    <li className="menu-item">
-                        <Link to="/admin" className="menu-link">
-                            <AiOutlineDashboard className="icon" /> Dashboard
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/inventory" className="menu-link">
-                            <FiShoppingCart className="icon" /> Inventory
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/sales" className="menu-link">
-                            <RiBarChartLine className="icon" /> Sales Reports
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/staff" className="menu-link">
-                            <FiUser className="icon" /> Staff
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/user-account-management" className="menu-link">
-                            <RiAccountCircleLine className="icon" /> User Account Management
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/chat-support" className="menu-link">
-                            <FiMessageSquare className="icon" /> Chat Support
-                        </Link>
-                    </li>
-                </ul>
-                <div className="settings-section">
-                    <FiSettings className="icon" /> Settings
-                </div>
-            </aside>
+                   <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+                   <h6>ADMIN</h6>
+               </div>
+               <ul className="sidebar-menu">
+                   <li className="menu-item">
+                       <Link to="/admin" className="menu-link">
+                           <AiOutlineDashboard className="icon" /> Dashboard
+                       </Link>
+                   </li>
+                   <li className="menu-item">
+                       <Link to="/inventory" className="menu-link">
+                           <FiShoppingCart className="icon" /> Inventory
+                       </Link>
+                   </li>
+                   <li className="menu-item">
+                       <Link to="/sales" className="menu-link">
+                           <RiBarChartLine className="icon" /> Sales Reports
+                       </Link>
+                   </li>
+                   <li className="menu-item active">
+                       <Link to="/staff" className="menu-link">
+                           <FiUser className="icon" /> Staff
+                       </Link>
+                   </li>
+                   <li className="menu-item">
+                       <Link to="/uam" className="menu-link">
+                           <RiAccountCircleLine className="icon" /> User Account Management
+                       </Link>
+                   </li>
+                   <li className="menu-item">
+                       <Link to="/chat-support" className="menu-link">
+                           <FiMessageSquare className="icon" /> Chat Support
+                       </Link>
+                   </li>
+               </ul>
+               <div className="divider"></div>
+               <div className="settings-section">
+                   <FiSettings className="icon" /> Settings
+               </div>
+           </aside>
 
         {/* Main Content of Staff */}
-        <div className='main'>
+        <div className='main-content'>
             <div className='head'>
                 <div className='headtext'>
                     Staff   
@@ -82,7 +83,7 @@ const AdminStaff = () => {
                             <th>Name</th>
                             <th>Job Title</th>
                             <th>DTR</th>
-                            <t>Status</t>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
