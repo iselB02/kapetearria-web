@@ -5,10 +5,14 @@ import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare } from 'react-icons
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 
-const AdminInventory = () => {
+const AdminInventory = () => { 
+
+    <div className="rectangle-container">
+    <div className="rectangle"> </div> </div>
+
     return (
         <div className="admin-container">
-            {/* Sidebar */}
+            {/* Sidebar for Inventory */}
             <aside className="sidebar2">
                 <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
@@ -51,7 +55,9 @@ const AdminInventory = () => {
                 </div>
             </aside>
         </div>
+        
     );
+    
 };
 
 export default AdminInventory;

@@ -1,0 +1,31 @@
+/* Admin Dashboard Layout */
+.admin-container {
+    display: flex;
+    height: 100vh;
+    font-size: 13px; /* Slightly larger font size */
+    margin-top: 5px;
+}
+
+/* Sidebar Styling */
+.sidebar3 {
+    width: 260px; /* Reduce sidebar width */
+    background-color: #fff;
+    border-right: 1px solid #e6e6e6;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 10px; /* Reduce padding */
+}
+
+.sidebar-header {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    margin-bottom: 20px; /* Reduce margin */
+}
+
+.sidebar-header .logo {
+    width: 2; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 5px; /* Add space between logo and Admin text */
+}

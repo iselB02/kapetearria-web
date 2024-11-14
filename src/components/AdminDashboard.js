@@ -88,7 +88,6 @@ const AdminDashboard = () => {
             {/* Main Content */}
             <main className="main-content">
                 <div className="top-bar">
-                    <input type="text" placeholder="Search" className="adminsearch-bar" />
                     <button className="profile-btn">Profile</button>
                 </div>
 

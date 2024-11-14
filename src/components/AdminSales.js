@@ -11,7 +11,7 @@ const AdminSales = () => {
     return (
         <div className="admin-container">
             {/* Sidebar */}
-            <aside className="sidebar2">
+            <aside className="sidebar3">
                 <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
                     <h6>ADMIN</h6>

@@ -1,3 +1,32 @@
+/* Main Content Responsiveness */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .dashboard-overview {
+        grid-template-columns: 1fr; /* Single column for small screens */
+        grid-gap: 15px; /* Reduce gap */
+    }
+
+    .overview-card {
+        margin: 0 auto;
+        width: 100%; 
+    }
+
+    .rectangle-container {
+        flex-direction: column; /* Stack rectangles vertically */
+        gap: 10px; /* Add spacing between rectangles */
+    }
+
+    .rectangle {
+        width: 100%; /* Let rectangles span full width */
+        height: auto; /* Adjust height automatically */
+        text-align: center;
+    }
+}
+
+
 /* Admin Dashboard Layout */
 .admin-container {
     display: flex;
@@ -5,6 +34,8 @@
     font-size: 13px; /* Slightly larger font size */
     margin-top: 5px;
 }
+
+
 
 /* Sidebar Styling */
 .sidebar {
@@ -54,19 +85,16 @@
 }
 
 .menu-item .icon {
-    font-size: 10px; /* Smaller size for the icon */
+    font-size: 10px; 
     margin-right: 10px; /* Adjust spacing if necessary */
     border: none; /* Remove any borders */
     border-radius: 0; /* Ensure there's no border-radius */
     height: 20px;
 }
 
-
-
-
 .menu-item:hover, .menu-item.active {
     background-color: #e8f4e8; /* Subtle green hover background */
-    color: #68a45d; /* Match text color with theme */
+    color: #5c8f4c; /* Match text color with theme */
     border-radius: 8px;
 }
 
@@ -76,15 +104,15 @@
     align-items: center;
     cursor: pointer;
     color: #333;
-    padding-top: 15px; /* Add space before settings section */
-    border-top: 1px solid #e6e6e6; /* Add a top border to separate */
+    padding-top: 15px; 
+    border-top: 1px solid #e6e6e6; 
 }
 
 .settings-section .icon {
     margin-right: 8px;
     font-size: 18px;
-    border: none; /* Remove any borders */
-    border-radius: 0; /* Ensure there's no border-radius */
+    border: none; 
+    border-radius: 0; 
     height: 20px;
 }
 
@@ -97,26 +125,25 @@
     flex-direction: column;
 }
 
+/* Top Bar Responsiveness */
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column; 
+        height: auto;
+        padding: 10px; 
+    }
+
+    .profile-btn {
+        width: 100%; /* Full width */
+    }
+}
+
 /* Top Bar Styling */
 .top-bar {
     display: flex;
     height: 100px; /* Adjust the height of the top bar */
     margin-bottom: 20px; /* Space below the top bar */
     background-color: #f8f8f8; /* Background color (optional) */
-}
-.adminsearch-bar {
-    width: 83%;
-    height: 40px; 
-    padding: 10px 20px; 
-    text-align: center;
-    font-size: 14px; 
-    border-radius: 25px; 
-    border: 2px solid #ccc; 
-    outline: none; 
-    transition: border-color 0.3s ease; 
-    justify-content: center;
-    align-items: center;
-    margin-right: auto;
 }
 
 .profile-btn {
@@ -136,11 +163,13 @@
     display: flex;
     width: 100%;
     height: 50%;
-    margin-bottom: 5%; /* Space between the rectangle and the cards */
+    margin-bottom: 4%; /* Space between the rectangle and the cards */
+    
 }
 
 .rectangle {
-    width: 200px; 
+    background-position: 0%;
+    width: 900px; 
     height: 40px; 
     background-color: #68a45d; 
     color: white; /* Text color */
@@ -158,25 +187,35 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 20px;
+    padding: 20px;
     z-index: 1;
 }
 
 /* Card Styling */
 .overview-card {
-    background-color: #fff;
+    position: relative; /* To position the close button */
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px; /* Rounded corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent; /* Placeholder for custom border colors */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-    position: relative;
-    box-sizing: border-box;
-    min-width: 250px;
-    max-width: 100%; 
+    background-color: #fff; /* Default background color */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Close Icon Styling */
+.overview-card .close-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 18px;
+    color: #666;
+    cursor: pointer;
+}
+
+
 
 .overview-card p {
     margin: 0;
@@ -188,9 +227,9 @@
 }
 
 .alert {
-    position: static !important; /* Force to prevent absolute positioning */
-    z-index: 1; /* Ensure it's not behind other elements */
-    width: auto; /* Ensure no forced width from signup.css */
+    position: static !important; 
+    z-index: 1; 
+    width: auto; 
     padding: 20px;
     font-size: 14px;
     border-radius: 10px;
@@ -198,12 +237,12 @@
     align-items: baseline;
     justify-content: flex-start;
     box-sizing: border-box;
-    border-left: 4px solid #f44336;
+    border-left: 4px solid #E05733;
     display: flex;
 }
 
 .success {
-    border-left: 4px solid #4caf50;
+    border-left: 4px solid #8FC742;
     position: static !important; /* Force to prevent absolute positioning */
     z-index: 1; /* Ensure it's not behind other elements */
     width: auto; /* Ensure no forced width from signup.css */
@@ -218,7 +257,7 @@
 }
 
 .info {
-    border-left: 4px solid #2196f3;
+    border-left: 4px solid #BB9773;
     position: static !important; /* Force to prevent absolute positioning */
     z-index: 1; /* Ensure it's not behind other elements */
     width: auto; /* Ensure no forced width from signup.css */
@@ -233,7 +272,7 @@
 }
 
 .warning {
-    border-left: 4px solid #ff9800;
+    border-left: 4px solid #DE5836;
     position: static !important; /* Force to prevent absolute positioning */
     z-index: 1; /* Ensure it's not behind other elements */
     width: auto; /* Ensure no forced width from signup.css */
@@ -288,4 +327,4 @@
 
 .visitor-chart canvas {
     max-height: 300px; /* Adjust the height on smaller screens */
-}
+} 
