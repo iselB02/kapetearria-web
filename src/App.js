@@ -15,6 +15,9 @@ import Drinks from './components/Drinks';
 import Checkout from './components/Checkout';
 import { useParams } from 'react-router-dom';
 import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
+import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
+import AdminSales from './components/AdminSales'; //Import Admin Sales
+
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -114,6 +117,9 @@ const Content = ({ user }) => {
            <Route path="/admin" element={<AdminDashboard />} />
            
           <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
+           {/*  Admin Inventory Route*/}
+           <Route path="/inventory" element={<AdminInventory />} />
+           <Route path="/sales" element={<AdminSales />} />
         </Routes>
       </div>
     </div>
