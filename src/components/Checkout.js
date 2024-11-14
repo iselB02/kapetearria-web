@@ -71,25 +71,26 @@ function Checkout() {
     };
 
 
-    const fetchOrdersFromFirebase = async () => {
+    const fetchOrders = async () => {
       if (user) {
         try {
-          const checkoutDocRef = doc(database, 'checkout_info', user.uid);
-          const checkoutDocSnap = await getDoc(checkoutDocRef);
-          if (checkoutDocSnap.exists()) {
-            const checkoutData = checkoutDocSnap.data();
-            setOrders(checkoutData.items || []);
+          const checkoutRef = doc(database, 'checkout_info', user.uid);
+          const checkoutSnap = await getDoc(checkoutRef);
+          if (checkoutSnap.exists()) {
+            const data = checkoutSnap.data();
+            setOrders(data.items || []);
+            console.log('Orders fetched:', data.items);
           } else {
-            console.error("No checkout data found.");
+            console.error('No orders found for UID:', user.uid);
           }
         } catch (error) {
-          console.error('Error fetching checkout orders:', error);
+          console.error('Error fetching orders:', error);
         }
       }
     };
 
     fetchUserData();
-    fetchOrdersFromFirebase();
+    fetchOrders();
   }, [user]);
 
   const geocodeAddress = async (address) => {
@@ -105,6 +106,15 @@ function Checkout() {
       console.error("Error geocoding address:", error);
     }
   };
+
+  //payment method
+  const PaymentModal= () => {
+    <div className='modal-overlay'>
+      <div className="modal-content">
+
+      </div>
+    </div>
+  }
 
   
 
@@ -248,8 +258,16 @@ function Checkout() {
                   <label htmlFor="COD">Cash On Delivery</label>
                 </div>
                 <div className='payment-container'>
-                  <input type="radio" id="Online" name='payment' value="Online" />
-                  <label htmlFor="Online">Online Payment</label>
+                  <label htmlFor="Online">
+                    <input
+                      type="radio"
+                      id="Online"
+                      name="payment"
+                      value="Online"
+                      onChange={PaymentModal} // Use onChange instead of onClick
+                    />
+                    Online Payment
+                  </label>
                 </div>
               </div>
             </div>
@@ -340,7 +358,7 @@ function Checkout() {
             {/* Discount Display */}
             {discountAmount > 0 && (
               <div className='discounts-applied'>
-                <h3 className='di '>
+                <h3 className='discount '>
                   {discountType === 'Senior' ? 'Senior Discount' :
                   discountType === 'PWD' ? 'PWD Discount' :
                   'Voucher Discount'}

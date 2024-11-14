@@ -212,6 +212,15 @@
 .product-info {
   width: 100%;
   padding: 3px;
+  /* background-color: #da8279; */
+  
+}
+
+.img-div {
+  /* background-color: aqua; */
+  max-width: 100px;
+  white-space: nowrap;    
+  overflow: hidden;          
 }
 
 .prod-img {
@@ -237,7 +246,13 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  width: 190px;
+  /* background-color: aqua; */
+  white-space: nowrap;    
+  overflow: hidden;          
+  text-overflow: ellipsis;   
 }
+
 
 .product {
   border-radius: 20px;
@@ -251,6 +266,10 @@
   height: 100px !important;
   width: 100%;
   justify-items: center;
+}
+
+.product:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
 
 #drop-list:hover {

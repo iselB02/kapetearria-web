@@ -229,6 +229,7 @@ const MenuProducts = () => {
     const [isModalVisible, setIsModalVisible] = useState(false); // Modal visibility state
     const [selectedProduct, setSelectedProduct] = useState(null); // Product selected for customization
 
+
     const selectCategory = (category) => {
         setActiveCategory(category);
     };
@@ -245,6 +246,18 @@ const MenuProducts = () => {
 
     const activeCategoryData = drinksData.find(category => category.category === activeCategory);
 
+    if (isloading) {
+        return (
+          <div className="loading-screen" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <img
+              src="image/loading2.gif"
+              alt="Loading..."
+              key={new Date().getTime()} // Ensures the GIF restarts on each render
+              style={{ width: '500px', height: '500px' }} // Adjust size as needed
+            />
+          </div>
+        );
+      }
 
   return (    
     <div className="menu-maincontainer">

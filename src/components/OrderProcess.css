@@ -1,0 +1,304 @@
+.orderContainer-main {
+    width: 100%;
+    height: 605px;
+    margin-top: 90px;
+    overflow-y: auto;
+    /* padding-bottom: 50px; */
+    /* background-color: bisque; */
+}
+
+.orderDetails-container {
+    width: 100%;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #5E2D26;
+    background-image: url("./image/cofee-bg.png");
+}
+
+.container-process {
+    justify-self: center;
+    width: 60%;
+    height: 100%;
+}
+
+.main-details {
+    justify-self: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.578) 0px 5px 15px;
+    padding: 20px;
+}
+
+.logo-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    /* background-color: aquamarine; */
+    margin-bottom: 10px;
+}
+
+
+.message {
+    text-align: center;
+    /* background-color: aquamarine; */
+}
+
+.message1 {
+    color: #3B1C18;
+    text-align: center;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.message2 {
+    color: #3B1C18;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 50px;
+}
+
+.message3 {
+    color: #02542D;
+    text-align: center;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 20px;
+}
+
+.process {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: aquamarine; */
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.icon-process {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    border: solid 2px black;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+
+.order-details-container {
+    /* background-color: aquamarine; */
+    text-align: center;
+    width: 100%;
+}
+
+.details {
+    color: #3B1C18;
+    text-align: center;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.other-derails-container {
+    width: 100%;
+    display: flex;
+    /* background-color: aquamarine; */
+    gap:50px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.deliverTo-container, .customerInfo-container {
+    width: 40%;
+    /* background-color: rgb(56, 164, 128); */
+}
+
+.customerInfo-container  {
+    padding-left: 50px;
+}
+
+.division1 {
+    background-color: rgba(178, 178, 178, 0.373);
+    height: 2px;
+    width: 100%;
+    margin-top: 30px;
+    /* margin-bottom: 5px; */
+    margin-bottom: 40px;
+}
+
+.title-order-container {
+    width: 100%;
+    /* background-color: aquamarine; */
+    text-align: center;
+}
+
+.title-order {
+    color: #3B1C18;
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.table-container {
+    justify-self: center;
+    width: 80%;
+}
+
+td {
+    text-align: center;
+    background-color: rgb(255, 255, 255) !important;
+}
+
+.table-title1, .table-title2, .table-title3  {
+    color: #3B1C18;
+    text-align: center;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: normal;
+}
+
+
+.with-addons, .details-order1, .details-order2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    /* background-color: aquamarine; */
+}
+
+.addons-namePrice {
+    padding-left: 20px;
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+th, td {
+    /* background-color: aqua; */
+    width: 33%;
+}
+
+.table-itemName, .table-qty {
+    text-align: center;
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+
+.table-price {
+    color: #3B1C18;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.table-details {
+    text-align: left;
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.details-order1 {
+    /* background-color: aqua; */
+    justify-content: center;
+    /* width: fit-content; */
+    padding-left: 30px;
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding-left: 50px;
+}
+
+.details-order2{
+    text-align: right;
+    /* background-color: aqua; */
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding-right: 50px;
+}
+
+.total-item, .total-itemPrice {
+    margin-top: 20px;
+    color: #3B1C18;
+    /* text-align: right; */
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.ModeOfPayment {
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.Payment {
+    color: #3B1C18;
+    /* text-align: right; */
+    font-family: Inter;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.icons-content {
+    /* position: absolute; */
+    display: flex;
+    width: 800px;
+    /* justify-content: space-between; */
+}
+
+
+.division2 {
+    background-color: rgb(178, 178, 178);
+    height: 5px;
+    width: 20%;
+    align-self: center;
+}

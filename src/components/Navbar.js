@@ -7,7 +7,7 @@ import { auth, database } from './firebaseConfig';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { collection, query, where, onSnapshot, doc, updateDoc, deleteDoc, setDoc, getDocs } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, doc, updateDoc, deleteDoc, setDoc, getDocs, getDoc } from 'firebase/firestore';
 
 function Navbar() {
   const [user] = useAuthState(auth);
@@ -131,48 +131,63 @@ function Navbar() {
       alert('Your cart is empty!');
       return;
     }
-
+  
     const uid = user?.uid || Cookies.get('authToken'); // Retrieve UID from user state or cookies
-
+  
     if (!uid) {
       console.error('User UID is not available.');
       return;
     }
-
-    try {
-      // Prepare checkout data with current timestamp
-      const checkoutData = {
-        items: cartItems,
-        checkoutDate: new Date(),
-        totalPrice,
-      };
-
   
-      // Save the checkout data to checkout_info collection with UID as the document ID
+    try {
+      // Reference the user's document in `checkout_info`
       const checkoutRef = doc(database, 'checkout_info', uid);
+      const checkoutSnap = await getDoc(checkoutRef);
+  
+      let existingItems = [];
+  
+      // Check if a `checkout_info` document already exists
+      if (checkoutSnap.exists()) {
+        const checkoutData = checkoutSnap.data();
+        existingItems = checkoutData.items || [];
+      }
+  
+      // Merge new cart items with existing items
+      const updatedItems = [...existingItems, ...cartItems];
+  
+      // Prepare checkout data with the merged items
+      const checkoutData = {
+        items: updatedItems,
+        checkoutDate: new Date(),
+        totalPrice: updatedItems.reduce((acc, item) => acc + item.totalPrice, 0), // Update total price based on all items
+      };
+  
+      // Save the updated checkout data back to Firestore
       await setDoc(checkoutRef, checkoutData);
-      console.log('Checkout data saved successfully');
-
-      // Clear the user's cart by deleting each document in the cart_info collection for this user
+      console.log('Checkout data updated successfully');
+  
+      // Clear the user's cart by deleting each document in the `cart_info` collection for this user
       const cartCollectionRef = collection(database, 'cart_info');
       const cartQuery = query(cartCollectionRef, where('userUid', '==', uid));
       const cartDocs = await getDocs(cartQuery);
-
+  
       // Loop through each document and delete it
       const deletePromises = cartDocs.docs.map((cartDoc) => deleteDoc(cartDoc.ref));
       await Promise.all(deletePromises);
-
+  
       console.log('Cart cleared after checkout');
       setCartItems([]); // Clear local cart items state
       setTotalPrice(0); // Reset total price
-
+  
       alert('Checkout successful!');
       navigate('/myorder'); // Redirect user to the order confirmation or a relevant page
+      window.location.reload(); 
     } catch (error) {
       console.error('Error during checkout:', error);
       alert('Checkout failed. Please try again.');
     }
   };
+  
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
