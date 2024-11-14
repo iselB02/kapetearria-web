@@ -15,6 +15,9 @@ import AccountSetup from './components/AccountSetup';
 import AccountSettings from './components/AccountSettings';
 import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
 import OrderProcess from './components/OrderProcess';
+import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
+import AdminSales from './components/AdminSales'; //Import Admin Sales
+import AdminStaff from './components/AdminStaff';
 import './App.css';
 import ChatBot from "react-chatbotify";
 import "../node_modules/react-chatbotify/dist/style.css";
@@ -163,10 +166,16 @@ const Content = () => {
           />
           <Route path="/admin" element={user?.isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
           <Route path="/" element={<Navigate to="/home" />} />
+            
+           {/* Admin Dashboard Route */}
+           <Route path="/admin" element={<AdminDashboard />} />
+           
+          <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
            {/*  Admin Inventory Route*/}
            <Route path="/inventory" element={<AdminInventory />} />
            {/*  Admin Sales Report Route*/}
            <Route path="/sales" element={<AdminSales />} />
+           <Route path="/staff" element={<AdminStaff/>} />
         </Routes>
       </div>
 
