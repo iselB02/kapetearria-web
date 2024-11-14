@@ -1,9 +1,10 @@
 .admin-container {
     display: flex;
     height: 100vh;
-    font-size: 13px; /* Slightly larger font size */
+    font-size: 13px; 
     margin-top: 5px;
 }
+
 /* Sidebar Styling */
 .sidebar2 {
     width: 260px; /* Reduce sidebar width */
@@ -71,8 +72,8 @@
     align-items: center;
     cursor: pointer;
     color: #333;
-    padding-top: 15px; /* Add space before settings section */
-    border-top: 1px solid #e6e6e6; /* Add a top border to separate */
+    padding-top: 15px; 
+    border-top: 1px solid #e6e6e6; 
 }
 
 .settings-section .icon {
@@ -91,4 +92,90 @@
 /* Optional: Add hover effect if needed */
 .menu-link:hover {
     color: #333; /* Or any color you want for hover */
+}
+/* Inventory Section */
+.inventory-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.inventory-header h2 {
+    font-size: 24px;
+}
+
+.add-product-form input {
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.add-product-btn {
+    background-color: #68a45d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.inventory-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #f5f5dc;
+    font-weight: bold;
+}
+
+th,
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #68a45d;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
 }

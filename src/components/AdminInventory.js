@@ -1,18 +1,74 @@
-import React from 'react';
-import './AdminInventory.css';
-import { Link } from 'react-router-dom';
-import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare } from 'react-icons/fi';
-import { AiOutlineDashboard } from 'react-icons/ai';
-import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
+import React, { useState } from "react";
+import "./AdminInventory.css";
+import { Link } from "react-router-dom";
+import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiEdit2, FiTrash2 } from "react-icons/fi";
+import { AiOutlineDashboard } from "react-icons/ai";
+import { RiAccountCircleLine, RiBarChartLine } from "react-icons/ri";
 
-const AdminInventory = () => { 
+const AdminInventory = () => {
+    const [products, setProducts] = useState([
+        {
+            id: 1,
+            image: "/images/product1.png", // Example image path
+            name: "Nachos",
+            category: "Snacks",
+            price: "₱99.00",
+            status: true,
+        },
+        {
+            id: 2,
+            image: "/images/product2.png",
+            name: "Latte",
+            category: "Beverages",
+            price: "₱150.00",
+            status: true,
+        },
+    ]);
 
-    <div className="rectangle-container">
-    <div className="rectangle"> </div> </div>
+    const [newProduct, setNewProduct] = useState({
+        name: "",
+        category: "",
+        price: "",
+        status: true,
+    });
+
+    const [newImage, setNewImage] = useState(null);
+
+    // Add a new product
+    const handleAddProduct = () => {
+        if (!newImage || !newProduct.name || !newProduct.category || !newProduct.price) {
+            alert("Please fill out all fields and upload an image.");
+            return;
+        }
+
+        const newProductData = {
+            id: products.length + 1,
+            image: URL.createObjectURL(newImage), // Simulate image upload
+            ...newProduct,
+        };
+
+        setProducts([...products, newProductData]);
+        setNewProduct({ name: "", category: "", price: "", status: true });
+        setNewImage(null);
+    };
+
+    // Toggle product status
+    const handleStatusToggle = (id) => {
+        const updatedProducts = products.map((product) =>
+            product.id === id ? { ...product, status: !product.status } : product
+        );
+        setProducts(updatedProducts);
+    };
+
+    // Delete a product
+    const handleDeleteProduct = (id) => {
+        const updatedProducts = products.filter((product) => product.id !== id);
+        setProducts(updatedProducts);
+    };
 
     return (
         <div className="admin-container">
-            {/* Sidebar for Inventory */}
+            {/* Sidebar */}
             <aside className="sidebar2">
                 <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
@@ -24,7 +80,7 @@ const AdminInventory = () => {
                             <AiOutlineDashboard className="icon" /> Dashboard
                         </Link>
                     </li>
-                    <li className="menu-item">
+                    <li className="menu-item active">
                         <Link to="/inventory" className="menu-link">
                             <FiShoppingCart className="icon" /> Inventory
                         </Link>
@@ -54,10 +110,86 @@ const AdminInventory = () => {
                     <FiSettings className="icon" /> Settings
                 </div>
             </aside>
+
+            {/* Main Content */}
+            <main className="inventory-content">
+                <div className="inventory-header">
+                    <h2>INVENTORY</h2>
+                    <div className="add-product-form">
+                        <input
+                            type="text"
+                            placeholder="Product Name"
+                            value={newProduct.name}
+                            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Category"
+                            value={newProduct.category}
+                            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                        />
+                        <input
+                            type="number"
+                            placeholder="Price"
+                            value={newProduct.price}
+                            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                        />
+                        <input type="file" onChange={(e) => setNewImage(e.target.files[0])} />
+                        <button className="add-product-btn" onClick={handleAddProduct}>
+                            + Add Product
+                        </button>
+                    </div>
+                </div>
+                <div className="inventory-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map((product) => (
+                                <tr key={product.id}>
+                                    <td>
+                                        <img src={product.image} alt={product.name} className="product-image" />
+                                    </td>
+                                    <td>{product.name}</td>
+                                    <td>{product.category}</td>
+                                    <td>{product.price}</td>
+                                    <td>
+                                        <label className="toggle-switch">
+                                            <input
+                                                type="checkbox"
+                                                checked={product.status}
+                                                onChange={() => handleStatusToggle(product.id)}
+                                            />
+                                            <span className="slider"></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <button className="action-btn edit-btn">
+                                            <FiEdit2 />
+                                        </button>
+                                        <button
+                                            className="action-btn delete-btn"
+                                            onClick={() => handleDeleteProduct(product.id)}
+                                        >
+                                            <FiTrash2 />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </main>
         </div>
-        
     );
-    
 };
 
 export default AdminInventory;
