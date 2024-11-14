@@ -7,6 +7,7 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { BsExclamationCircle, BsCheckCircle, BsInfoCircle } from 'react-icons/bs';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Link } from 'react-router-dom';
 
 // Registering Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -38,9 +39,8 @@ const AdminDashboard = () => {
                 display: true,
                 text: 'Daily Visitors',
                 font: {
-                    size: 20, 
-                     weight: 'bold'
-
+                    size: 20,
+                    weight: 'bold'
                 }
             },
         },
@@ -55,14 +55,20 @@ const AdminDashboard = () => {
                     <h6>ADMIN</h6>
                 </div>
                 <ul className="sidebar-menu">
-                    <li className="menu-item active">
-                        <AiOutlineDashboard className="icon" /> Dashboard
+                <li className="menu-item">
+                        <Link to="/admin" className="menu-link">
+                            <AiOutlineDashboard className="icon" /> Dashboard
+                        </Link>
                     </li>
                     <li className="menu-item">
-                        <FiShoppingCart className="icon" /> Inventory
+                        <Link to="/inventory" className="menu-link">
+                            <FiShoppingCart className="icon" /> Inventory
+                        </Link>
                     </li>
                     <li className="menu-item">
+                        <Link to="/sales" className="menu-link">
                         <RiBarChartLine className="icon" /> Sales Reports
+                        </Link>
                     </li>
                     <li className="menu-item">
                         <FiUser className="icon" /> Staff

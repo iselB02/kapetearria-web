@@ -14,6 +14,7 @@ import Checkout from './components/Checkout';
 import AccountSetup from './components/AccountSetup';
 import AccountSettings from './components/AccountSettings';
 import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
+<<<<<<< HEAD
 import OrderProcess from './components/OrderProcess';
 import './App.css';
 import ChatBot from "react-chatbotify";
@@ -39,6 +40,11 @@ const messageParser = (message) => {
   console.log("Parsed message:", message);
   // Add parsing logic if needed
 };
+=======
+import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
+import AdminSales from './components/AdminSales'; //Import Admin Sales
+
+>>>>>>> b85409f5f7ed1f6e2c1d3b080e617ce2579c491a
 
 const App = () => {
   const { user} = useAuth();
@@ -157,8 +163,19 @@ const Content = () => {
               </>
             }
           />
+<<<<<<< HEAD
           <Route path="/admin" element={user?.isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
           <Route path="/" element={<Navigate to="/home" />} />
+=======
+            
+           {/* Admin Dashboard Route */}
+           <Route path="/admin" element={<AdminDashboard />} />
+           
+          <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
+           {/*  Admin Inventory Route*/}
+           <Route path="/inventory" element={<AdminInventory />} />
+           <Route path="/sales" element={<AdminSales />} />
+>>>>>>> b85409f5f7ed1f6e2c1d3b080e617ce2579c491a
         </Routes>
       </div>
 
