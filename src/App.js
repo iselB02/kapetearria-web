@@ -18,10 +18,11 @@ import OrderProcess from './components/OrderProcess';
 import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
 import AdminSales from './components/AdminSales'; //Import Admin Sales
 import AdminStaff from './components/AdminStaff';
+import AdminUAM from './components/AdminUAM';
+import AdminChat from './components/AdminChat';
 import './App.css';
 import ChatBot from "react-chatbotify";
 import "../node_modules/react-chatbotify/dist/style.css";
-import AdminUAM from './components/AdminUAM';
 
 
 const config = {
