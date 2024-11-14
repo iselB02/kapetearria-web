@@ -134,11 +134,12 @@ thead {
     background-color: #e8f4e8;
 }
 
-th,
-td {
+th,td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     text-align: center;
+    width: 19%;
 }
 
 .product-image {
@@ -212,4 +213,36 @@ input:checked + .slider:before {
 
 .action-btn:hover {
     opacity: 0.7;
+}
+
+/* Divider Styling */
+.divider {
+    height: 1px;
+    background-color: #e6e6e6; /* Light gray for subtle effect */
+    margin: 20px 0; /* Spacing around the divider */
+    border: none; /* Remove any default border styles */
+}
+
+/* Input Field Styling */
+.inventory-table input {
+    width: 100%;
+    padding: 5px;
+    font-size: 13px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Save Button Styling */
+.save-btn {
+    background-color: #68a45d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.save-btn:hover {
+    background-color: #568c4b;
 }
