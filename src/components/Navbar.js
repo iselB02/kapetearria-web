@@ -1,134 +1,178 @@
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import 'bootstrap/dist/css/bootstrap.css';
 import './Navbar.css';
-import { Link } from 'react-router-dom';
-import { auth, database } from './firebaseConfig'; // Firebase configuration
-import { useAuthState } from 'react-firebase-hooks/auth'; // Firebase Auth hook
-import { signOut } from 'firebase/auth'; // Firebase Auth sign-out
-import { useNavigate } from 'react-router-dom'; // Router for navigation
-import Dropdown from 'react-bootstrap/Dropdown'; // Dropdown UI component
-import { collection, query, where, onSnapshot, updateDoc, doc, deleteDoc, addDoc } from 'firebase/firestore'; // Firestore functions
+import { Link, useNavigate } from 'react-router-dom';
+import { auth, database } from './firebaseConfig';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { signOut } from 'firebase/auth';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { collection, query, where, onSnapshot, doc, updateDoc, deleteDoc, setDoc, getDocs } from 'firebase/firestore';
 
 function Navbar() {
-  const [user] = useAuthState(auth); // Get the current user state
-  const [cartItems, setCartItems] = useState([]); // State for storing cart items
-  const [totalPrice, setTotalPrice] = useState(0); // State for storing total price
-  const navigate = useNavigate(); // For navigation
+  const [user] = useAuthState(auth);
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate();
 
-  // Fetch cart items in real-time from Firestore
-  const fetchCartItems = async () => {
-    if (user) {
-      const userUid = user.uid; // Get user ID
-      const cartCollectionRef = collection(database, 'cart_info'); // Reference to the 'cart_info' collection
-      const q = query(cartCollectionRef, where('userUid', '==', userUid)); // Query to get only the current user's cart items
-
-      // Real-time listener for cart items
-      onSnapshot(q, (querySnapshot) => {
-        const cartData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // Map documents to an array
-        setCartItems(cartData); // Update state with cart items
-
-        // Calculate the total price of all cart items
-        const total = cartData.reduce((acc, item) => acc + item.totalPrice, 0);
-        setTotalPrice(total); // Set total price without adding delivery fee
+  const fetchCartItems = () => {
+    const uid = user?.uid || Cookies.get('authToken');
+    if (uid) {
+      const cartCollectionRef = collection(database, 'cart_info');
+      const q = query(cartCollectionRef, where('userUid', '==', uid));
+  
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        if (!querySnapshot.empty) {
+          const cartData = querySnapshot.docs.map((doc) => ({
+            id: doc.id, // Firestore document ID
+            ...doc.data(),
+          }));
+          setCartItems(cartData);
+  
+          // Calculate total price
+          const total = cartData.reduce((acc, item) => acc + item.totalPrice, 0);
+          setTotalPrice(total);
+        } else {
+          setCartItems([]);
+          setTotalPrice(0);
+        }
       });
+  
+      return () => unsubscribe();
     }
   };
-
+  
   useEffect(() => {
-    fetchCartItems(); // Fetch cart items when the component mounts
+    const unsubscribe = fetchCartItems();
+    return () => unsubscribe && unsubscribe(); // Unsubscribe when the component unmounts
   }, [user]);
+  
 
   // Handle user logout
   const handleLogout = async () => {
     try {
       await signOut(auth);
       console.log('User logged out');
-      navigate('/login'); // Navigate to login page after logout
+      navigate('/login');
     } catch (error) {
       console.error('Error during logout:', error.message);
     }
   };
 
-  // Handle adding quantity
-  const handleAddQuantity = async (cartItem, event) => {
-    event.stopPropagation(); // Prevent dropdown from closing
-    const userCartRef = doc(database, 'cart_info', cartItem.id); // Reference to the specific cart item document
-    const updatedQuantity = cartItem.quantity + 1;
-    const updatedTotalPrice = cartItem.price * updatedQuantity;
-
-    try {
-      await updateDoc(userCartRef, {
-        quantity: updatedQuantity,
-        totalPrice: updatedTotalPrice,
-      });
-      console.log(`Updated quantity to ${updatedQuantity}`);
-    } catch (error) {
-      console.error('Error updating cart quantity:', error);
+  // Update cart in Firestore
+  const updateCartInFirestore = async (updatedCartItems) => {
+    const uid = user?.uid || Cookies.get('authToken');
+    if (uid) {
+      try {
+        const cartCollectionRef = collection(database, 'cart_info');
+  
+        // Update each document based on its ID
+        for (const updatedItem of updatedCartItems) {
+          const cartItemRef = doc(cartCollectionRef, updatedItem.id); // Use the Firestore document ID
+          await updateDoc(cartItemRef, updatedItem);
+        }
+      } catch (error) {
+        console.error('Error updating cart in Firestore:', error);
+      }
     }
   };
+  
+
+  // Handle adding quantity
+  const handleAddQuantity = (cartItem, event) => {
+    event.stopPropagation();
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === cartItem.id
+        ? { ...item, quantity: item.quantity + 1, totalPrice: (item.quantity + 1) * item.price }
+        : item
+    );
+  
+    setCartItems(updatedCartItems);
+    updateCartInFirestore(updatedCartItems);
+  };
+  
 
   // Handle decreasing quantity
   const handleRemoveQuantity = async (cartItem, event) => {
-    event.stopPropagation(); // Prevent dropdown from closing
-    const userCartRef = doc(database, 'cart_info', cartItem.id); // Reference to the specific cart item document
-    const updatedQuantity = cartItem.quantity - 1;
-    const addOns = cartItem?.add_ons ? cartItem.add_ons.split(',') : [];
-
-    if (updatedQuantity > 0) {
-      const updatedTotalPrice = cartItem.price * updatedQuantity;
-
+    event.stopPropagation();
+  
+    if (cartItem.quantity === 1) {
+      // If the item's quantity is 1 and reduced to 0, delete it
       try {
-        await updateDoc(userCartRef, {
-          quantity: updatedQuantity,
-          totalPrice: updatedTotalPrice,
-        });
-        console.log(`Updated quantity to ${updatedQuantity}`);
+        const cartItemRef = doc(database, 'cart_info', cartItem.id); // Firestore document reference
+        await deleteDoc(cartItemRef); // Delete from Firestore
+  
+        // Remove the item from the local state
+        setCartItems((prevCartItems) =>
+          prevCartItems.filter((item) => item.id !== cartItem.id)
+        );
+  
+        console.log(`Item ${cartItem.id} deleted from cart.`);
       } catch (error) {
-        console.error('Error updating cart quantity:', error);
+        console.error(`Error deleting item ${cartItem.id} from Firestore:`, error);
       }
     } else {
-      // If quantity is 0, delete the item from Firestore
-      try {
-        await deleteDoc(userCartRef);
-        console.log(`Deleted item with id: ${cartItem.id}`);
-      } catch (error) {
-        console.error('Error deleting item from cart:', error);
-      }
+      // Reduce the quantity if it's greater than 1
+      const updatedCartItems = cartItems.map((item) =>
+        item.id === cartItem.id
+          ? { ...item, quantity: item.quantity - 1, totalPrice: (item.quantity - 1) * item.price }
+          : item
+      );
+  
+      // Update Firestore and local state
+      setCartItems(updatedCartItems);
+      updateCartInFirestore(updatedCartItems);
     }
   };
+  
 
-  // Handle proceeding to checkout
   const handleCheckout = async () => {
     if (cartItems.length === 0) {
       alert('Your cart is empty!');
       return;
     }
 
+    const uid = user?.uid || Cookies.get('authToken'); // Retrieve UID from user state or cookies
+
+    if (!uid) {
+      console.error('User UID is not available.');
+      return;
+    }
+
     try {
-      const userUid = user.uid;
-      const checkoutCollectionRef = collection(database, 'checkout_info'); // Reference to 'checkout_info'
+      // Prepare checkout data with current timestamp
+      const checkoutData = {
+        items: cartItems,
+        checkoutDate: new Date(),
+        totalPrice,
+      };
 
-      // Store each cart item in the 'checkout_info' collection
-      for (const item of cartItems) {
-        await addDoc(checkoutCollectionRef, {
-          ...item,
-          userUid,
-          checkoutDate: new Date(), // Add the current date and time
-        });
-      }
+  
+      // Save the checkout data to checkout_info collection with UID as the document ID
+      const checkoutRef = doc(database, 'checkout_info', uid);
+      await setDoc(checkoutRef, checkoutData);
+      console.log('Checkout data saved successfully');
 
-      // Clear the cart after checkout
-      for (const item of cartItems) {
-        const cartItemRef = doc(database, 'cart_info', item.id);
-        await deleteDoc(cartItemRef); // Delete each item from the cart after checking out
-      }
+      // Clear the user's cart by deleting each document in the cart_info collection for this user
+      const cartCollectionRef = collection(database, 'cart_info');
+      const cartQuery = query(cartCollectionRef, where('userUid', '==', uid));
+      const cartDocs = await getDocs(cartQuery);
+
+      // Loop through each document and delete it
+      const deletePromises = cartDocs.docs.map((cartDoc) => deleteDoc(cartDoc.ref));
+      await Promise.all(deletePromises);
+
+      console.log('Cart cleared after checkout');
+      setCartItems([]); // Clear local cart items state
+      setTotalPrice(0); // Reset total price
 
       alert('Checkout successful!');
+      navigate('/myorder'); // Redirect user to the order confirmation or a relevant page
     } catch (error) {
       console.error('Error during checkout:', error);
+      alert('Checkout failed. Please try again.');
     }
   };
-
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
@@ -158,10 +202,9 @@ function Navbar() {
               </li>
             </Link>
 
-            {/* Conditionally show "My Order" only when the user is logged in */}
             {user && (
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <a className="nav-link" onClick={() => navigate('/myorder')}>
                   <img src="image/my-order.svg" className="my-order" alt="myorder-icon" />
                   <span className="text">My order</span>
                 </a>
@@ -175,17 +218,11 @@ function Navbar() {
                   <span className="text">My cart</span>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu
-                  align="end"
-                  className="custom-dropdown-menu"
-                  id="cart-dropdown"
-                  onWheel={(e) => e.stopPropagation()}  // Stop scroll event from propagating to the parent
-                >
-
+                <Dropdown.Menu align="end" className="custom-dropdown-menu" id="cart-dropdown">
                   <div className="cart-main">
                     <div className="cart-header">
-                        <img src="image/my-cart.svg" className="my-cart" alt="mycart-icon" />
-                        <h2>My Cart</h2>
+                      <img src="image/my-cart.svg" id="cart" alt="mycart-icon" />
+                      <h2 id='title-cart'>My Cart</h2>
                     </div>
                     <div className="cart-container">
                       {cartItems.length > 0 ? (
@@ -201,15 +238,7 @@ function Navbar() {
                                   <h3 className="quantity">{item.quantity}x</h3>
                                 </div>
                                 <div className="row2">
-                                  <h3 className="addons"> {item.selectedAddOns.map((addOns, index) => (
-                                      <span key={index}>
-                                        {addOns} {/* Assuming each add-on has a 'name' property */}
-                                      </span>
-                                    ))}
-                                      <span>{item.selectedSize}</span>
-                                      <span>{item.selectedSugar}</span>
-                                    </h3>
-                        
+                                  <h3 className="addons">{item.selectedAddOns?.join(', ')} {item.selectedSize} {item.selectedSugar}</h3>
                                 </div>
                                 <div className="row3">
                                   <button
@@ -228,19 +257,18 @@ function Navbar() {
                                 </div>
                               </div>
                             </div>
-                        
                           </Dropdown.Item>
                         ))
                       ) : (
                         <p className='empty'>Your cart is empty.</p>
                       )}
-                      {/* Conditionally render the checkout section */}
                       <div className='divider'></div>
                       {cartItems.length > 0 && (
                         <div className='checkout-div'>
+                          <div className='division'></div>
                           <div className='total-price'>
-                               <h3>Total</h3>
-                              <h3>₱{totalPrice.toFixed(2)}</h3>
+                            <h3 id='total-title'>Total</h3>
+                            <h3 id='total' >₱{totalPrice.toFixed(2)}</h3>
                           </div>
                           <button className='checkout-btn' onClick={handleCheckout}>Proceed to Checkout</button>
                         </div>
@@ -258,9 +286,8 @@ function Navbar() {
                     <img src="image/sign-in.svg" className="account" alt="account-icon" />
                     <span className="text ms-2">Account</span>
                   </Dropdown.Toggle>
-
                   <Dropdown.Menu align="start" className="custom-dropdown-menu">
-                    <Dropdown.Item href="#" className="custom-dropdown-item">Account Settings</Dropdown.Item>
+                    <Dropdown.Item href="#" className="custom-dropdown-item" onClick={() => navigate('/my-account')}>Account Settings</Dropdown.Item>
                     <Dropdown.Item onClick={handleLogout} className="custom-dropdown-item">Logout</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

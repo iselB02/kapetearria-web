@@ -11,6 +11,7 @@
   height: auto;
 }
 
+
 .login-side{
   display: flex;
   justify-content: center;
@@ -69,15 +70,19 @@
 
   }
 
-  label {
-    color: #5E2D26;
+  .label {
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
     font-weight: 500;
-    margin-bottom: 5px;
+    line-height: normal;
   }
   
   .login-form form {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
   
   .login-form form div {
@@ -129,6 +134,7 @@
 
 .google-btn img {
   margin-right: 5px;
+  width: 20px;
 }
 
 .signup {
@@ -160,3 +166,4 @@
   width: 100%;
   position: absolute;
 }
+

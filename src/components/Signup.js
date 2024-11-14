@@ -1,180 +1,142 @@
 import React, { useState } from 'react';
-import { auth, database } from './firebaseConfig';
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    setPersistence,
-    browserSessionPersistence,
-    sendPasswordResetEmail,
-    fetchSignInMethodsForEmail,
-} from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { useAuth } from '../backend/AuthContext'; // Import the Auth context
 import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 import Footer from './Footer';
 
 function Signup() {
+    const { signup } = useAuth(); // Destructure signup from the context
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+    const [otp, setOtp] = useState('');
+    const [generatedOtp, setGeneratedOtp] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const [alertType, setAlertType] = useState('');
     const [passwordError, setPasswordError] = useState('');
-    const [phoneError, setPhoneError] = useState('');
     const [emailError, setEmailError] = useState('');
+    const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
     const navigate = useNavigate();
 
-    const validateEmail = (email) => {
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return emailPattern.test(email);
-    };
+    const validateEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+    const validatePassword = (password) => /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
 
-    const validatePassword = (password) => {
-        const passwordRequirements = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return passwordRequirements.test(password);
-    };
+    const generateOtp = () => Math.floor(100000 + Math.random() * 900000).toString();
 
-    const validatePhoneNumber = (phone) => {
-        const phonePattern = /^09\d{9}$/;
-        return phonePattern.test(phone);
+    const sendOtpToEmail = async (otpCode) => {
+        try {
+            const response = await fetch('http://localhost:5000/send-otp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    otp: otpCode
+                })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert('OTP has been sent to your email.');
+            } else {
+                console.error('Error sending OTP:', result.message);
+                setAlertMessage('Failed to send OTP email');
+                setAlertType('error');
+                setIsAlertModalVisible(true);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setAlertMessage('Error sending OTP email');
+            setAlertType('error');
+            setIsAlertModalVisible(true);
+        }
     };
 
     const handleSignup = async () => {
-        setAlertMessage('');
-        setPasswordError('');
-        setPhoneError('');
         setEmailError('');
+        setPasswordError('');
+        setAlertMessage('');
         let hasError = false;
 
-        if (!email || !validateEmail(email)) {
+        if (!validateEmail(email)) {
             setEmailError('Please enter a valid email address.');
             hasError = true;
         }
-
         if (!validatePassword(password)) {
-            setPasswordError('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character.');
+            setPasswordError('Password must be at least 8 characters long and include uppercase, lowercase, digit, and special character.');
             hasError = true;
         }
-
-        if (!validatePhoneNumber(phone)) {
-            setPhoneError('Invalid Phone Number (09xxxxxxxxx)');
-            hasError = true;
-        }
-
         if (hasError) return;
 
         try {
-            const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+            const otpCode = generateOtp();
+            setGeneratedOtp(otpCode);
+            setIsOtpModalVisible(true);
 
-            if (signInMethods.length > 0) {
-                setEmailError('An account with this email already exists.');
-                return;
-            }
-
-            await setPersistence(auth, browserSessionPersistence);
-
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            await addDoc(collection(database, 'users'), {
-                uid: user.uid,
-                email,
-                phone,
-            });
-
-            await signInWithEmailAndPassword(auth, email, password);
-
-            setEmail('');
-            setPhone('');
-            setPassword('');
-
-            navigate('/home');
-        } catch (err) {
-            console.error('Signup error:', err);
-            setAlertMessage(err.message);
+            await sendOtpToEmail(otpCode);
+        } catch (error) {
+            setAlertMessage(error.message);
             setAlertType('error');
+            setIsAlertModalVisible(true);
+            console.error('Signup error:', error);
         }
     };
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-        if (emailError) {
-            setEmailError('');
+    const verifyOtpAndCreateAccount = async () => {
+        if (otp === generatedOtp) {
+            alert('Email verified successfully!');
+            setIsOtpModalVisible(false);
+            try {
+                await signup(email, password); // Call signup from the Auth context
+                setEmail('');
+                setPassword('');
+                navigate('/setup-account'); // Direct to the setup account page
+            } catch (error) {
+                setAlertMessage(error.message);
+                setAlertType('error');
+                setIsAlertModalVisible(true);
+                console.error('Account creation error:', error);
+            }
+        } else {
+            alert('Invalid OTP, please try again.');
         }
     };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-        if (passwordError) {
-            setPasswordError('');
-        }
-    };
-
-    const handlePhoneChange = (e) => {
-        setPhone(e.target.value);
-        if (phoneError) {
-            setPhoneError('');
-        }
-    };
-
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword); // Toggle the visibility state
-    };
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
+    const toggleShowPassword = () => setShowPassword(!showPassword);
 
     return (
         <div className='main'>
-            {alertMessage && (
-                <div className={`alert ${alertType}`}>
-                    {alertMessage}
-                    <span className="close-alert" onClick={() => setAlertMessage('')}>&times;</span>
+            {isAlertModalVisible && (
+                <div className='alert-modal'>
+                    <div className='alert-content'>
+                        <span className="close-alert" onClick={() => setIsAlertModalVisible(false)}>&times;</span>
+                        <p className={`alert-message ${alertType}`}>{alertMessage}</p>
+                    </div>
                 </div>
             )}
             <div className='main-body'>
                 <div className='icon-side'>
                     <img src='image/singin-signup-logo.png' alt='signin-signup-logo' />
-                    <button>Continue without signing in</button>
+                    <button onClick={() => navigate('/home')}>Continue without signing in</button>
                 </div>
                 <div className='login-side'>
                     <div className="login-form">
                         <h2>Sign up</h2>
                         <div className='email'>
-                            <label>Email:</label>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                placeholder="Enter your email"
-                                required
-                            />
+                            <label className='label'>Email:</label>
+                            <input type="email" value={email} onChange={handleEmailChange} placeholder="Enter your email" required />
                             {emailError && <div className="error-banner">{emailError}</div>}
                         </div>
-                        <div className='phone'>
-                            <label>Phone Number:</label>
-                            <input
-                                type="text"
-                                value={phone}
-                                onChange={handlePhoneChange}
-                                placeholder="Enter your phone number"
-                            />
-                            {phoneError && <div className="error-banner">{phoneError}</div>}
-                        </div>
                         <div className='password'>
-                            <label>Password:</label>
+                            <label className='label'>Password:</label>
                             <div className="password-input-container">
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    value={password}
-                                    onChange={handlePasswordChange}
-                                    placeholder="Enter a password"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    className="toggle-password"
-                                    onClick={toggleShowPassword}
-                                >
-                                    {showPassword ? <img src='image/hide.svg'/> : <img src='image/show.svg'/>}
+                                <input type={showPassword ? 'text' : 'password'} value={password} onChange={handlePasswordChange} placeholder="Enter a password" required />
+                                <button type="button" className="toggle-password" onClick={toggleShowPassword}>
+                                    {showPassword ? <img src='image/hide.svg' alt="hide" /> : <img src='image/show.svg' alt="show" />}
                                 </button>
                             </div>
                             {passwordError && <div className="error-banner">{passwordError}</div>}
@@ -193,9 +155,19 @@ function Signup() {
                     </div>
                 </div>
             </div>
-            <div className='footer'>
             <Footer />
-            </div>
+
+            {/* OTP Modal */}
+            {isOtpModalVisible && (
+                <div className='otp-modal'>
+                    <div className='otp-modal-content'>
+                        <span className='close' onClick={() => setIsOtpModalVisible(false)}>&times;</span>
+                        <h2>Enter OTP</h2>
+                        <input className='input-otp' maxLength={6} value={otp} onChange={(e) => setOtp(e.target.value)} />
+                        <button onClick={verifyOtpAndCreateAccount}>Submit OTP</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

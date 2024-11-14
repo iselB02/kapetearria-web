@@ -13,6 +13,8 @@ import Tagline from './components/Tagline';
 import Faqs from './components/Faqs';
 import Drinks from './components/Drinks';
 import Checkout from './components/Checkout';
+import AccountSetup from './components/AccountSetup';
+import AccountSettings from './components/AccountSettings';
 import { useParams } from 'react-router-dom';
 import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
 import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
@@ -42,41 +44,41 @@ const Content = ({ user }) => {
 
   useEffect(() => {
     const handleScroll = (event) => {
-      // List of routes that should have normal scrolling
       const normalScrollRoutes = ['/meals', '/drinks', '/snacks', '/desserts'];
-
-      if (normalScrollRoutes.includes(location.pathname)) {
-        return; // Normal scrolling for specific routes
-      }
-
-      event.preventDefault(); // Prevent default scroll behavior for other routes
+  
+      // Only apply custom scroll prevention for pages other than normal scroll routes
+      if (normalScrollRoutes.includes(location.pathname)) return;
+  
+      // Check if the target is the cart container to allow its independent scroll
+      if (event.target.closest('.cart-container')) return;
+  
+      // Prevent default scroll behavior on other routes
+      event.preventDefault();
       const sections = document.querySelectorAll('.full-page .section');
       const totalSections = sections.length;
       let currentSection = Math.round(window.scrollY / window.innerHeight);
-
+  
       if (event.deltaY > 0) {
         currentSection = Math.min(currentSection + 1, totalSections - 1);
       } else {
         currentSection = Math.max(currentSection - 1, 0);
       }
-
+  
       window.scrollTo({
         top: currentSection * window.innerHeight,
         behavior: 'smooth',
       });
     };
-
-    // Add event listener only if not on normal scroll routes
-    const normalScrollRoutes = ['/meals', '/drinks', '/snacks', '/desserts'];
-    if (!normalScrollRoutes.includes(location.pathname)) {
+  
+    if (!['/meals', '/drinks', '/snacks', '/desserts'].includes(location.pathname)) {
       window.addEventListener('wheel', handleScroll, { passive: false });
     }
-
+  
     return () => {
       window.removeEventListener('wheel', handleScroll);
     };
   }, [location.pathname]);
-
+  
   const { type } = useParams();
 
   return (
@@ -88,8 +90,10 @@ const Content = ({ user }) => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
           {/* Pass the 'type' (e.g., drinks, snacks, desserts) as a route parameter */}
+          <Route path="/setup-account" element={<AccountSetup />} />
           <Route path="/:type" element={<Drinks />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/myorder" element={<Checkout />} />
+          <Route path="/my-account" element={<AccountSettings />} />
           <Route
             path="/home"
             element={
@@ -112,7 +116,7 @@ const Content = ({ user }) => {
               </>
             }
           />
-
+            
            {/* Admin Dashboard Route */}
            <Route path="/admin" element={<AdminDashboard />} />
            
