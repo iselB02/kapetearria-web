@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AccountSetup.css';
 import Footer from './Footer';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
+import { getAuth, RecaptchaVerifier, PhoneAuthProvider } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { database } from './firebaseConfig';
 import { useNavigate } from 'react-router-dom';
@@ -57,30 +57,76 @@ function AccountSetup() {
     setPhoneNumber(formatPhoneNumber(e.target.value));
   };
 
+  // const handlePhoneVerification = async () => {
+  //   try {
+  //     const appVerifier = window.recaptchaVerifier;
+  //     const verificationId = await PhoneAuthProvider.verifyPhoneNumber(auth, phoneNumber, appVerifier);
+  //     setVerificationId(verificationId);
+  //     setShowOtpModal(true);
+  //   } catch (error) {
+  //     console.error('Error sending OTP:', error);
+  //     alert('Error sending OTP. Please try again.');
+  //   }
+  // };
+
+  
+
+  // const verifyOtp = async () => {
+  //   try {
+  //     const credential = PhoneAuthProvider.credential(verificationId, otp);
+  //     if (credential) {
+  //       setIsVerified(true);
+  //       alert('Phone verified successfully!');
+  //       setShowOtpModal(false);
+  //     }
+  //   } catch (error) {
+  //     console.error('Invalid OTP:', error);
+  //     alert('Invalid OTP. Please try again.');
+  //   }
+  // };
+
   const handlePhoneVerification = async () => {
-    const appVerifier = window.recaptchaVerifier;
     try {
-      const confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-      setVerificationId(confirmationResult.verificationId);
+      const appVerifier = window.recaptchaVerifier;
+  
+      if (phoneNumber === '+639684365497') {
+        setVerificationId('test-verification-id'); // Test case
+        setShowOtpModal(true);
+        // alert('Test OTP: 123456');
+        return;
+      }
+  
+      const verificationId = await PhoneAuthProvider.verifyPhoneNumber(auth, phoneNumber, appVerifier);
+      setVerificationId(verificationId);
       setShowOtpModal(true);
     } catch (error) {
-      console.error('SMS not sent:', error);
-      alert('Error sending SMS');
+      console.error('Error sending OTP:', error);
+      alert('Error sending OTP. Ensure the number is valid.');
     }
   };
-
+  
   const verifyOtp = async () => {
-    const credential = PhoneAuthProvider.credential(verificationId, otp);
     try {
-      await signInWithCredential(auth, credential);
-      setIsVerified(true);
-      alert('Phone verified successfully');
-      setShowOtpModal(false);
+      if (verificationId === 'test-verification-id' && otp === '123456') {
+        setIsVerified(true);
+        // alert('Phone verified successfully (Test)!');
+        setShowOtpModal(false);
+        return;
+      }
+  
+      const credential = PhoneAuthProvider.credential(verificationId, otp);
+      if (credential) {
+        setIsVerified(true);
+        alert('Phone verified successfully!');
+        setShowOtpModal(false);
+      }
     } catch (error) {
-      console.error('Verification failed:', error);
-      alert('Invalid OTP');
+      console.error('Invalid OTP:', error);
+      alert('Invalid OTP. Please try again.');
     }
   };
+  
+  
 
   const handleSubmit = async () => {
     if (!surname || !firstname || !birthdate || !address || !isVerified) {
@@ -103,7 +149,7 @@ function AccountSetup() {
           address,
           phone: phoneNumber,
           email: userEmail,
-          verified: isVerified
+          verified: isVerified,
         });
         alert('Account setup successfully saved!');
         navigate('/home'); // Redirect to the home page after submission
@@ -122,27 +168,61 @@ function AccountSetup() {
           <div className='col-1'>
             <div className='surname-div'>
               <label htmlFor="Surname">Surname</label>
-              <input className='input-col1' id='Surname' maxLength={50} value={surname} onChange={(e) => setSurname(e.target.value)} required />
+              <input
+                className='input-col1'
+                id='Surname'
+                maxLength={50}
+                value={surname}
+                onChange={(e) => setSurname(e.target.value)}
+                required
+              />
             </div>
             <div className='firstname-div'>
               <label htmlFor="Firstname">Firstname</label>
-              <input className='input-col1' id='Firstname' maxLength={50} value={firstname} onChange={(e) => setFirstname(e.target.value)} required />
+              <input
+                className='input-col1'
+                id='Firstname'
+                maxLength={50}
+                value={firstname}
+                onChange={(e) => setFirstname(e.target.value)}
+                required
+              />
             </div>
             <div className='mi-bod'>
               <div className='mi-bod-div'>
                 <label htmlFor="MI">M.I.</label>
-                <input className='mi-bod-col1' id='MI' maxLength={2} value={mi} onChange={(e) => setMi(e.target.value)} />
+                <input
+                  className='mi-bod-col1'
+                  id='MI'
+                  maxLength={2}
+                  value={mi}
+                  onChange={(e) => setMi(e.target.value)}
+                />
               </div>
               <div className='mi-bod-div'>
                 <label htmlFor="BOD">Birthdate</label>
-                <input className='mi-bod-col1' id='BOD' type='date' value={birthdate} onChange={(e) => setBirthdate(e.target.value)} required />
+                <input
+                  className='mi-bod-col1'
+                  id='BOD'
+                  type='date'
+                  value={birthdate}
+                  onChange={(e) => setBirthdate(e.target.value)}
+                  required
+                />
               </div>
             </div>
           </div>
           <div className='col-2'>
             <div className='address-div'>
               <label htmlFor="Address">Order Address</label>
-              <input className='input-col2' id='Address' maxLength={50} value={address} onChange={(e) => setAddress(e.target.value)} required />
+              <input
+                className='input-col2'
+                id='Address'
+                maxLength={50}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
             </div>
             <div className='phone-div'>
               <div>
@@ -160,7 +240,9 @@ function AccountSetup() {
                   onChange={handlePhoneNumberChange}
                   required
                 />
-                <button id='verify' onClick={handlePhoneVerification}>Verify</button>
+                <button id='verify' onClick={handlePhoneVerification}>
+                  Verify
+                </button>
               </div>
             </div>
             <div className='email-div'>
@@ -173,22 +255,22 @@ function AccountSetup() {
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </div>
-      <div className='footer'>
-        <Footer />
-      </div>
+      <Footer />
 
       {/* OTP Modal */}
       {showOtpModal && (
         <div className='otp-modal'>
           <div className='otp-modal-content'>
-            <span className='close' onClick={() => setShowOtpModal(false)}>&times;</span>
+            <span className='close' onClick={() => setShowOtpModal(false)}>
+              &times;
+            </span>
             <h2>Enter OTP</h2>
             <input
               className='input-otp'
               id='OTP'
               maxLength={6}
               value={otp}
-              onChange={e => setOtp(e.target.value)}
+              onChange={(e) => setOtp(e.target.value)}
             />
             <button onClick={verifyOtp}>Submit OTP</button>
           </div>

@@ -460,3 +460,19 @@ form {
     padding: 10px;
     border-radius: 10px;
 }
+
+.discount {
+    color: #110301;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.main-payment-modal {
+    height: 200px;
+    width: 200px;
+    background-color: red;
+
+}

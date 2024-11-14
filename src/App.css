@@ -38,3 +38,25 @@ body {
   align-items: center;
   font-size: 2rem;
 }
+
+
+/* Center the loading spinner in the middle of the screen */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff; /* Adjust the background color as needed */
+  z-index: 9999;
+}
+
+/* Optional: Style the loading image */
+.loading-screen img {
+  width: 150px; /* Adjust the size of the loading GIF */
+  height: auto;
+}
+
