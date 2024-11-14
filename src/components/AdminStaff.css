@@ -1,0 +1,82 @@
+.head{
+    display: flex;
+    border-radius: 11px;
+    background: #5C8F4C;
+    margin-bottom: 20px;
+    width: 1257px;
+    height: 36px;
+    color: azure;
+    justify-self: center;
+    margin-top: 10px;
+    justify-content: center ;
+}
+
+.headtext{
+    display: flex;
+    width: 100px;
+    font-weight:bold;
+    font-size: larger;
+    align-items: center;
+    text-align: center;
+    margin: 6px;
+    justify-content: center ;
+}
+
+.second{
+    margin: 0 30px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50%;
+}
+
+.search{
+    margin: 10px 0px;
+    width: 400px;
+    border-radius: 50px;
+    border: 1px solid black;
+    background-color: rgb(226, 226, 226);
+}
+
+.search-icon{
+    margin: 5px 0 0 0 ;
+    text-align: center;
+}
+
+
+.btn{
+    margin: 5px 0;
+    width: 200px;
+    height: 40px ;
+    color: white;
+    background-color: #5C8F4C;
+    font-weight: 500;
+    border-radius: 10px;
+    
+}
+
+ /*paganahin mo nga tangina */
+.btn:hover, .btn:active{
+    background-color: #3a1c17;
+    color: white;
+    
+}
+
+.staff{
+    height: 500px;
+    margin: 20px 30px;
+    
+}
+
+ .table{
+    border: 2px solid black !important;
+    border-radius: 20px !important;
+
+    
+ }
+
+ .header-staff{
+    background-color: #3a1c17 !important;
+    color: white !important ;
+ }

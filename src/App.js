@@ -17,6 +17,7 @@ import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashbo
 import OrderProcess from './components/OrderProcess';
 import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
 import AdminSales from './components/AdminSales'; //Import Admin Sales
+import AdminStaff from './components/AdminStaff';
 import './App.css';
 import ChatBot from "react-chatbotify";
 import "../node_modules/react-chatbotify/dist/style.css";
@@ -170,6 +171,7 @@ const Content = () => {
            {/*  Admin Inventory Route*/}
            <Route path="/inventory" element={<AdminInventory />} />
            <Route path="/sales" element={<AdminSales />} />
+           <Route path="/staff" element={<AdminStaff/>} />
         </Routes>
       </div>
 
