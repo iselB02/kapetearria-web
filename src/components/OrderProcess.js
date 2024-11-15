@@ -87,7 +87,7 @@ function OrderProcess() {
                             <td className='table-itemName'><div className='with-addons'><span>Chocolate Frappe</span><span className='addons-namePrice'>Whipped Cream</span></div></td>
                             <td className='table-price'><div className='with-addons'><span>₱ 173.00</span><span className='addons-namePrice'>₱ 50.00</span></div></td>
                             </tr>
-                            <tr>
+                            <tr className='other-details-container'>
                             <td className='table-details'><div className='details-order1'><span>Subtotal:</span><span>Delivery Fee:</span><span>Less VAT</span><span>Less Senior/PWD</span><span className='total-item'>Total</span></div></td>
                             <td className='table-qty'></td>
                             <td className='table-details'><div className='details-order2'><span>₱ 419.00</span><span>₱ 59.00</span><span>-₱ 59.00</span><span>-₱ 39.00</span><span className='total-itemPrice'>₱ 380.00</span></div></td>
