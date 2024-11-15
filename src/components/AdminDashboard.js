@@ -9,6 +9,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Link } from 'react-router-dom';
 
+
 // Registering Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -88,7 +89,6 @@ const AdminDashboard = () => {
             {/* Main Content */}
             <main className="main-content">
                 <div className="top-bar">
-                    <input type="text" placeholder="Search" className="adminsearch-bar" />
                     <button className="profile-btn">Profile</button>
                 </div>
 
