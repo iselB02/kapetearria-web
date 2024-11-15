@@ -14,11 +14,9 @@ import Checkout from './components/Checkout';
 import AccountSetup from './components/AccountSetup';
 import AccountSettings from './components/AccountSettings';
 import AdminDashboard from './components/AdminDashboard'; // Import Admin Dashboard
-import OrderProcess from './components/OrderProcess';
-import AdminInventory from './components/AdminInventory'; // Import Admin Inventory
+import OrderProcess from './components/OrderProcess';// Import Admin Inventory
 import AdminSales from './components/AdminSales'; // Import Admin Sales
 import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
-import AdminSales from './components/AdminSales'; //Import Admin Sales
 import AdminStaff from './components/AdminStaff';
 import AdminUAM from './components/AdminUAM';
 import AdminChat from './components/AdminChat';
