@@ -10,7 +10,7 @@ const AdminInventory = () => {
         {
             id: 1,
             image: "public/image/drink1.png",
-            name: "Nachos",
+            name: "MilkShake",
             category: "Snacks",
             price: "₱99.00",
             status: true,

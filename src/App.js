@@ -164,17 +164,13 @@ const Content = () => {
               </>
             }
           />
-          <Route path="/admin" element={user?.isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} />
+        
+      {/*  <Route path="/admin" element={user?.isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} /> 
+        */}
           <Route path="/" element={<Navigate to="/home" />} />
-            
-           {/* Admin Dashboard Route */}
-           <Route path="/admin" element={<AdminDashboard />} />
-           
-          <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
-           {/*  Admin Inventory Route*/}
-           <Route path="/inventory" element={<AdminInventory />} />
-           {/*  Admin Sales Report Route*/}
-           <Route path="/sales" element={<AdminSales />} />
+           {/* Admin Dashboard Route */}<Route path="/admin" element={<AdminDashboard />} />
+           {/*  Admin Inventory Route*/}<Route path="/inventory" element={<AdminInventory />} />
+           {/*  Admin Sales Report Route*/}<Route path="/sales" element={<AdminSales />} />
            <Route path="/staff" element={<AdminStaff/>} />
            <Route path='/uam' element={<AdminUAM/>}/>
            <Route path='/chat-support' element={<AdminChat/>}/>
