@@ -14,6 +14,8 @@
     padding-bottom: 20px;
     background-color: #5E2D26;
     background-image: url("./image/cofee-bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .container-process {
@@ -209,6 +211,7 @@ th, td {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    /* background-color: aquamarine !important; */
 }
 
 
@@ -267,6 +270,7 @@ th, td {
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    /* background-color: #02542D; */
 }
 
 .ModeOfPayment {

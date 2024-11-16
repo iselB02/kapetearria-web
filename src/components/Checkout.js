@@ -43,6 +43,8 @@ function Checkout() {
   });
   const [mapPosition, setMapPosition] = useState([14.3277, 121.0778]); // Default position
   const [isMapReady, setIsMapReady] = useState(false); // To conditionally render the map
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState("COD");
   const [orders, setOrders] = useState([]);
   const [discountType, setDiscountType] = useState('');
   const [discountID, setDiscountID] = useState('');
@@ -93,6 +95,7 @@ function Checkout() {
     fetchOrders();
   }, [user]);
 
+
   const geocodeAddress = async (address) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
@@ -107,14 +110,39 @@ function Checkout() {
     }
   };
 
-  //payment method
-  const PaymentModal= () => {
-    <div className='modal-overlay'>
-      <div className="modal-content">
+   const handlePaymentChange = (e) => {
+    const value = e.target.value;
+    console.log(`Payment selected: ${value}`);
+    setSelectedPayment(value);
 
+    // Open modal only for Online Payment
+    if (value === "Online") {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
+  };
+
+  const closeModal = () => {
+    console.log("Closing modal...");
+    setIsModalOpen(false);
+  };
+
+  // Payment Modal Component
+  const PaymentModal = () => (
+    <div className="modal-overlay">
+      <div className="paymentModal-content">
+        <div className='payment-header'>
+          <h2>Online Payment</h2>
+        </div>
+        <div className='main-content-payment'>
+            <div className='paymentOptions-container'>
+            <button className='payment1'>GCash</button>
+          </div>
+          <button onClick={closeModal} className='close-btn-payment'>Close</button></div>
       </div>
     </div>
-  }
+  );
 
   
 
@@ -254,7 +282,12 @@ function Checkout() {
               <h2 className='checkout-title'>Payment Method</h2>
               <div className='radio-btn'>
                 <div className='payment-container'>
-                  <input type="radio" id="COD" name='payment' value="COD" checked />
+                  <input type="radio"
+                    id="COD"
+                    name="payment"
+                    value="COD"
+                    checked={selectedPayment === "COD"}
+                    onChange={handlePaymentChange} />
                   <label htmlFor="COD">Cash On Delivery</label>
                 </div>
                 <div className='payment-container'>
@@ -264,13 +297,15 @@ function Checkout() {
                       id="Online"
                       name="payment"
                       value="Online"
-                      onChange={PaymentModal} // Use onChange instead of onClick
+                      checked={selectedPayment === "Online"}
+                      onChange={handlePaymentChange}
                     />
                     Online Payment
                   </label>
                 </div>
               </div>
             </div>
+            {isModalOpen && <PaymentModal />}
 
             <div className='info-divider'></div>
 
