@@ -93,6 +93,14 @@
     color: #333; /* Or any color you want for hover */
 }
 
+.search2{
+    margin: 10px 0px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 50px;
+    border: 1px solid black;
+    background-color: rgb(226, 226, 226);
+}
 
 /* Inventory Section */
 .inventory-content {

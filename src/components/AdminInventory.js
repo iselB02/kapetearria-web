@@ -128,6 +128,12 @@ const AdminInventory = () => {
                </div>
                <div className="divider"></div>
 
+               <div className='search2'> 
+                    <div className='search-icon'>
+                        search
+                    </div>
+                </div> 
+
                <div className="inventory-table">
                    <table>
                        <thead>
