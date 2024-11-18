@@ -1,238 +1,275 @@
-/* Sidebar Styling */
-.sidebar {
-    width: 260px; /* Reduce sidebar width */
-    background-color: #fff;
-    border-right: 1px solid #e6e6e6;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 10px; /* Reduce padding */
-}
-
-.sidebar-header {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;
-    margin-bottom: 20px; /* Reduce margin */
-}
-
-.sidebar-header .logo {
-    width: 2; /* Adjust logo size */
-    height: auto; /* Maintain aspect ratio */
-    margin-bottom: 5px; /* Add space between logo and Admin text */
-}
-
-.sidebar-header h6 {
-    font-size: 12px; /* Make the Admin text smaller */
-    color: #333; /* Dark color for better readability */
-    margin-top: 5px; /* Add space between logo and Admin text */
-}
-
-/* Sidebar Menu */
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 0; /* Increase padding for a cleaner look */
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 13px; /* Slightly larger font size for menu items */
-    justify-content: flex-start; /* Align the icons and text to the left */
-}
-
-.menu-item .icon {
-    font-size: 10px; 
-    margin-right: 10px; /* Adjust spacing if necessary */
-    border: none; /* Remove any borders */
-    border-radius: 0; /* Ensure there's no border-radius */
-    height: 20px;
-}
-
-.menu-item.active {
-    background-color: #8B443A; /* Subtle green hover background */
-    color: rgb(240, 240, 240); /* Match text color with theme */
-    border-radius: 8px 0px 0px 8px;
-}
-
-.menu-item:hover{
-    background-color: #e8f4e8; /* Subtle green hover background */
-    color: #5c8f4c; /* Match text color with theme */
-    border-radius: 8px 0px 0px 8px;
-}
-
-.settings-section {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #333;
-    padding-top: 15px; 
-    border-top: 1px solid #e6e6e6; 
-}
-
-.settings-section .icon {
-    margin-right: 8px;
-    font-size: 18px;
-    border: none; 
-    border-radius: 0; 
-    height: 20px;
-}
-
-/* */
-
-.head{
-    display: flex;
-    border-radius: 11px;
-    background: #5C8F4C;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width:100%;
-    height: 36px;
-    color: azure;
-    justify-self: center;
-    margin-top: 10px;
-    justify-content: center ;
-    align-self: center;
-}
-
-.headtext{
-    display: flex;
-    width: auto;
-    font-weight:bold;
-    font-size: larger;
-    align-items: center;
-    text-align: center;
-    margin: 6px;
-    justify-content: center ;
-}
-
-.second{
-    margin: 0 30px;
-    height: 50px;   
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 53%;
-}
-
-.search{
-    margin: 10px 0px;
-    width: 80%;
-    max-width: 400px;
-    border-radius: 50px;
-    border: 1px solid black;
-    background-color: rgb(226, 226, 226);
-}
-
-.search-icon{
-    margin: 5px 0 0 0 ;
-    text-align: center;
-}
-
-
-.btn{
-    margin: 5px 0;
-    width: 200px; /* prob5 sa responsiveness */
-    height: 40px ;
-    color: white;
-    background-color: #5C8F4C;
-    font-weight: 500;
-    border-radius: 10px;
-    
-}
-
- /*paganahin mo nga tangina */
-.btn:hover, .btn:active{
-    background-color: #3a1c17;
-    color: white;
-    
-}
-
-.staff {
-    display: block;
-    justify-self: center;
-    height: 500px;
-    width: 100%;
-    max-width: 90rem;
-    margin: 10px 30px;
-}
-
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    border: 2px solid black ;
-    border-radius: 10px !important;
-    border-collapse:separate;
-}
-
-.table th{
-    background-color: #3a1c17 !important;
-    color: white !important;
-    text-align: center;
-    padding: 10px;
-    border: none;
-    text-align: center;
-    font-weight: bolder !important;
-}
-
-.table td{
-    border: none;
-    padding: 10px 30px;
-}
-
-.table td:not(:first-child) {
-    text-align: left;
-}
-
-.table th:first-child, .table td:first-child {
-    width: 60px;
-}
-
-
-.tr1 th:first-child {
-    border-top-left-radius: 7px;
-}
-
-.tr1 th:last-child {
-    border-top-right-radius: 7px;
-}
-
-
-
-
- @media (max-width: 768px) {
-    .head {
-        height: auto;
+    /* Sidebar Styling */
+    .sidebar {
+        width: 260px; /* Reduce sidebar width */
+        background-color: #fff;
+        border-right: 1px solid #e6e6e6;
+        display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        padding: 10px 10px; /* Reduce padding */
+    }
+
+    .sidebar-header {
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+        margin-bottom: 20px; /* Reduce margin */
+    }
+
+    .sidebar-header .logo {
+        width: 2; /* Adjust logo size */
+        height: auto; /* Maintain aspect ratio */
+        margin-bottom: 5px; /* Add space between logo and Admin text */
+    }
+
+    .sidebar-header h6 {
+        font-size: 12px; /* Make the Admin text smaller */
+        color: #333; /* Dark color for better readability */
+        margin-top: 5px; /* Add space between logo and Admin text */
+    }
+
+    /* Sidebar Menu */
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 0; /* Increase padding for a cleaner look */
+        color: #333;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 13px; /* Slightly larger font size for menu items */
+        justify-content: flex-start; /* Align the icons and text to the left */
+    }
+
+    .menu-item .icon {
+        font-size: 10px; 
+        margin-right: 10px; /* Adjust spacing if necessary */
+        border: none; /* Remove any borders */
+        border-radius: 0; /* Ensure there's no border-radius */
+        height: 20px;
+    }
+
+    .menu-item.active {
+        background-color: #8B443A; /* Subtle green hover background */
+        color: rgb(240, 240, 240); /* Match text color with theme */
+        border-radius: 8px 0px 0px 8px;
+    }
+
+    .menu-item:hover{
+        background-color: #e8f4e8; /* Subtle green hover background */
+        color: #5c8f4c; /* Match text color with theme */
+        border-radius: 8px 0px 0px 8px;
+    }
+
+    .settings-section {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #333;
+        padding-top: 15px; 
+        border-top: 1px solid #e6e6e6; 
+    }
+
+    .settings-section .icon {
+        margin-right: 8px;
+        font-size: 18px;
+        border: none; 
+        border-radius: 0; 
+        height: 20px;
+    }
+
+    /* */
+
+    .head{
+        display: flex;
+        border-radius: 11px;
+        background: #5C8F4C;
+        margin-bottom: 20px;
+        width: 100%;
+        max-width:100%;
+        height: 36px;
+        color: azure;
+        justify-self: center;
+        margin-top: 10px;
+        justify-content: center ;
+        align-self: center;
+    }
+
+    .headtext{
+        display: flex;
+        width: auto;
+        font-weight:bold;
+        font-size: larger;
+        align-items: center;
+        text-align: center;
+        margin: 6px;
+        justify-content: center ;
+    }
+
+    .second{
+        margin: 0 30px;
+        height: 50px;   
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 53%;
+    }
+
+    .search{
+        margin: 10px 0px;
+        width: 80%;
+        max-width: 400px;
+        border-radius: 50px;
+        border: 1px solid black;
+        box-sizing: border-box;
+        background-color: rgb(226, 226, 226);
+        padding: 10px 20px;
+    }
+
+    .search::placeholder{
         text-align: center;
     }
-    
-    .second {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .headtext {
+
+
+
+    .btnadd{
+        margin: 5px 0;
+        padding: 0px 10px;
+        width: 150px; /* prob5 sa responsiveness */
+        height: 35px ;
+        color: white;
+        background-color: #5C8F4C;
+        font-weight: 500;
         font-size: medium;
+        border-radius: 10px;
+        
     }
-    
-    .search {
-        width: 100%;
-        max-width: 300px;
+
+    /*paganahin mo nga tangina */
+    .btnadd:hover, .btnadd:active{
+        background-color: #3a1c17;
+        color: white;
+        
     }
-    
-    .btn {
-        width: 100%;
-    }
-    
+
     .staff {
+        display: block;
+        justify-self: center;
+        height: 500px;
         width: 100%;
-        margin: 10px auto;
+        max-width: 90rem;
     }
+
+    .table {
+        max-height: 600px; 
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden; /* Disable horizontal scrolling */
+        margin-bottom: 20px; /* Add spacing below the table */
+    }
+
+    .table th{
+        background-color: #e8f4e8 !important;
+        color: rgb(10, 10, 10) !important;
+        text-align: center;
+        padding: 10px;
+        border: none;
+        text-align: center;
+        font-weight: bolder !important;
+    }
+
+    .table td{
+        border: none;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .table th:first-child, .table td:first-child {
+        width: 60px;
+    }
+
+
+    .tr1 th:first-child {
+        border-top-left-radius: 7px;
+    }
+
+    .tr1 th:last-child {
+        border-top-right-radius: 7px;
+    }
+
+    .staff-image {
+        width: 50px; 
+        height: 50px; 
+        border-radius: 50%; /* bilog image wahwha */
+    }
+
+.btn {
+    margin: 0px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.366);
 }
+
+.btn-edit {
+    background-color: #ececec;
+    color: rgb(81, 204, 0);
+    border-radius: 5px 0px 0px 5px;
+
+}
+
+.btn-delete { /* change color*/
+    border-left: #333;
+    background-color: #ececec; 
+    color: rgb(182, 2, 2);
+    border-radius: 0px 5px 5px 0px;
+}
+
+.btn-edit:hover {/* change color*/
+    background-color: #5c8f4c;
+    color: #361111;
+}
+
+    
+
+
+
+
+
+
+
+
+    @media (max-width: 768px) {
+        .head {
+            height: auto;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .second {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .headtext {
+            font-size: medium;
+        }
+        
+        .search {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn {
+            width: 100%;
+        }
+        
+        .staff {
+            width: 100%;
+            margin: 10px auto;
+        }
+    }

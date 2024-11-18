@@ -61,11 +61,9 @@ const AdminUAM = () => {
                         User Accout Management   
                     </div>
                 </div>
-                <div className='search'> 
-                    <div className='search-icon'>
-                        search
-                    </div>
-                </div> 
+                <div className='search-head'>
+                    <input className='search' placeholder='Search' />
+                </div>
                 <div className="user">
                 <table className="tablee">
                     <thead>
