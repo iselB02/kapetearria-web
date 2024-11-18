@@ -9,36 +9,6 @@
     import Banner from './Banner';
     import Footer from './Footer';
 
-    // Order History Component
-    const OrderHistory = ({ orderHistory, searchQuery }) => {
-        const filteredOrders = orderHistory.filter(order =>
-            order.name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-
-        return (
-            <div className="order-history-content">
-                <div className="order-history-header">
-                    <h2>Order History <span className="order-history-menu">...</span></h2>
-                </div>
-                <div className="order-history-items">
-                    {filteredOrders.length > 0 ? (
-                        filteredOrders.map((order, index) => (
-                            <div key={index} className="order-item">
-                                <img src={order.src} alt={order.name} className="order-img" />
-                                <div className="order-info">
-                                    <p className="order-name">{order.name}</p>
-                                    <p className="order-price">₱{order.price.toFixed(2)}</p>
-                                </div>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No matching orders found.</p>
-                    )}
-                </div>
-            </div>
-        );
-    };
-
     const SearchBar = ({ query, onSearch }) => {
         return (
             <div className="search-bar">
@@ -264,6 +234,8 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
         const [loading, setLoading] = useState(true);
         const [selectedAddOns, setSelectedAddOns] = useState([]);
         const [menuData, setMenuData] = useState([]);
+        const [orderHistory, setOrderHistory] = useState([]);
+
     
         // Fetch products from Firestore where type is dynamic based on URL or props
         useEffect(() => {
@@ -289,6 +261,44 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
             fetchDrinksData();
         }, [type]); // Re-run when `type` changes (e.g., URL param changes)
     
+      // Fetch Order History
+useEffect(() => {
+    const fetchOrderHistory = async () => {
+      if (!auth.currentUser) {
+        console.warn('No user signed in.');
+        setLoading(false);
+        return;
+      }
+  
+      try {
+        const userUid = auth.currentUser.uid;
+        const ordersRef = collection(database, 'order_history');
+        const q = query(ordersRef, where('userId', '==', userUid));
+        const querySnapshot = await getDocs(q);
+  
+        // Extract orders from each document
+        const allOrders = querySnapshot.docs.flatMap((doc) => {
+          const data = doc.data();
+          return data.orders || []; // Return the orders array or an empty array if not present
+        });
+  
+        setOrderHistory(allOrders);
+      } catch (error) {
+        console.error('Error fetching order history:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchOrderHistory();
+  }, []);
+  
+
+        // Filter Order History by Search Query
+        const filteredOrders = orderHistory.filter((order) =>
+            order.productName?.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
         const selectCategory = (category) => {
             setActiveCategory(category);  // Set active category dynamically
         };
@@ -333,27 +343,33 @@ const ProductModal = ({ product, isVisible, onClose, selectedAddOns, setSelected
                     </div>
                 </div>
 
-                <div className='order-history'>
-                    <div className='order-history-content'>
-                        <div className='order-history-header'>
-                            <h2>Order History</h2>
-                            <button>...</button>
-                        </div>
-                        <div className='order-history-items'>
-                            <div className="order-item-container">
-                                <div className='order-item'>
-                                        <img src='image/drink1.png' alt='' className="order-img" />
-                                    <div className="order-info">
-                                        <div className="history-name-price">
-                                            <p className="order-name">Iced Caramel Latte</p>
-                                            <p className="order-price">₱100.0</p>
-                                        </div>
-                                    </div>
-                                </div>
+                
+                <div className="order-history-content">
+                    <div className="order-history-header">
+                    <h2>Order History</h2>
+                    </div>
+                    <div className="order-history-items">
+                    {filteredOrders.length > 0 ? (
+                        filteredOrders.map((item, index) => (
+                        <div key={index} className="order-item">
+                            <img
+                            src={item.image || '/image/default-drink.png'}
+                            alt={item.name}
+                            className="order-img"
+                            />
+                            <div className="order-info">
+                            <p className="order-history-name">{item.productName}</p>
+                            <p className="order-history-price">₱{item.price?.toFixed(2)}</p>
+                            {/* <p className="order-quantity">Quantity: {item.quantity}</p> */}
                             </div>
                         </div>
+                        ))
+                    ) : (
+                        <p>No matching orders found.</p>
+                    )}
                     </div>
                 </div>
+
 
                 <div className="selections">
                     {/* Drink Categories for selection (like Hot Coffee, Iced Coffee, etc.) */}

@@ -80,6 +80,103 @@ const AdminDashboard = () => {
     },
   };
 
+    // return (
+    //     <div className="admin-container">
+    //         {/* Sidebar */}
+    //         <aside className="sidebar">
+    //             <div className="sidebar-header">
+    //                 <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+    //                 <h6>ADMIN</h6>
+    //             </div>
+    //             <ul className="sidebar-menu">
+    //                 <Link to="/admin" className="menu-link">
+    //                     <li className="menu-item">
+    //                             <AiOutlineDashboard className="icon" /> Dashboard
+    //                     </li>
+    //                 </Link>
+    //                 <Link to="/inventory" className="menu-link">
+    //                     <li className="menu-item">
+    //                             <FiShoppingCart className="icon" /> Inventory
+    //                     </li>
+    //                 </Link>
+    //                 <Link to="/sales" className="menu-link">
+    //                     <li className="menu-item">
+    //                         <RiBarChartLine className="icon" /> Sales Reports
+    //                     </li>
+    //                 </Link>
+    //                 <Link to="/staff"> 
+    //                     <li className="menu-item">
+    //                         <FiUser className="icon" /> Staff
+    //                     </li>
+    //                 </Link>
+    //                 <li className="menu-item">
+    //                     <RiAccountCircleLine className="icon" /> User Account Management
+    //                 </li>
+    //                 <li className="menu-item">
+    //                     <FiMessageSquare className="icon" /> Chat Support
+    //                 </li>
+    //             </ul>
+    //             <div className="settings-section">
+    //                 <FiSettings className="icon" /> Settings
+    //             </div>
+    //         </aside>
+
+    //         {/* Main Content */}
+    //         <main className="main-content">
+    //             <div className="top-bar">
+    //                 <button className="profile-btn">Profile</button>
+    //             </div>
+
+    //             <div className="rectangle-container">
+    //                 <div className="rectangle">
+    //                     Dashboard
+    //                 </div>
+    //             </div>
+
+    //             {/* Card Section */}
+    //             <div className="dashboard-overview">
+    //                 <div className="overview-card alert">
+    //                     <BsExclamationCircle className="card-icon" />
+    //                     <div className="card-content">
+    //                         <p>LOW INVENTORY</p>
+    //                         <p>Inventory Level is LOW. Contact Manager now.</p>
+    //                         <a href="/">Learn more &gt;</a>
+    //                     </div>
+    //                 </div>
+
+    //                 <div className="overview-card success">
+    //                     <BsCheckCircle className="card-icon" />
+    //                     <div className="card-content">
+    //                         <p>BOBA MILKTEA</p>
+    //                         <p>67 Customers bought this item. Keep up!</p>
+    //                         <a href="/">Learn more &gt;</a>
+    //                     </div>
+    //                 </div>
+
+    //                 <div className="overview-card info">
+    //                     <BsInfoCircle className="card-icon" />
+    //                     <div className="card-content">
+    //                         <p>NET WORTH</p>
+    //                         <p>Daily income of the store</p>
+    //                         <a href="/">Learn more &gt;</a>
+    //                     </div>
+    //                 </div>
+
+    //                 <div className="overview-card warning">
+    //                     <BsExclamationCircle className="card-icon" />
+    //                     <div className="card-content">
+    //                         <p>DELIVERY PENDING</p>
+    //                         <p>1 Matcha Latte, 1 Carrot Cake</p>
+    //                         <a href="/">Learn more &gt;</a>
+    //                     </div>
+    //                 </div>
+    //             </div>
+
+    //             {/* Visitor Chart with Chart.js */}
+    //             <div className="visitor-chart">
+    //                 <Line data={data} options={options} />
+    //             </div>
+    //         </main>
   return (
     <div className="admin-container">
       {/* Sidebar */}
@@ -185,6 +282,6 @@ const AdminDashboard = () => {
       </main>
     </div>
   );
-};
+}
 
 export default AdminDashboard;

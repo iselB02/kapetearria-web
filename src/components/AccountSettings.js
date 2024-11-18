@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './AccountSetup.css';
+import './AccountSettings.css';
 import Footer from './Footer';
 import {
   getAuth,
@@ -142,7 +142,7 @@ function AccountSettings() {
   };
 
   return (
-    <div className='main-setup'>
+    <div className='main-setup-container'>
       <div className='setup-container'>
         <h1 id='title-account'>Account</h1>
         <div className='columns-setup'>
@@ -215,7 +215,7 @@ function AccountSettings() {
           {isEditing && <button onClick={handleSubmit}>Save</button>}
         </div>
       </div>
-      <Footer />
+
 
       {/* OTP Modal */}
       {showOtpModal && (
@@ -233,6 +233,9 @@ function AccountSettings() {
           </div>
         </div>
       )}
+      <div className='footer'>
+        <Footer />
+      </div>
     </div>
   );
 }

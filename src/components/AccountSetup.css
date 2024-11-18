@@ -1,7 +1,8 @@
 
 .main-setup {
     width: 100%;
-    /* background-color: bisque; */
+    height: 645px ; 
+    background-color: bisque;
 }
 
 #title-account {
