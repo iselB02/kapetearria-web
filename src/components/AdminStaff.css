@@ -55,14 +55,14 @@
 
 .menu-item.active {
     background-color: #8B443A; /* Subtle green hover background */
-    color: rgb(216, 216, 216); /* Match text color with theme */
-    border-radius: 8px;
+    color: rgb(240, 240, 240); /* Match text color with theme */
+    border-radius: 8px 0px 0px 8px;
 }
 
 .menu-item:hover{
     background-color: #e8f4e8; /* Subtle green hover background */
     color: #5c8f4c; /* Match text color with theme */
-    border-radius: 8px;
+    border-radius: 8px 0px 0px 8px;
 }
 
 .settings-section {

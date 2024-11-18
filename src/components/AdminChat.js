@@ -9,48 +9,50 @@ const AdminChat = () => {
   return (
     <div className='admin-container'>
            {/* Sidebar */}
-            <aside className="sidebar2">
-               <div className="sidebar-header">
-                   <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
-                   <h6>ADMIN</h6>
-               </div>
-               <ul className="sidebar-menu">
-                   <li className="menu-item">
-                       <Link to="/admin" className="menu-link">
-                           <AiOutlineDashboard className="icon" /> Dashboard
-                       </Link>
-                   </li>
-                   <li className="menu-item">
-                       <Link to="/inventory" className="menu-link">
-                           <FiShoppingCart className="icon" /> Inventory
-                       </Link>
-                   </li>
-                   <li className="menu-item">
-                       <Link to="/sales" className="menu-link">
-                           <RiBarChartLine className="icon" /> Sales Reports
-                       </Link>
-                   </li>
-                   <li className="menu-item">
-                       <Link to="/staff" className="menu-link">
-                           <FiUser className="icon" /> Staff
-                       </Link>
-                   </li>
-                   <li className="menu-item">
-                       <Link to="/uam" className="menu-link">
-                           <RiAccountCircleLine className="icon" /> User Account Management
-                       </Link>
-                   </li>
-                   <li className="menu-item">
-                       <Link to="/chat-support" className="menu-link active">
-                           <FiMessageSquare className="icon" /> Chat Support
-                       </Link>
-                   </li>
-               </ul>
-               <div className="divider"></div>
-               <div className="settings-section">
-                   <FiSettings className="icon" /> Settings
-               </div>
-           </aside>
+           <aside className="sidebar">
+            <div className="sidebar-header">
+              <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+              <h6>ADMIN</h6>
+            </div>
+            <ul className="sidebar-menu">
+              <Link to="/admin" className="menu-link">
+                <li className="menu-item">
+                  <AiOutlineDashboard className="icon" /> Dashboard
+                </li>
+              </Link> 
+              <Link to="/inventory" className="menu-link">
+              <li className="menu-item">
+
+                  <FiShoppingCart className="icon" /> Inventory
+              </li>
+              </Link>
+              <Link to="/sales" className="menu-link">
+                <li className="menu-item">    
+                  <RiBarChartLine className="icon" /> Sales Reports
+                </li>
+              </Link>
+              <Link to="/staff" className='menu-link'>
+                <li className="menu-item">
+                <FiUser className="icon" /> Staff
+                </li>
+              </Link>
+              <Link to="/uam" className='menu-link'>
+                <li className="menu-item">
+                  <RiAccountCircleLine className="icon" /> User Account Management
+                </li>
+              </Link>
+              <Link to="/chat-support" className='menu-link'>
+                <li className="menu-item active">
+                  <FiMessageSquare className="icon" /> Chat Support
+                </li>
+                </Link>
+            </ul>
+            <Link to="/settings" className='menu-link'>
+              <div className="settings-section">
+                <FiSettings className="icon" /> Settings
+              </div>
+            </Link>
+          </aside>
     </div>
   )
 

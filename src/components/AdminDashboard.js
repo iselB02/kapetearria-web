@@ -90,7 +90,7 @@ const AdminDashboard = () => {
         </div>
         <ul className="sidebar-menu">
           <Link to="/admin" className="menu-link">
-            <li className="menu-item">
+            <li className="menu-item active">
               <AiOutlineDashboard className="icon" /> Dashboard
             </li>
           </Link> 
