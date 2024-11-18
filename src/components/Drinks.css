@@ -302,43 +302,49 @@
 /* Order Image */
 .order-img {
     width: 80px;
-    height: 80px;
+    height: auto;
     object-fit: cover;
     margin-right: 12px;
     margin-bottom: 15px;
     /* background-color: #77002c; */
 }
 
-/* Order Information */
 .order-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 70px;
+    height: fit-content;
     width: 150px;
-    padding-top: 30px;
+    padding-top: 10px; /* Adjust to desired spacing */
+    padding-bottom: 10px; /* Optional: to control spacing at the bottom */
     /* background-color: red; */
     margin-bottom: 35px;
     margin-right: 10px;
 }
 
-.order-name {
+.order-history-name {
     font-size: 1.1rem;
     color: #3B1C18;
     font-weight: bold;
     width: 150px;
-    line-height: 1; /* Adjusted for better readability */
     overflow: hidden; /* Hide overflow */
     white-space: nowrap; /* Prevent text from wrapping to the next line */
     text-overflow: ellipsis; /* Show ellipsis when text overflows */
-    /* padding-top: 15px; */
+    /* padding: 5px 0; Adjust padding for tighter spacing */
+    /* background-color: #4CAF50; */
+
 }
 
-
-.order-price {
-    font-size: 0.95rem;
+.order-history-price {
+    /* font-size: 0.95rem; */
     color: #351916;
-    padding-bottom: 12px;
+    /* height: 30px; */
+    /* padding: 5px 0; Adjust padding for tighter spacing */
+    /* background-color: #009951; */
+}
+
+/* Optional: Remove all child element margins to further tighten the space */
+.order-info > * {
+    margin: 0;
 }
 
 .drink-list {

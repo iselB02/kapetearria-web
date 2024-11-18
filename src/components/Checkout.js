@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Checkout.css';
 import { collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { database } from './firebaseConfig';
@@ -10,6 +10,15 @@ import L from 'leaflet';
 import Footer from './Footer';
 
 const MapComponent = ({ position, address }) => {
+  const mapRef = useRef(null); // Reference to MapContainer
+
+  useEffect(() => {
+    if (mapRef.current) {
+      const map = mapRef.current;
+      map.flyTo(position, 15, { duration: 1.5 }); // Smooth transition to new position
+    }
+  }, [position]);
+
   const svgIcon = L.divIcon({
     html: `<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="red" class="bi bi-geo-fill" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
@@ -21,7 +30,12 @@ const MapComponent = ({ position, address }) => {
   });
 
   return (
-    <MapContainer center={position} zoom={15} style={{ height: "450px", width: "100%" }}>
+    <MapContainer
+      center={position}
+      zoom={15}
+      style={{ height: "450px", width: "100%" }}
+      ref={mapRef} // Attach the reference
+    >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -32,7 +46,6 @@ const MapComponent = ({ position, address }) => {
     </MapContainer>
   );
 };
-
 function Checkout() {
   const { user } = useAuth(); // Get the user object from AuthContext
   const [userData, setUserData] = useState({
@@ -181,13 +194,16 @@ function Checkout() {
           selectedSize: order.selectedSize || null,
           selectedSugar: order.selectedSugar || null,
           selectedAddOns: order.selectedAddOns || [],
+          image: order.image || null,
         })),
         totalAmount: grandTotal,
         deliveryFee: deliveryFee,
         discountAmount: discountAmount,
         eta: etaFormatted,
-        estimatedTime: estimatedTimeRange, // Save estimated time range
+        estimatedTime: estimatedTimeRange,
+        status: "for approval",
         timestamp: new Date(),
+        // image: orders.image,
       };
   
       // Save to database
@@ -470,70 +486,74 @@ function Checkout() {
           </div>
         </form>
 
-        {/* Order Summary Section */}
+       {/* Order Summary Section */}
         <div className='order-summary'>
           <div className='order-header'>
             <h1>Order Summary</h1>
           </div>
-          <div className='summary-info'>
-            {orders.length > 0 ? (
-              orders.map((order, index) => (
-                <div key={index} className='order'>
-                  <div className='main-order'>
-                    <div className='quantity-container'>{order.quantity}x</div>
-                    <div className='prod-info'>
-                      <h3 className='name-order'>{order.productName}</h3>
-                      <p className='customization'>
-                        {order.selectedSize && <span>{order.selectedSize}</span>}
-                        {order.selectedSugar && <span> | {order.selectedSugar}</span>}
-                        {order.selectedAddOns && order.selectedAddOns.length > 0 && (
-                          <>
-                            <span> | </span>
-                            {order.selectedAddOns.join(", ")}
-                          </>
-                        )}
-                      </p>
+          {orders.length > 0 ? (
+            <>
+              <div className='summary-info'>
+                {orders.map((order, index) => (
+                  <div key={index} className='order'>
+                    <div className='main-order'>
+                      <div className='quantity-container'>{order.quantity}x</div>
+                      <div className='prod-info'>
+                        <h3 className='name-order'>{order.productName}</h3>
+                        <p className='customization'>
+                          {order.selectedSize && <span>{order.selectedSize}</span>}
+                          {order.selectedSugar && <span> | {order.selectedSugar}</span>}
+                          {order.selectedAddOns && order.selectedAddOns.length > 0 && (
+                            <>
+                              <span> | </span>
+                              {order.selectedAddOns.join(", ")}
+                            </>
+                          )}
+                        </p>
+                      </div>
                     </div>
+                    <h3 className='order-price'>₱{(order.price * order.quantity).toFixed(2)}</h3>
                   </div>
-                  <h3 className='order-price'>₱{(order.price * order.quantity).toFixed(2)}</h3>
-                </div>
-              ))
-            ) : (
-              <p>No orders found.</p>
-            )}
-          </div>
-
-          <div className='other-details'>
-            <div className='total'>
-              <h3 className='totalprice-title'>Subtotal</h3>
-              <h3 className='totalprice'>₱{orderTotal.toFixed(2)}</h3>
-            </div>
-            <div className='delivery-fee'>
-              <h3 className='deliveryfee-title'>Delivery Fee</h3>
-              <h3 className='delivery-price'>₱{deliveryFee.toFixed(2)}</h3>
-            </div>
-            {/* Discount Display */}
-            {discountAmount > 0 && (
-              <div className='discounts-applied'>
-                <h3 className='discount '>
-                  {discountType === 'Senior' ? 'Senior Discount' :
-                  discountType === 'PWD' ? 'PWD Discount' :
-                  'Voucher Discount'}
-                </h3>
-                <h3 className='discount-price'>₱{discountAmount.toFixed(2)}</h3>
+                ))}
               </div>
-            )}
-            <div className='total-details'>
-              <h3 className='total-title'>Total</h3>
-              <h3 className='grand-totalprice'>₱{grandTotal.toFixed(2)}</h3>
+              <div className='other-details'>
+                <div className='total'>
+                  <h3 className='totalprice-title'>Subtotal</h3>
+                  <h3 className='totalprice'>₱{orderTotal.toFixed(2)}</h3>
+                </div>
+                <div className='delivery-fee'>
+                  <h3 className='deliveryfee-title'>Delivery Fee</h3>
+                  <h3 className='delivery-price'>₱{deliveryFee.toFixed(2)}</h3>
+                </div>
+                {/* Discount Display */}
+                {discountAmount > 0 && (
+                  <div className='discounts-applied'>
+                    <h3 className='discount '>
+                      {discountType === 'Senior' ? 'Senior Discount' :
+                      discountType === 'PWD' ? 'PWD Discount' :
+                      'Voucher Discount'}
+                    </h3>
+                    <h3 className='discount-price'>₱{discountAmount.toFixed(2)}</h3>
+                  </div>
+                )}
+                <div className='total-details'>
+                  <h3 className='total-title'>Total</h3>
+                  <h3 className='grand-totalprice'>₱{grandTotal.toFixed(2)}</h3>
+                </div>
+              </div>
+
+              <div className="checkoutbtn-container">
+                <button onClick={handleCheckout}>Checkout</button>
+              </div>
+            </>
+          ) : (
+            <div className="no-orders-container">
+              <p className="no-orders-message">No orders found. Add items to your cart to proceed.</p>
             </div>
-          </div>
-
-          <div className="checkoutbtn-container">
-            <button onClick={handleCheckout}>Checkout</button>
-          </div>
-
+          )}
         </div>
+
+
       </div>
       <div className='footer'>
         <Footer />

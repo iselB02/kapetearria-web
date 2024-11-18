@@ -79,12 +79,12 @@ const AdminStaff = () => {
                 <table className="table">
                     <thead>
                         <tr className='tr1'>
-                            <th>Image</th>
-                            <th>Name</th>
-                            <th>Job Title</th>
-                            <th>DTR</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th className='th'>Image</th>
+                            <th className='th'>Name</th>
+                            <th className='th'>Job Title</th>
+                            <th className='th'>DTR</th>
+                            <th className='th'>Status</th>
+                            <th className='th'>Action</th>
                         </tr>
                     </thead>
                     <tbody className='tablebody'>

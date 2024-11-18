@@ -9,7 +9,7 @@ import './OrderProcess.css';
 
 function OrderProcess() {
   const { user } = useAuth();
-  const navigate = useNavigate(); // Navigate for redirection
+  const navigate = useNavigate();
   const [orderData, setOrderData] = useState(null);
   const [firstName, setFirstName] = useState('');
   const [middleInitial, setMI] = useState('');
@@ -23,20 +23,23 @@ function OrderProcess() {
         try {
           const orderRef = doc(database, 'order_info', user.uid);
           const orderSnap = await getDoc(orderRef);
+
           if (orderSnap.exists()) {
             const order = orderSnap.data();
             setOrderData(order);
 
-            // Check if the order is completed
+            // Redirect if the order is completed
             if (order.status.toLowerCase() === 'order completed') {
               await handleOrderCompletion(order);
             }
           } else {
-            console.error('No order data found.');
+            // Redirect if no order exists
+            navigate('/');
           }
 
           const userRef = doc(database, 'user_info', user.uid);
           const userSnap = await getDoc(userRef);
+
           if (userSnap.exists()) {
             const userData = userSnap.data();
             setFirstName(userData.firstname);
@@ -49,35 +52,29 @@ function OrderProcess() {
           }
         } catch (error) {
           console.error('Error fetching data:', error);
+          navigate('/'); // Redirect on error
         }
+      } else {
+        navigate('/login'); // Redirect if not authenticated
       }
     };
 
-    // Initial fetch
     fetchOrderData();
-
-    // Set up an interval to refresh order data
-    const intervalId = setInterval(fetchOrderData, 500);
-
-    return () => clearInterval(intervalId);
-  }, [user]);
+  }, [user, navigate]);
 
   const handleOrderCompletion = async (order) => {
     try {
-      // Save order details to `order_history`
       const historyRef = doc(database, 'order_history', user.uid);
       await setDoc(historyRef, {
         ...order,
         completedAt: new Date(),
       });
 
-      // Delete the order from `order_info`
       const orderRef = doc(database, 'order_info', user.uid);
       await deleteDoc(orderRef);
 
-      // Prompt the user and redirect
       alert('Your order has been completed!');
-      setTimeout(() => navigate('/'), 3000); // Redirect to home after 3 seconds
+      navigate('/'); // Redirect to home
     } catch (error) {
       console.error('Error handling order completion:', error);
     }
@@ -85,7 +82,7 @@ function OrderProcess() {
 
   const getColorByStatus = (iconIndex) => {
     const statuses = ['for approval', 'preparing', 'out for delivery', 'order completed'];
-    const currentStatusIndex = statuses.indexOf(orderData.status.toLowerCase());
+    const currentStatusIndex = statuses.indexOf(orderData?.status.toLowerCase());
     return iconIndex <= currentStatusIndex ? 'green' : 'gray';
   };
 
@@ -183,7 +180,7 @@ function OrderProcess() {
               <h6 className='title-order'>Order Summary</h6>
             </div>
             <div className='table-container'>
-              <Table>
+              <table className='table-process'>
                 <thead>
                   <tr>
                     <th className='table-title2'>Qty</th>
@@ -224,7 +221,7 @@ function OrderProcess() {
                     <td className='Payment'>{orderData.paymentType}</td>
                   </tr>
                 </tbody>
-              </Table>
+              </table>
             </div>
           </div>
         </div>

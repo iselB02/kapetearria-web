@@ -255,7 +255,6 @@ function AccountSetup() {
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </div>
-      <Footer />
 
       {/* OTP Modal */}
       {showOtpModal && (
@@ -288,6 +287,9 @@ function AccountSetup() {
           </div>
         </div>
       )}
+      <div className='footer'>
+        <Footer />
+      </div>
     </div>
   );
 }

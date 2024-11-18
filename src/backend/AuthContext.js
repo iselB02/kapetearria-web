@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   setPersistence,
   browserSessionPersistence,
+  browserLocalPersistence, // Use browserLocalPersistence
 } from 'firebase/auth';
 import Cookies from 'js-cookie';
 
@@ -13,7 +14,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -21,8 +22,8 @@ export const AuthProvider = ({ children }) => {
         console.log('Setting authToken for user:', currentUser.uid);
         Cookies.set('authToken', currentUser.uid, {
           expires: 7, // Cookie expiration in days
-          secure: true, // Ensure cookie is sent over HTTPS
-          sameSite: 'None', // Enable cross-site access if needed
+          secure: true,
+          sameSite: 'None',
           path: '/', // Make cookie accessible across the app
         });
         setUser(currentUser); // Update the user state
@@ -33,29 +34,30 @@ export const AuthProvider = ({ children }) => {
       }
       setLoading(false); // Indicate authentication state is resolved
     });
-  
+
     return () => unsubscribe();
   }, [auth]);
 
   const login = async (email, password) => {
-    await setPersistence(auth, browserSessionPersistence); // Set session persistence
+    await setPersistence(auth, browserLocalPersistence); // Use browserLocalPersistence
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     setUser(userCredential.user);
     Cookies.set('authToken', userCredential.user.uid, {
       expires: 7, // Cookie expiration in days
-      secure: true, // Ensures cookies are sent over HTTPS
-      sameSite: 'None', // Allows cross-site cookie usage
+      secure: true,
+      sameSite: 'None',
       path: '/',
     });
   };
 
   const signup = async (email, password) => {
+    await setPersistence(auth, browserLocalPersistence); // Use browserLocalPersistence
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     setUser(userCredential.user);
     Cookies.set('authToken', userCredential.user.uid, {
-      expires: 7, // Cookie expiration in days
-      secure: true, // Ensures cookies are sent over HTTPS
-      sameSite: 'None', // Allows cross-site cookie usage
+      expires: 7,
+      secure: true,
+      sameSite: 'None',
       path: '/',
     });
     return userCredential.user;
