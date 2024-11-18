@@ -6,6 +6,7 @@ import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 import { FiEdit } from 'react-icons/fi';
 import { FiTrash2 } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 
 
 const handleEdit = (name) => {
@@ -21,6 +22,12 @@ const handleDelete = (name) => {
 };
 
 const AdminStaff = () => {
+  const navigate = useNavigate();
+
+    const handleAddStaff = () => {
+        navigate('/add-staff');  // Adjust the path as needed
+    };
+
     return (
         <div className="admin-container">
             {/* Sidebar */}
@@ -80,7 +87,7 @@ const AdminStaff = () => {
                     <input className='search' placeholder='Search' />
                     <nav className='addstaff'>
                         <form className='addbutton'>
-                            <button className="btnadd" type="button">Add Staff</button>
+                            <button className="btnadd" type="button" onClick={handleAddStaff}>Add Staff</button>
                         </form>
                     </nav>
                 </div>

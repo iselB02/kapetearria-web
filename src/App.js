@@ -18,6 +18,7 @@ import OrderProcess from './components/OrderProcess';// Import Admin Inventory
 import AdminSales from './components/AdminSales'; // Import Admin Sales
 import AdminInventory from './components/AdminInventory'; //Import Admin Inventory
 import AdminStaff from './components/AdminStaff';
+import AddStaff from './components/AddStaff';
 import AdminUAM from './components/AdminUAM';
 import AdminChat from './components/AdminChat';
 import './App.css';
@@ -182,6 +183,7 @@ const Content = () => {
            {/*  Admin Inventory Route*/}<Route path="/inventory" element={<AdminInventory />} />
            {/*  Admin Sales Report Route*/}<Route path="/sales" element={<AdminSales />} />
            <Route path="/staff" element={<AdminStaff/>} />
+           <Route path="/add-staff" element={<AddStaff />} />
            <Route path='/uam' element={<AdminUAM/>}/>
            <Route path='/chat-support' element={<AdminChat/>}/>
         </Routes>
