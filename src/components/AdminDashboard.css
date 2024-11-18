@@ -35,7 +35,6 @@
 }
 
 
-
 /* Sidebar Styling */
 .sidebar {
     width: 260px; /* Reduce sidebar width */
@@ -122,7 +121,11 @@
     background-color: #f8f8f8;
     display: flex;
     flex-direction: column;
-    
+    gap: 20px;
+    overflow-y: auto; /* Enables vertical scrolling */
+    height: 100%; /* Ensures it spans the full height */
+    box-sizing: border-box; /* Includes padding in height calculations */
+    scroll-behavior: smooth; /* Smooth scrolling */
 }
 
 /* Top Bar Responsiveness */
@@ -290,27 +293,47 @@
     font-size: 28px;
 }
 
-/* Visitor Chart */
 .visitor-chart {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 25px;
-    margin-bottom: 20px;
+    height: 350px; /* Chart height */
+    background: #fff; /* White background */
+    padding: 20px; /* Add padding */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-top: 20px;
     display: flex;
-}
-
-.chart-placeholder {
-    height: 200px;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
+  }
+  
+  .chart-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .rectangle {
+    background-color: #68a45d;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
     border-radius: 10px;
-    color: #888;
-    margin-top: 10px;
-}
+    text-align: center;
+  }
+
+
+
 
 /* Chart Container */
 .visitor-chart canvas {

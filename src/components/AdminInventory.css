@@ -88,11 +88,19 @@
     text-decoration: none; /* Remove underline */
 }
 
-/* Optional: Add hover effect if needed */
+
 .menu-link:hover {
     color: #333; /* Or any color you want for hover */
 }
 
+.search2{
+    margin: 10px 0px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 50px;
+    border: 1px solid black;
+    background-color: rgb(226, 226, 226);
+}
 
 /* Inventory Section */
 .inventory-content {
@@ -124,6 +132,15 @@
     background-color: #568c4b;
 }
 
+.inventory-table {
+    max-height: 600px; 
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    border: 1px solid #ddd; /* Optional: Add a border for better visibility */
+    margin-bottom: 20px; /* Add spacing below the table */
+}
+
+
 /* Table */
 .inventory-table table {
     width: 100%;
@@ -132,14 +149,17 @@
 
 thead {
     background-color: #e8f4e8;
+    position: sticky; /* Make the header row sticky */
+    top: 0; /* Stick the header to the top of the container */
+    z-index: 1; /* Ensure it stays above table rows */
 }
 
-th,td {
+th, td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
     border-top: 1px solid #ddd;
     text-align: center;
-    width: 19%;
+    width: 19%; 
 }
 
 .product-image {
@@ -246,3 +266,4 @@ input:checked + .slider:before {
 .save-btn:hover {
     background-color: #568c4b;
 }
+
