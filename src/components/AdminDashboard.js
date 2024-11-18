@@ -186,34 +186,43 @@ const AdminDashboard = () => {
           <h6>ADMIN</h6>
         </div>
         <ul className="sidebar-menu">
-          <li className="menu-item">
-            <Link to="/admin" className="menu-link">
+          <Link to="/admin" className="menu-link">
+            <li className="menu-item active">
               <AiOutlineDashboard className="icon" /> Dashboard
-            </Link>
-          </li>
-          <li className="menu-item">
-            <Link to="/inventory" className="menu-link">
+            </li>
+          </Link> 
+          <Link to="/inventory" className="menu-link">
+           <li className="menu-item">
+
               <FiShoppingCart className="icon" /> Inventory
-            </Link>
-          </li>
-          <li className="menu-item">
-            <Link to="/sales" className="menu-link">
+           </li>
+          </Link>
+          <Link to="/sales" className="menu-link">
+            <li className="menu-item">    
               <RiBarChartLine className="icon" /> Sales Reports
-            </Link>
-          </li>
-          <li className="menu-item">
+            </li>
+          </Link>
+          <Link to="/staff" className='menu-link'>
+            <li className="menu-item">
             <FiUser className="icon" /> Staff
-          </li>
-          <li className="menu-item">
-            <RiAccountCircleLine className="icon" /> User Account Management
-          </li>
-          <li className="menu-item">
-            <FiMessageSquare className="icon" /> Chat Support
-          </li>
+            </li>
+          </Link>
+          <Link to="/uam" className='menu-link'>
+            <li className="menu-item">
+              <RiAccountCircleLine className="icon" /> User Account Management
+            </li>
+          </Link>
+          <Link to="/chat-support" className='menu-link'>
+            <li className="menu-item">
+              <FiMessageSquare className="icon" /> Chat Support
+            </li>
+            </Link>
         </ul>
-        <div className="settings-section">
-          <FiSettings className="icon" /> Settings
-        </div>
+        <Link to="/settings" className='menu-link'>
+          <div className="settings-section">
+            <FiSettings className="icon" /> Settings
+          </div>
+        </Link>
       </aside>
 
       {/* Main Content */}
