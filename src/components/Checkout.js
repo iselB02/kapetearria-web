@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Checkout.css';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { database } from './firebaseConfig';
 import { useAuth } from '../backend/AuthContext'; // Import the Auth context
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useNavigate } from "react-router-dom"; // Import for navigation
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import Footer from './Footer';
@@ -53,6 +54,13 @@ function Checkout() {
   const [isVerified, setIsVerified] = useState(false);
   const deliveryFee = 60.00;
   const discount = 30.00;
+  const navigate = useNavigate();
+  const STORE_COORDINATES = { latitude: 14.3277, longitude: 121.0778 }; // Replace with actual store coordinates
+  const AVERAGE_SPEED_KMH = 30; // Average delivery speed in km/h
+  const PREPARATION_TIME_MIN = 20; // Fixed preparation time in minutes
+  const DEFAULT_DISTANCE_KM = 5; // Default distance in kilometers
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -63,6 +71,11 @@ function Checkout() {
           if (docSnap.exists()) {
             const userData = docSnap.data();
             setUserData(userData);
+  
+            // Trigger geocoding when address is fetched
+            if (userData.address) {
+              geocodeAddress(userData.address);
+            }
           } else {
             console.error("No user data found.");
           }
@@ -71,8 +84,7 @@ function Checkout() {
         }
       }
     };
-
-
+  
     const fetchOrders = async () => {
       if (user) {
         try {
@@ -90,12 +102,18 @@ function Checkout() {
         }
       }
     };
-
+  
     fetchUserData();
     fetchOrders();
   }, [user]);
-
-
+  
+  useEffect(() => {
+    // Trigger geocoding whenever the user's address changes
+    if (userData.address) {
+      geocodeAddress(userData.address);
+    }
+  }, [userData.address]);
+  
   const geocodeAddress = async (address) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
@@ -104,11 +122,93 @@ function Checkout() {
         const { lat, lon } = data[0];
         setMapPosition([parseFloat(lat), parseFloat(lon)]);
         setIsMapReady(true);
+        console.log(`Map position updated to: [${lat}, ${lon}]`);
+      } else {
+        console.warn("No results found for the given address.");
       }
     } catch (error) {
       console.error("Error geocoding address:", error);
     }
   };
+  
+
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+  
+    if (!selectedPayment) {
+      alert("Please select a payment method.");
+      return;
+    }
+  
+    try {
+      // Use predefined distance
+      const distanceKm = DEFAULT_DISTANCE_KM; // Hardcoded or fetched from predefined zones
+  
+      // Calculate travel time based on average speed
+      const travelTimeMin = (distanceKm / AVERAGE_SPEED_KMH) * 60; // Time in minutes
+  
+      // Calculate total time (including preparation)
+      const totalTimeMin = PREPARATION_TIME_MIN + travelTimeMin;
+      const minEstimatedTime = Math.floor(totalTimeMin); // Minimum time
+      const maxEstimatedTime = Math.ceil(totalTimeMin + 5); // Add a buffer of 5 minutes
+      const estimatedTimeRange = `${minEstimatedTime}-${maxEstimatedTime} mins`;
+  
+      const now = new Date();
+      const eta = new Date(now.getTime() + totalTimeMin * 60 * 1000);
+      const etaFormatted = eta.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+      // Generate unique order number
+      const day = now.getDate().toString().padStart(2, "0");
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const year = now.getFullYear().toString().slice(-2);
+      const randomPart = Math.floor(Math.random() * 100).toString().padStart(2, "0");
+      const orderNumber = `${day}${month}${year}${randomPart}`;
+  
+      // Prepare order data
+      const orderData = {
+        userId: user.uid,
+        orderNumber,
+        serviceOption: document.querySelector('input[name="selection"]:checked').value,
+        address: userData.address,
+        addressDetails: document.getElementById("details-address").value || "N/A",
+        paymentType: selectedPayment,
+        discountType: discountType || "None",
+        discountCode: discountID || voucherCodeInput || "None",
+        orders: orders.map(order => ({
+          productName: order.productName,
+          quantity: order.quantity,
+          price: order.price,
+          selectedSize: order.selectedSize || null,
+          selectedSugar: order.selectedSugar || null,
+          selectedAddOns: order.selectedAddOns || [],
+        })),
+        totalAmount: grandTotal,
+        deliveryFee: deliveryFee,
+        discountAmount: discountAmount,
+        eta: etaFormatted,
+        estimatedTime: estimatedTimeRange, // Save estimated time range
+        timestamp: new Date(),
+      };
+  
+      // Save to database
+      const orderRef = doc(database, "order_info", user.uid);
+      await setDoc(orderRef, orderData);
+  
+      // Delete document from `checkout_info`
+      const checkoutRef = doc(database, "checkout_info", user.uid);
+      await deleteDoc(checkoutRef);
+  
+      // Navigate to order process page
+      navigate("/order-process");
+  
+      alert(`Order placed successfully! Estimated time of arrival: ${estimatedTimeRange}`);
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place order. Please try again.");
+    }
+  };
+  
+  
 
    const handlePaymentChange = (e) => {
     const value = e.target.value;
@@ -132,17 +232,36 @@ function Checkout() {
   const PaymentModal = () => (
     <div className="modal-overlay">
       <div className="paymentModal-content">
-        <div className='payment-header'>
+        <div className="payment-header">
           <h2>Online Payment</h2>
         </div>
-        <div className='main-content-payment'>
-            <div className='paymentOptions-container'>
-            <button className='payment1'>GCash</button>
+        <div className="main-content-payment">
+          <div className="paymentOptions-container">
+            <button
+              className="payment1"
+              onClick={() => {
+                setSelectedPayment("Online"); // Set radio button to "Online"
+                setUserData({
+                  ...userData,
+                  paymentDetails: {
+                    type: "GCash", // Specify payment type as GCash
+                  },
+                });
+                setIsModalOpen(false); // Close the modal
+                console.log("GCash selected and payment set to Online.");
+              }}
+            >
+              GCash
+            </button>
           </div>
-          <button onClick={closeModal} className='close-btn-payment'>Close</button></div>
+          <button onClick={closeModal} className="close-btn-payment">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );
+  
 
   
 
@@ -280,17 +399,19 @@ function Checkout() {
 
             <div className='payment-method'>
               <h2 className='checkout-title'>Payment Method</h2>
-              <div className='radio-btn'>
-                <div className='payment-container'>
-                  <input type="radio"
+              <div className="radio-btn">
+                <div className="payment-container">
+                  <input
+                    type="radio"
                     id="COD"
                     name="payment"
                     value="COD"
                     checked={selectedPayment === "COD"}
-                    onChange={handlePaymentChange} />
+                    onChange={handlePaymentChange}
+                  />
                   <label htmlFor="COD">Cash On Delivery</label>
                 </div>
-                <div className='payment-container'>
+                <div className="payment-container">
                   <label htmlFor="Online">
                     <input
                       type="radio"
@@ -304,6 +425,7 @@ function Checkout() {
                   </label>
                 </div>
               </div>
+
             </div>
             {isModalOpen && <PaymentModal />}
 
@@ -407,9 +529,10 @@ function Checkout() {
             </div>
           </div>
 
-          <div className='checkoutbtn-container'>
-            <button type='submit'>Checkout</button>
+          <div className="checkoutbtn-container">
+            <button onClick={handleCheckout}>Checkout</button>
           </div>
+
         </div>
       </div>
       <div className='footer'>

@@ -56,24 +56,26 @@ const AdminDashboard = () => {
                     <h6>ADMIN</h6>
                 </div>
                 <ul className="sidebar-menu">
-                <li className="menu-item">
-                        <Link to="/admin" className="menu-link">
-                            <AiOutlineDashboard className="icon" /> Dashboard
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/inventory" className="menu-link">
-                            <FiShoppingCart className="icon" /> Inventory
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <Link to="/sales" className="menu-link">
-                        <RiBarChartLine className="icon" /> Sales Reports
-                        </Link>
-                    </li>
-                    <li className="menu-item">
-                        <FiUser className="icon" /> Staff
-                    </li>
+                    <Link to="/admin" className="menu-link">
+                        <li className="menu-item">
+                                <AiOutlineDashboard className="icon" /> Dashboard
+                        </li>
+                    </Link>
+                    <Link to="/inventory" className="menu-link">
+                        <li className="menu-item">
+                                <FiShoppingCart className="icon" /> Inventory
+                        </li>
+                    </Link>
+                    <Link to="/sales" className="menu-link">
+                        <li className="menu-item">
+                            <RiBarChartLine className="icon" /> Sales Reports
+                        </li>
+                    </Link>
+                    <Link to="/staff"> 
+                        <li className="menu-item">
+                            <FiUser className="icon" /> Staff
+                        </li>
+                    </Link>
                     <li className="menu-item">
                         <RiAccountCircleLine className="icon" /> User Account Management
                     </li>

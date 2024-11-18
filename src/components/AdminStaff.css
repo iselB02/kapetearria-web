@@ -159,7 +159,9 @@
     height: 500px;
     width: 100%;
     max-width: 90rem;
-    margin: 10px 30px;
+    /* margin: 10px 30px; */
+    margin-top: 10px;
+    /* background-color: #5C8F4C; */
 }
 
 .table {
