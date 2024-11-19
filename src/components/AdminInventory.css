@@ -59,12 +59,6 @@
     height: 20px;
 }
 
-.menu-item:hover, .menu-item.active {
-    background-color: #e8f4e8; /* Subtle green hover background */
-    color: #68a45d; /* Match text color with theme */
-    border-radius: 8px;
-}
-
 .settings-section {
     margin-top: auto;
     display: flex;
@@ -81,16 +75,6 @@
     border: none; /* Remove any borders */
     border-radius: 0; /* Ensure there's no border-radius */
     height: 20px;
-}
-
-.menu-link {
-    color: inherit; /* Inherit the color from the parent (to match others) */
-    text-decoration: none; /* Remove underline */
-}
-
-
-.menu-link:hover {
-    color: #333; /* Or any color you want for hover */
 }
 
 .search2{

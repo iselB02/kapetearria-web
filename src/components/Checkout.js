@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './Checkout.css';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { database } from './firebaseConfig';
 import { useAuth } from '../backend/AuthContext'; // Import the Auth context
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { useNavigate } from "react-router-dom"; // Import for navigation
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import Footer from './Footer';
 
 const MapComponent = ({ position, address }) => {
+  const mapRef = useRef(null); // Reference to MapContainer
+
+  useEffect(() => {
+    if (mapRef.current) {
+      const map = mapRef.current;
+      map.flyTo(position, 15, { duration: 1.5 }); // Smooth transition to new position
+    }
+  }, [position]);
+
   const svgIcon = L.divIcon({
     html: `<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="red" class="bi bi-geo-fill" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
@@ -20,7 +30,12 @@ const MapComponent = ({ position, address }) => {
   });
 
   return (
-    <MapContainer center={position} zoom={15} style={{ height: "450px", width: "100%" }}>
+    <MapContainer
+      center={position}
+      zoom={15}
+      style={{ height: "450px", width: "100%" }}
+      ref={mapRef} // Attach the reference
+    >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -31,7 +46,6 @@ const MapComponent = ({ position, address }) => {
     </MapContainer>
   );
 };
-
 function Checkout() {
   const { user } = useAuth(); // Get the user object from AuthContext
   const [userData, setUserData] = useState({
@@ -53,6 +67,13 @@ function Checkout() {
   const [isVerified, setIsVerified] = useState(false);
   const deliveryFee = 60.00;
   const discount = 30.00;
+  const navigate = useNavigate();
+  const STORE_COORDINATES = { latitude: 14.3277, longitude: 121.0778 }; // Replace with actual store coordinates
+  const AVERAGE_SPEED_KMH = 30; // Average delivery speed in km/h
+  const PREPARATION_TIME_MIN = 20; // Fixed preparation time in minutes
+  const DEFAULT_DISTANCE_KM = 5; // Default distance in kilometers
+
+
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -63,6 +84,11 @@ function Checkout() {
           if (docSnap.exists()) {
             const userData = docSnap.data();
             setUserData(userData);
+  
+            // Trigger geocoding when address is fetched
+            if (userData.address) {
+              geocodeAddress(userData.address);
+            }
           } else {
             console.error("No user data found.");
           }
@@ -71,8 +97,7 @@ function Checkout() {
         }
       }
     };
-
-
+  
     const fetchOrders = async () => {
       if (user) {
         try {
@@ -90,12 +115,18 @@ function Checkout() {
         }
       }
     };
-
+  
     fetchUserData();
     fetchOrders();
   }, [user]);
-
-
+  
+  useEffect(() => {
+    // Trigger geocoding whenever the user's address changes
+    if (userData.address) {
+      geocodeAddress(userData.address);
+    }
+  }, [userData.address]);
+  
   const geocodeAddress = async (address) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
@@ -104,11 +135,96 @@ function Checkout() {
         const { lat, lon } = data[0];
         setMapPosition([parseFloat(lat), parseFloat(lon)]);
         setIsMapReady(true);
+        console.log(`Map position updated to: [${lat}, ${lon}]`);
+      } else {
+        console.warn("No results found for the given address.");
       }
     } catch (error) {
       console.error("Error geocoding address:", error);
     }
   };
+  
+
+  const handleCheckout = async (e) => {
+    e.preventDefault();
+  
+    if (!selectedPayment) {
+      alert("Please select a payment method.");
+      return;
+    }
+  
+    try {
+      // Use predefined distance
+      const distanceKm = DEFAULT_DISTANCE_KM; // Hardcoded or fetched from predefined zones
+  
+      // Calculate travel time based on average speed
+      const travelTimeMin = (distanceKm / AVERAGE_SPEED_KMH) * 60; // Time in minutes
+  
+      // Calculate total time (including preparation)
+      const totalTimeMin = PREPARATION_TIME_MIN + travelTimeMin;
+      const minEstimatedTime = Math.floor(totalTimeMin); // Minimum time
+      const maxEstimatedTime = Math.ceil(totalTimeMin + 5); // Add a buffer of 5 minutes
+      const estimatedTimeRange = `${minEstimatedTime}-${maxEstimatedTime} mins`;
+  
+      const now = new Date();
+      const eta = new Date(now.getTime() + totalTimeMin * 60 * 1000);
+      const etaFormatted = eta.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+      // Generate unique order number
+      const day = now.getDate().toString().padStart(2, "0");
+      const month = (now.getMonth() + 1).toString().padStart(2, "0");
+      const year = now.getFullYear().toString().slice(-2);
+      const randomPart = Math.floor(Math.random() * 100).toString().padStart(2, "0");
+      const orderNumber = `${day}${month}${year}${randomPart}`;
+  
+      // Prepare order data
+      const orderData = {
+        userId: user.uid,
+        orderNumber,
+        serviceOption: document.querySelector('input[name="selection"]:checked').value,
+        address: userData.address,
+        addressDetails: document.getElementById("details-address").value || "N/A",
+        paymentType: selectedPayment,
+        discountType: discountType || "None",
+        discountCode: discountID || voucherCodeInput || "None",
+        orders: orders.map(order => ({
+          productName: order.productName,
+          quantity: order.quantity,
+          price: order.price,
+          selectedSize: order.selectedSize || null,
+          selectedSugar: order.selectedSugar || null,
+          selectedAddOns: order.selectedAddOns || [],
+          image: order.image || null,
+        })),
+        totalAmount: grandTotal,
+        deliveryFee: deliveryFee,
+        discountAmount: discountAmount,
+        eta: etaFormatted,
+        estimatedTime: estimatedTimeRange,
+        status: "for approval",
+        timestamp: new Date(),
+        // image: orders.image,
+      };
+  
+      // Save to database
+      const orderRef = doc(database, "order_info", user.uid);
+      await setDoc(orderRef, orderData);
+  
+      // Delete document from `checkout_info`
+      const checkoutRef = doc(database, "checkout_info", user.uid);
+      await deleteDoc(checkoutRef);
+  
+      // Navigate to order process page
+      navigate("/order-process");
+  
+      alert(`Order placed successfully! Estimated time of arrival: ${estimatedTimeRange}`);
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place order. Please try again.");
+    }
+  };
+  
+  
 
    const handlePaymentChange = (e) => {
     const value = e.target.value;
@@ -132,17 +248,36 @@ function Checkout() {
   const PaymentModal = () => (
     <div className="modal-overlay">
       <div className="paymentModal-content">
-        <div className='payment-header'>
+        <div className="payment-header">
           <h2>Online Payment</h2>
         </div>
-        <div className='main-content-payment'>
-            <div className='paymentOptions-container'>
-            <button className='payment1'>GCash</button>
+        <div className="main-content-payment">
+          <div className="paymentOptions-container">
+            <button
+              className="payment1"
+              onClick={() => {
+                setSelectedPayment("Online"); // Set radio button to "Online"
+                setUserData({
+                  ...userData,
+                  paymentDetails: {
+                    type: "GCash", // Specify payment type as GCash
+                  },
+                });
+                setIsModalOpen(false); // Close the modal
+                console.log("GCash selected and payment set to Online.");
+              }}
+            >
+              GCash
+            </button>
           </div>
-          <button onClick={closeModal} className='close-btn-payment'>Close</button></div>
+          <button onClick={closeModal} className="close-btn-payment">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );
+  
 
   
 
@@ -280,17 +415,19 @@ function Checkout() {
 
             <div className='payment-method'>
               <h2 className='checkout-title'>Payment Method</h2>
-              <div className='radio-btn'>
-                <div className='payment-container'>
-                  <input type="radio"
+              <div className="radio-btn">
+                <div className="payment-container">
+                  <input
+                    type="radio"
                     id="COD"
                     name="payment"
                     value="COD"
                     checked={selectedPayment === "COD"}
-                    onChange={handlePaymentChange} />
+                    onChange={handlePaymentChange}
+                  />
                   <label htmlFor="COD">Cash On Delivery</label>
                 </div>
-                <div className='payment-container'>
+                <div className="payment-container">
                   <label htmlFor="Online">
                     <input
                       type="radio"
@@ -304,6 +441,7 @@ function Checkout() {
                   </label>
                 </div>
               </div>
+
             </div>
             {isModalOpen && <PaymentModal />}
 
@@ -348,69 +486,74 @@ function Checkout() {
           </div>
         </form>
 
-        {/* Order Summary Section */}
+       {/* Order Summary Section */}
         <div className='order-summary'>
           <div className='order-header'>
             <h1>Order Summary</h1>
           </div>
-          <div className='summary-info'>
-            {orders.length > 0 ? (
-              orders.map((order, index) => (
-                <div key={index} className='order'>
-                  <div className='main-order'>
-                    <div className='quantity-container'>{order.quantity}x</div>
-                    <div className='prod-info'>
-                      <h3 className='name-order'>{order.productName}</h3>
-                      <p className='customization'>
-                        {order.selectedSize && <span>{order.selectedSize}</span>}
-                        {order.selectedSugar && <span> | {order.selectedSugar}</span>}
-                        {order.selectedAddOns && order.selectedAddOns.length > 0 && (
-                          <>
-                            <span> | </span>
-                            {order.selectedAddOns.join(", ")}
-                          </>
-                        )}
-                      </p>
+          {orders.length > 0 ? (
+            <>
+              <div className='summary-info'>
+                {orders.map((order, index) => (
+                  <div key={index} className='order'>
+                    <div className='main-order'>
+                      <div className='quantity-container'>{order.quantity}x</div>
+                      <div className='prod-info'>
+                        <h3 className='name-order'>{order.productName}</h3>
+                        <p className='customization'>
+                          {order.selectedSize && <span>{order.selectedSize}</span>}
+                          {order.selectedSugar && <span> | {order.selectedSugar}</span>}
+                          {order.selectedAddOns && order.selectedAddOns.length > 0 && (
+                            <>
+                              <span> | </span>
+                              {order.selectedAddOns.join(", ")}
+                            </>
+                          )}
+                        </p>
+                      </div>
                     </div>
+                    <h3 className='order-price'>₱{(order.price * order.quantity).toFixed(2)}</h3>
                   </div>
-                  <h3 className='order-price'>₱{(order.price * order.quantity).toFixed(2)}</h3>
-                </div>
-              ))
-            ) : (
-              <p>No orders found.</p>
-            )}
-          </div>
-
-          <div className='other-details'>
-            <div className='total'>
-              <h3 className='totalprice-title'>Subtotal</h3>
-              <h3 className='totalprice'>₱{orderTotal.toFixed(2)}</h3>
-            </div>
-            <div className='delivery-fee'>
-              <h3 className='deliveryfee-title'>Delivery Fee</h3>
-              <h3 className='delivery-price'>₱{deliveryFee.toFixed(2)}</h3>
-            </div>
-            {/* Discount Display */}
-            {discountAmount > 0 && (
-              <div className='discounts-applied'>
-                <h3 className='discount '>
-                  {discountType === 'Senior' ? 'Senior Discount' :
-                  discountType === 'PWD' ? 'PWD Discount' :
-                  'Voucher Discount'}
-                </h3>
-                <h3 className='discount-price'>₱{discountAmount.toFixed(2)}</h3>
+                ))}
               </div>
-            )}
-            <div className='total-details'>
-              <h3 className='total-title'>Total</h3>
-              <h3 className='grand-totalprice'>₱{grandTotal.toFixed(2)}</h3>
-            </div>
-          </div>
+              <div className='other-details'>
+                <div className='total'>
+                  <h3 className='totalprice-title'>Subtotal</h3>
+                  <h3 className='totalprice'>₱{orderTotal.toFixed(2)}</h3>
+                </div>
+                <div className='delivery-fee'>
+                  <h3 className='deliveryfee-title'>Delivery Fee</h3>
+                  <h3 className='delivery-price'>₱{deliveryFee.toFixed(2)}</h3>
+                </div>
+                {/* Discount Display */}
+                {discountAmount > 0 && (
+                  <div className='discounts-applied'>
+                    <h3 className='discount '>
+                      {discountType === 'Senior' ? 'Senior Discount' :
+                      discountType === 'PWD' ? 'PWD Discount' :
+                      'Voucher Discount'}
+                    </h3>
+                    <h3 className='discount-price'>₱{discountAmount.toFixed(2)}</h3>
+                  </div>
+                )}
+                <div className='total-details'>
+                  <h3 className='total-title'>Total</h3>
+                  <h3 className='grand-totalprice'>₱{grandTotal.toFixed(2)}</h3>
+                </div>
+              </div>
 
-          <div className='checkoutbtn-container'>
-            <button type='submit'>Checkout</button>
-          </div>
+              <div className="checkoutbtn-container">
+                <button onClick={handleCheckout}>Checkout</button>
+              </div>
+            </>
+          ) : (
+            <div className="no-orders-container">
+              <p className="no-orders-message">No orders found. Add items to your cart to proceed.</p>
+            </div>
+          )}
         </div>
+
+
       </div>
       <div className='footer'>
         <Footer />

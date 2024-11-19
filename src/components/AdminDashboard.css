@@ -1,353 +1,362 @@
-/* Main Content Responsiveness */
-@media (max-width: 768px) {
+    /* Main Content Responsiveness */
+    @media (max-width: 768px) {
+        .main-content {
+            padding: 10px; /* Reduce padding for smaller screens */
+        }
+
+        .dashboard-overview {
+            grid-template-columns: 1fr; /* Single column for small screens */
+            grid-gap: 15px; /* Reduce gap */
+        }
+
+        .overview-card {
+            margin: 0 auto;
+            width: 100%; 
+        }
+
+        .rectangle-container {
+            flex-direction: column; /* Stack rectangles vertically */
+            gap: 10px; /* Add spacing between rectangles */
+        }
+
+        .rectangle {
+            width: 100%; /* Let rectangles span full width */
+            height: auto; /* Adjust height automatically */
+            text-align: center;
+        }
+    }
+
+
+    /* Admin Container */
+    .admin-container {
+        display: flex;
+        height: 100vh; /* Full viewport height */
+        overflow: hidden; /* Prevent horizontal scrolling */
+    }
+
+
+    /* Sidebar Styling */
+    .sidebar {
+        display: flex;
+        width: 260px; /* Reduce sidebar width */
+        background-color: #fff;
+        border-right: 1px solid #e6e6e6;
+        flex-direction: column;
+        padding: 10px 10px; /* Reduce padding */
+    }
+
+    .sidebar-header {
+        display: flex;
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;
+    }
+
+    .sidebar-header .logo {
+        width: 2; /* Adjust logo size */
+        height: auto; /* Maintain aspect ratio */
+        margin-bottom: 5px; /* Add space between logo and Admin text */
+    }
+
+    .sidebar-header h6 {
+        font-size: 12px; /* Make the Admin text smaller */
+        font-weight: bolder;
+        color: #333; /* Dark color for better readability */
+        margin-top: 5px; /* Add space between logo and Admin text */
+    }
+
+    /* Sidebar Menu */
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu-link {
+        margin-bottom: 250px;
+        margin-top: 150px;
+        color: inherit; /* Inherit the color from the parent (to match others) */
+        text-decoration: none; /* Remove underline */
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 0; /* Increase padding for a cleaner look */
+        color: #333;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 13px; /* Slightly larger font size for menu items */
+        justify-content: flex-start; /* Align the icons and text to the left */
+    }
+
+    .menu-item .icon {
+        font-size: 10px; 
+        margin-right: 10px; /* Adjust spacing if necessary */
+        border: none; /* Remove any borders */
+        border-radius: 0; /* Ensure there's no border-radius */
+        height: 20px;
+    }
+    .menu-item.active:hover {
+        background-color: #8B443A;
+        color: rgb(240, 240, 240); 
+        border-radius: 8px 0px 0px 8px;
+    }
+
+    .settings-section {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: #333;
+        padding: 15px 0px; 
+        border-top: 1px solid #e6e6e6; 
+    }
+
+    .settings-section:hover{
+        color: #5c8f4c; /* Match text color with theme */
+        border-radius: 8px 0px 0px 8px;
+    }
+
+    .settings-section .icon {
+        margin-right: 8px;
+        font-size: 18px;
+        border: none; 
+        border-radius: 0; 
+        height: 20px;
+    }
+
+    /* Main Content Styling */
     .main-content {
-        padding: 10px; /* Reduce padding for smaller screens */
+        flex: 1;
+        padding: 20px;
+        background-color: #f8f8f8;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto; /* Enables vertical scrolling */
+        height: 100%; /* Ensures it spans the full height */
+        box-sizing: border-box; /* Includes padding in height calculations */
+        scroll-behavior: smooth; /* Smooth scrolling */
     }
 
-    .dashboard-overview {
-        grid-template-columns: 1fr; /* Single column for small screens */
-        grid-gap: 15px; /* Reduce gap */
+    /* Top Bar Responsiveness */
+    @media (max-width: 768px) {
+        .top-bar {
+            flex-direction: column; 
+            height: auto;
+            padding: 10px; 
+        }
+
+        .profile-btn {
+            width: 100%; /* Full width */
+        }
     }
 
-    .overview-card {
-        margin: 0 auto;
-        width: 100%; 
-    }
-
-    .rectangle-container {
-        flex-direction: column; /* Stack rectangles vertically */
-        gap: 10px; /* Add spacing between rectangles */
-    }
-
-    .rectangle {
-        width: 100%; /* Let rectangles span full width */
-        height: auto; /* Adjust height automatically */
-        text-align: center;
-    }
-}
-
-
-/* Admin Container */
-.admin-container {
-    display: flex;
-    height: 100vh; /* Full viewport height */
-    overflow: hidden; /* Prevent horizontal scrolling */
-}
-
-
-/* Sidebar Styling */
-.sidebar {
-    width: 260px; /* Reduce sidebar width */
-    background-color: #fff;
-    border-right: 1px solid #e6e6e6;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 10px 10px; /* Reduce padding */
-}
-
-.sidebar-header {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;
-    margin-bottom: 20px; /* Reduce margin */
-}
-
-.sidebar-header .logo {
-    width: 2; /* Adjust logo size */
-    height: auto; /* Maintain aspect ratio */
-    margin-bottom: 5px; /* Add space between logo and Admin text */
-}
-
-.sidebar-header h6 {
-    font-size: 12px; /* Make the Admin text smaller */
-    color: #333; /* Dark color for better readability */
-    margin-top: 5px; /* Add space between logo and Admin text */
-}
-
-/* Sidebar Menu */
-.sidebar-menu {
-    list-style: none;
-    padding: 0;
-}
-
-.menu-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 0; /* Increase padding for a cleaner look */
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 13px; /* Slightly larger font size for menu items */
-    justify-content: flex-start; /* Align the icons and text to the left */
-}
-
-.menu-item .icon {
-    font-size: 10px; 
-    margin-right: 10px; /* Adjust spacing if necessary */
-    border: none; /* Remove any borders */
-    border-radius: 0; /* Ensure there's no border-radius */
-    height: 20px;
-}
-
-.menu-item:hover, .menu-item.active {
-    background-color: #000000; /* Subtle green hover background */
-    color: rgb(216, 216, 216); /* Match text color with theme */
-    border-radius: 8px;
-}
-
-.settings-section {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: #333;
-    padding-top: 15px; 
-    border-top: 1px solid #e6e6e6; 
-}
-
-.settings-section .icon {
-    margin-right: 8px;
-    font-size: 18px;
-    border: none; 
-    border-radius: 0; 
-    height: 20px;
-}
-
-/* Main Content Styling */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    background-color: #f8f8f8;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow-y: auto; /* Enables vertical scrolling */
-    height: 100%; /* Ensures it spans the full height */
-    box-sizing: border-box; /* Includes padding in height calculations */
-    scroll-behavior: smooth; /* Smooth scrolling */
-}
-
-/* Top Bar Responsiveness */
-@media (max-width: 768px) {
+    /* Top Bar Styling */
     .top-bar {
-        flex-direction: column; 
-        height: auto;
-        padding: 10px; 
+        display: flex;
+        height: 100px; /* Adjust the height of the top bar */
+        margin-bottom: 20px; /* Space below the top bar */
+        background-color: #f8f8f8; /* Background color (optional) */
     }
 
     .profile-btn {
-        width: 100%; /* Full width */
+        padding: 8px 15px; 
+        background-color: #8FC742;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: bold;
+        width: 15%;
+        margin-left: auto;
     }
-}
 
-/* Top Bar Styling */
-.top-bar {
-    display: flex;
-    height: 100px; /* Adjust the height of the top bar */
-    margin-bottom: 20px; /* Space below the top bar */
-    background-color: #f8f8f8; /* Background color (optional) */
-}
+    .rectangle-container {
+        position: relative; 
+        display: flex;
+        width: 100%;
+        height: 50%;
+        margin-bottom: 4%; /* Space between the rectangle and the cards */
+        
+    }
 
-.profile-btn {
-    padding: 8px 15px; 
-    background-color: #8FC742;
-    color: white;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 15%;
-    margin-left: auto;
-}
+    .rectangle {
+        background-position: 0%;
+        width: 900px; 
+        height: 40px; 
+        background-color: #68a45d; 
+        color: white; /* Text color */
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        border-radius: 15px; 
+        font-size: 16px;
+        font-weight: bold; 
+        text-align: center;
+    }
 
-.rectangle-container {
-    position: relative; 
-    display: flex;
-    width: 100%;
-    height: 50%;
-    margin-bottom: 4%; /* Space between the rectangle and the cards */
-    
-}
-
-.rectangle {
-    background-position: 0%;
-    width: 900px; 
-    height: 40px; 
-    background-color: #68a45d; 
-    color: white; /* Text color */
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    border-radius: 15px; 
-    font-size: 16px;
-    font-weight: bold; 
-    text-align: center;
-}
-
-.dashboard-overview {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 20px;
-    padding: 20px;
-    z-index: 1;
-}
-
-/* Card Styling */
-.overview-card {
-    position: relative; /* To position the close button */
-    padding: 20px;
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid transparent; /* Placeholder for custom border colors */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #fff; /* Default background color */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Close Icon Styling */
-.overview-card .close-icon {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 18px;
-    color: #666;
-    cursor: pointer;
-}
-
-
-
-.overview-card p {
-    margin: 0;
-}
-
-.overview-card a {
-    text-decoration: none;
-    color: #2196f3;
-}
-
-.alert {
-    position: static !important; 
-    z-index: 1; 
-    width: auto; 
-    padding: 20px;
-    font-size: 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    border-left: 4px solid #E05733;
-    display: flex;
-}
-
-.success {
-    border-left: 4px solid #8FC742;
-    position: static !important; /* Force to prevent absolute positioning */
-    z-index: 1; /* Ensure it's not behind other elements */
-    width: auto; /* Ensure no forced width from signup.css */
-    padding: 20px;
-    font-size: 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    display: flex;
-}
-
-.info {
-    border-left: 4px solid #BB9773;
-    position: static !important; /* Force to prevent absolute positioning */
-    z-index: 1; /* Ensure it's not behind other elements */
-    width: auto; /* Ensure no forced width from signup.css */
-    padding: 20px;
-    font-size: 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    display: flex;
-}
-
-.warning {
-    border-left: 4px solid #DE5836;
-    position: static !important; /* Force to prevent absolute positioning */
-    z-index: 1; /* Ensure it's not behind other elements */
-    width: auto; /* Ensure no forced width from signup.css */
-    padding: 20px;
-    font-size: 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    box-sizing: border-box;
-    display: flex;
-}
-
-.card-icon {
-    font-size: 28px;
-}
-
-.visitor-chart {
-    height: 350px; /* Chart height */
-    background: #fff; /* White background */
-    padding: 20px; /* Add padding */
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .chart-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #444;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  .main-content {
-    flex: 1;
-    padding: 20px;
-    background: #f9f9f9;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .rectangle {
-    background-color: #68a45d;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    text-align: center;
-  }
-
-
-
-
-/* Chart Container */
-.visitor-chart canvas {
-    width: 100% !important; /* Ensure chart takes full width */
-    height: auto !important; /* Adjust height automatically */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
     .dashboard-overview {
-        grid-template-columns: 1fr; /* Single column layout for mobile */
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-gap: 20px;
+        padding: 20px;
+        z-index: 1;
     }
-}
 
-.visitor-chart canvas {
-    max-height: 300px; /* Adjust the height on smaller screens */
-} 
+    /* Card Styling */
+    .overview-card {
+        position: relative; /* To position the close button */
+        padding: 20px;
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border: 2px solid transparent; /* Placeholder for custom border colors */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: #fff; /* Default background color */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* Close Icon Styling */
+    .overview-card .close-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 18px;
+        color: #666;
+        cursor: pointer;
+    }
+
+
+
+    .overview-card p {
+        margin: 0;
+    }
+
+    .overview-card a {
+        text-decoration: none;
+        color: #2196f3;
+    }
+
+    .alert {
+        position: static !important; 
+        z-index: 1; 
+        width: auto; 
+        padding: 20px;
+        font-size: 14px;
+        border-radius: 10px;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        border-left: 4px solid #E05733;
+        display: flex;
+    }
+
+    .success {
+        border-left: 4px solid #8FC742;
+        position: static !important; /* Force to prevent absolute positioning */
+        z-index: 1; /* Ensure it's not behind other elements */
+        width: auto; /* Ensure no forced width from signup.css */
+        padding: 20px;
+        font-size: 14px;
+        border-radius: 10px;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .info {
+        border-left: 4px solid #BB9773;
+        position: static !important; /* Force to prevent absolute positioning */
+        z-index: 1; /* Ensure it's not behind other elements */
+        width: auto; /* Ensure no forced width from signup.css */
+        padding: 20px;
+        font-size: 14px;
+        border-radius: 10px;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .warning {
+        border-left: 4px solid #DE5836;
+        position: static !important; /* Force to prevent absolute positioning */
+        z-index: 1; /* Ensure it's not behind other elements */
+        width: auto; /* Ensure no forced width from signup.css */
+        padding: 20px;
+        font-size: 14px;
+        border-radius: 10px;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        display: flex;
+    }
+
+    .card-icon {
+        font-size: 28px;
+    }
+
+    .visitor-chart {
+        height: 350px; /* Chart height */
+        background: #fff; /* White background */
+        padding: 20px; /* Add padding */
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .chart-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .main-content {
+        flex: 1;
+        padding: 20px;
+        background: #f9f9f9;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .rectangle {
+        background-color: #68a45d;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+
+
+
+    /* Chart Container */
+    .visitor-chart canvas {
+        width: 100% !important; /* Ensure chart takes full width */
+        height: auto !important; /* Adjust height automatically */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .dashboard-overview {
+            grid-template-columns: 1fr; /* Single column layout for mobile */
+        }
+    }
+
+    .visitor-chart canvas {
+        max-height: 300px; /* Adjust the height on smaller screens */
+    } 

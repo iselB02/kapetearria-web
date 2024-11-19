@@ -4,22 +4,38 @@
     height: 500px;
     width: auto;
     max-width: 90rem;
-    margin: 10px 30px;
+}
+
+.search-head{
+    margin: 0 30px;
+    height: 50px;   
+    display: flex;
+    justify-content: left;
+}
+
+.search{
+    margin: 10px 0px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 50px;
+    border: 1px solid black;
+    box-sizing: border-box;
+    background-color: rgb(226, 226, 226);
+    padding: 10px 20px;
 }
 
 .tablee {
     width: 100%;
-    background-color: #3a1c17;
     margin: 0 auto;
-    border: 2px solid black ;
     border-radius: 5px !important;
-    border-collapse:separate; /* search how to adjust */
-    table-layout: fixed;
+    max-height: 600px; 
+    overflow-y: auto; 
+    overflow-x: hidden;
 }
 
 .tablee th{
-    background-color: #3a1c17 !important;
-    color: white !important;
+    background-color: #e8f4e8 !important;
+    color: rgb(22, 22, 22) !important;
     text-align: center;
     padding: 10px;
     border: none;
@@ -30,8 +46,8 @@
 
 .tablee td{
     border: none;
-    padding: 30px;
-    text-align: left;
+    padding: 15px;
+    text-align: center;
     width: auto;
 }
 

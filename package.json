@@ -15,6 +15,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "firebase": "^9.14.0",
+    "geolib": "^3.3.4",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "nodemailer": "^6.9.16",

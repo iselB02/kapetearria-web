@@ -1,6 +1,6 @@
 .orderContainer-main {
     width: 100%;
-    height: 605px;
+    height: 640px;
     margin-top: 90px;
     overflow-y: auto;
     /* padding-bottom: 50px; */
@@ -177,6 +177,8 @@ td {
     font-style: italic;
     font-weight: 600;
     line-height: normal;
+    background-color: white;
+    /* background-color: #02542D !important;     */
 }
 
 
@@ -201,6 +203,10 @@ td {
 th, td {
     /* background-color: aqua; */
     width: 33%;
+}
+
+.table-process {
+    width: 100%;
 }
 
 .table-itemName, .table-qty {

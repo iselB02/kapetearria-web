@@ -85,48 +85,50 @@ const AdminInventory = () => {
     return (
         <div className="admin-container">
             {/* Sidebar */}
-            <aside className="sidebar2">
+            <aside className="sidebar">
                 <div className="sidebar-header">
-                    <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
-                    <h6>ADMIN</h6>
+                <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+                <h6>ADMIN</h6>
                 </div>
                 <ul className="sidebar-menu">
+                <Link to="/admin" className="menu-link">
                     <li className="menu-item">
-                        <Link to="/admin" className="menu-link">
-                            <AiOutlineDashboard className="icon" /> Dashboard
-                        </Link>
+                    <AiOutlineDashboard className="icon" /> Dashboard
                     </li>
-                    <li className="menu-item active">
-                        <Link to="/inventory" className="menu-link">
-                            <FiShoppingCart className="icon" /> Inventory
-                        </Link>
+                </Link> 
+                <Link to="/inventory" className="menu-link">
+                <li className="menu-item active">
+
+                    <FiShoppingCart className="icon" /> Inventory
+                </li>
+                </Link>
+                <Link to="/sales" className="menu-link">
+                    <li className="menu-item">    
+                    <RiBarChartLine className="icon" /> Sales Reports
                     </li>
+                </Link>
+                <Link to="/staff" className='menu-link'>
                     <li className="menu-item">
-                        <Link to="/sales" className="menu-link">
-                            <RiBarChartLine className="icon" /> Sales Reports
-                        </Link>
+                    <FiUser className="icon" /> Staff
                     </li>
+                </Link>
+                <Link to="/uam" className='menu-link'>
                     <li className="menu-item">
-                        <Link to="/staff" className="menu-link">
-                            <FiUser className="icon" /> Staff
-                        </Link>
+                    <RiAccountCircleLine className="icon" /> User Account Management
                     </li>
+                </Link>
+                <Link to="/chat-support" className='menu-link'>
                     <li className="menu-item">
-                        <Link to="/uam" className="menu-link">
-                            <RiAccountCircleLine className="icon" /> User Account Management
-                        </Link>
+                    <FiMessageSquare className="icon" /> Chat Support
                     </li>
-                    <li className="menu-item">
-                        <Link to="/chat-support" className="menu-link">
-                            <FiMessageSquare className="icon" /> Chat Support
-                        </Link>
-                    </li>
+                    </Link>
                 </ul>
-                <div className="divider"></div>
+                <Link to="/settings" className='menu-link'>
                 <div className="settings-section">
                     <FiSettings className="icon" /> Settings
                 </div>
-            </aside>
+                </Link>
+             </aside>
 
             <main className="inventory-content">
                 {/* Inventory Header */}

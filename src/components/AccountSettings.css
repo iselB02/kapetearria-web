@@ -1,0 +1,209 @@
+
+.main-setup-container {
+    width: 100%;
+    height: 700px; 
+    background-color: bisque;
+}
+
+#title-account {
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding-left: 15px;
+    /* background-color: pink; */
+}
+
+.columns-setup {
+    display: flex;
+    /* background-color: aqua; */
+    
+}
+
+.setup-container {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    height: 630px;
+    width: 80%;
+    /* background-color: aqua; */
+    padding: 150px 50px 50px 50px;
+}
+
+.setup-container, label {
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.col-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    gap: 30px;
+    width: 50%;
+    height: auto;
+    /* background-color: red; */
+}
+
+.surname-div, .firstname-div, .address-div, .phone-div, .email-div {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+
+}
+
+.input-col1, .input-col2, .mi-bod-col1 {
+    border-radius: 15px;
+    border: 2px solid var(--Color, #5E2D26);
+    background: #EEECDD;
+}
+
+.mi-bod {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    width: 100%;
+    /* background-color: pink; */
+    
+}
+
+.mi-bod-col1 {
+    border-radius: 10px;
+}
+
+.mi-bod-div {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    /* background-color: aqua; */
+}
+
+.col-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+    gap: 30px;
+    width: 50%;
+    height: auto;
+}
+
+#Phone {
+    width: 79.5%;
+    border-radius: 15px 0px 0px 15px;
+}
+
+#verify {
+    width: 20%;
+    border-radius: 0px 15px 15px 0px;
+    border: 2px solid var(--Color, #5E2D26);
+    background: #EEECDD;
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.phone-div div {
+    display: flex;
+    gap: 0.5%;
+    /* background-color: pink; */
+}
+
+.verification-status {
+    align-self: center;
+    font-size: 15px;
+    /* background-color: red; */
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+
+
+.button-sub{
+    display: flex;
+    justify-content: center;
+    /* background-color: #3B1C18; */
+}
+
+.button-sub button {
+    background-color: #3B1C18;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border: none;
+    border-radius: 15px;
+    width: 150px;
+    padding: 5px;
+}
+
+
+.otp-modal, .warning-modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .otp-modal-content, .warning-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .input-otp {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+.warning-modal-content button{
+    margin-left: 10px;
+}
+
+.warning-modal-content  h2 {
+    color: #3B1C18;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

@@ -26,6 +26,7 @@
  gap: 20px; /* Maintain consistent spacing between items */
  padding: 0;
  list-style: none;
+ /* background-color: rgb(0, 30, 255); */
 }
 
 .nav-item {
@@ -34,6 +35,8 @@
  justify-content: center;
  width: 100px; /* Fixed width for consistent alignment */
  padding: 10px 0; /* Adjusted padding for spacing */
+ /* background-color: aqua; */
+ height: 70px;
 }
 
 .nav-link {
@@ -42,7 +45,7 @@
  align-items: center;
  text-decoration: none;
  color: inherit;
- /* background-color: aqua; */
+ /* background-color: rgb(59, 146, 146); */
  width: 100px; 
 }
 
@@ -62,8 +65,9 @@
  align-items: center;
  font-size: 14px;
  font-weight: bold;
- background-color: rgb(255, 255, 255) !important;
+ background-color: transparent!important;
  width: 100px;
+ height: 60px;
 }
 
 /* Responsive styling */
