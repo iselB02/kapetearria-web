@@ -23,6 +23,8 @@ import AdminChat from './components/AdminChat';
 import './App.css';
 import ChatBot from "react-chatbotify";
 import "../node_modules/react-chatbotify/dist/style.css";
+import AddProduct from "./components/AdminAdd"; // Import the component
+
 
 
 const config = {
@@ -179,7 +181,8 @@ const Content = () => {
         */}
           <Route path="/" element={<Navigate to="/home" />} />
            {/* Admin Dashboard Route */}<Route path="/admin" element={<AdminDashboard />} />
-           {/*  Admin Inventory Route*/}<Route path="/inventory" element={<AdminInventory />} />
+           {/*  Admin Inventory Route*/}<Route path="/inventory" element={<AdminInventory />} /> 
+           {/*  Admin Add Product Route*/} <Route path="/add" element={<AddProduct />} />
            {/*  Admin Sales Report Route*/}<Route path="/sales" element={<AdminSales />} />
            <Route path="/staff" element={<AdminStaff/>} />
            <Route path='/uam' element={<AdminUAM/>}/>

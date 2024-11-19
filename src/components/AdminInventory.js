@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./AdminInventory.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Correct import for useNavigate
 import {
     FiSettings,
     FiUser,
@@ -16,7 +16,7 @@ const AdminInventory = () => {
     const [products, setProducts] = useState([
         {
             id: 1,
-            image: "/image/drink1.png", // Adjusted image path
+            image: "/image/drink1.png",
             name: "Milkshake",
             category: "Snacks",
             price: "₱99.00",
@@ -33,51 +33,25 @@ const AdminInventory = () => {
         {
             id: 3,
             image: "/image/drink1.png",
-            name: "Spanish Latte",
-            category: "Beverages",
-            price: "₱150.00",
+            name: "Milkshake",
+            category: "Snacks",
+            price: "₱99.00",
             status: true,
         },
 
         {
             id: 4,
             image: "/image/drink1.png",
-            name: "Spanish Latte",
-            category: "Beverages",
-            price: "₱150.00",
-            status: true,
-        },
-
-        {
-            id: 5,
-            image: "/image/drink1.png",
-            name: "Spanish Latte",
-            category: "Beverages",
-            price: "₱150.00",
-            status: true,
-        },
-
-        {
-            id: 6,
-            image: "/image/drink1.png",
-            name: "Spanish Latte",
-            category: "Beverages",
-            price: "₱150.00",
-            status: true,
-        },
-
-        {
-            id: 7,
-            image: "/image/drink1.png",
-            name: "Spanish Latte",
-            category: "Beverages",
-            price: "₱150.00",
+            name: "Milkshake",
+            category: "Snacks",
+            price: "₱99.00",
             status: true,
         },
     ]);
 
     const [editProduct, setEditProduct] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate(); // Correctly initialize navigate
 
     // Save edits to a product
     const handleSaveEdit = () => {
@@ -154,20 +128,28 @@ const AdminInventory = () => {
                 </div>
             </aside>
 
-            {/* Main Content */}
             <main className="inventory-content">
+                {/* Inventory Header */}
                 <div className="inventory-header">
-                    <h2>INVENTORY</h2>
                     <input
                         type="text"
                         placeholder="Search by product name..."
-                        className="search-bar"
+                        className="search2"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
+
+                    <button
+                        className="add-product-rectangle"
+                        onClick={() => navigate("/add")} // Properly attach the onClick handler
+                    >
+                        Add Product
+                    </button>
                 </div>
+
                 <div className="divider"></div>
 
+                {/* Inventory Table */}
                 <div className="inventory-table">
                     <table>
                         <thead>

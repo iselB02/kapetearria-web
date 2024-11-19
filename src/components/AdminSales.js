@@ -121,11 +121,7 @@ const AdminSales = () => {
 
       {/* Main Content */}
       <main className="sales-content">
-        {/* Header */}
-        <div className="sales-header">
-          <h2>SALES & REPORTS</h2>
-        </div>
-
+    
         {/* Bar Chart Section */}
         <div className="chart-section">
           <h3>Total Revenue</h3>
