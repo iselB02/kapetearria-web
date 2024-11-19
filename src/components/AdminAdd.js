@@ -1,30 +1,31 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./AdminAdd.css";
 
 const AddProduct = () => {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [details, setDetails] = useState("");
-  const [image, setImage] = useState(null); // Image preview state
-  const [errors, setErrors] = useState({}); // Error state
+  const [details, setDetails] = useState(""); // Optional field
+  const [image, setImage] = useState(null);
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate(); // Initialize navigate function
 
   const validateFields = () => {
     const newErrors = {};
     if (!productName.trim()) newErrors.productName = "Product name is required!";
     if (!category.trim()) newErrors.category = "Category is required!";
     if (!price || price <= 0) newErrors.price = "Enter a valid price!";
-    if (!details.trim()) newErrors.details = "Details are required!";
     if (!image) newErrors.image = "Product image is required!";
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        // Limit file size to 5MB
         alert("File size should be less than 5MB!");
         return;
       }
@@ -37,9 +38,7 @@ const AddProduct = () => {
     }
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+  const handleDragOver = (e) => e.preventDefault();
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -50,34 +49,38 @@ const AddProduct = () => {
   const handleSave = () => {
     if (!validateFields()) return;
 
-    // Saving logic
     console.log({ productName, category, price, details, image });
     alert("Product added successfully!");
 
-    // Reset form
     setProductName("");
     setCategory("");
     setPrice("");
     setDetails("");
     setImage(null);
+
+    // Navigate to Inventory Page after saving
+    navigate("/inventory");
+  };
+
+  const handleClose = () => {
+    // Navigate to Inventory Page when X button is clicked
+    navigate("/inventory");
   };
 
   return (
     <div className="add-product-container">
-      <h2 className="add-product-header">ADD NEW PRODUCT</h2>
+      <button className="close-button" onClick={handleClose}>X</button>
+      <div className="add-product-header">
+        <h2>ADD NEW PRODUCT</h2>
+      </div>
       <div className="add-product-form">
-        {/* Drag-and-Drop Image Upload */}
         <div
           className={`product-image-container ${errors.image ? "error-border" : ""}`}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
           {image ? (
-            <img
-              src={image}
-              alt="Uploaded Preview"
-              className="product-image-preview"
-            />
+            <img src={image} alt="Uploaded Preview" className="product-image-preview" />
           ) : (
             <div className="product-image-placeholder">
               <label htmlFor="image-upload" className="upload-label">
@@ -95,7 +98,6 @@ const AddProduct = () => {
         </div>
         {errors.image && <p className="error-text">{errors.image}</p>}
 
-        {/* Input Fields */}
         <input
           type="text"
           placeholder="Product Name"
@@ -124,14 +126,12 @@ const AddProduct = () => {
         {errors.price && <p className="error-text">{errors.price}</p>}
 
         <textarea
-          placeholder="Details"
+          placeholder="Details (Optional)"
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          className={`textarea-field ${errors.details ? "error-border" : ""}`}
+          className="textarea-field"
         ></textarea>
-        {errors.details && <p className="error-text">{errors.details}</p>}
 
-        {/* Save Button */}
         <button onClick={handleSave} className="save-button">
           SAVE
         </button>

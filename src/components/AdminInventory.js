@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./AdminInventory.css";
-import { Link, useNavigate } from "react-router-dom"; // Correct import for useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import {
     FiSettings,
     FiUser,
@@ -33,25 +33,16 @@ const AdminInventory = () => {
         {
             id: 3,
             image: "/image/drink1.png",
-            name: "Milkshake",
+            name: "Smoothie",
             category: "Snacks",
             price: "₱99.00",
-            status: true,
-        },
-
-        {
-            id: 4,
-            image: "/image/drink1.png",
-            name: "Milkshake",
-            category: "Snacks",
-            price: "₱99.00",
-            status: true,
+            status: false,
         },
     ]);
 
     const [editProduct, setEditProduct] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const navigate = useNavigate(); // Correctly initialize navigate
+    const navigate = useNavigate();
 
     // Save edits to a product
     const handleSaveEdit = () => {
@@ -72,6 +63,15 @@ const AdminInventory = () => {
         setEditProduct(null);
     };
 
+    // Toggle the status of a product
+    const toggleProductStatus = (id) => {
+        setProducts((prevProducts) =>
+            prevProducts.map((product) =>
+                product.id === id ? { ...product, status: !product.status } : product
+            )
+        );
+    };
+
     // Delete a product
     const handleDeleteProduct = (id) => {
         setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
@@ -87,48 +87,47 @@ const AdminInventory = () => {
             {/* Sidebar */}
             <aside className="sidebar">
                 <div className="sidebar-header">
-                <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
-                <h6>ADMIN</h6>
+                    <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+                    <h6>ADMIN</h6>
                 </div>
                 <ul className="sidebar-menu">
-                <Link to="/admin" className="menu-link">
-                    <li className="menu-item">
-                    <AiOutlineDashboard className="icon" /> Dashboard
-                    </li>
-                </Link> 
-                <Link to="/inventory" className="menu-link">
-                <li className="menu-item active">
-
-                    <FiShoppingCart className="icon" /> Inventory
-                </li>
-                </Link>
-                <Link to="/sales" className="menu-link">
-                    <li className="menu-item">    
-                    <RiBarChartLine className="icon" /> Sales Reports
-                    </li>
-                </Link>
-                <Link to="/staff" className='menu-link'>
-                    <li className="menu-item">
-                    <FiUser className="icon" /> Staff
-                    </li>
-                </Link>
-                <Link to="/uam" className='menu-link'>
-                    <li className="menu-item">
-                    <RiAccountCircleLine className="icon" /> User Account Management
-                    </li>
-                </Link>
-                <Link to="/chat-support" className='menu-link'>
-                    <li className="menu-item">
-                    <FiMessageSquare className="icon" /> Chat Support
-                    </li>
+                    <Link to="/admin" className="menu-link">
+                        <li className="menu-item">
+                            <AiOutlineDashboard className="icon" /> Dashboard
+                        </li>
+                    </Link>
+                    <Link to="/inventory" className="menu-link">
+                        <li className="menu-item active">
+                            <FiShoppingCart className="icon" /> Inventory
+                        </li>
+                    </Link>
+                    <Link to="/sales" className="menu-link">
+                        <li className="menu-item">
+                            <RiBarChartLine className="icon" /> Sales Reports
+                        </li>
+                    </Link>
+                    <Link to="/staff" className="menu-link">
+                        <li className="menu-item">
+                            <FiUser className="icon" /> Staff
+                        </li>
+                    </Link>
+                    <Link to="/uam" className="menu-link">
+                        <li className="menu-item">
+                            <RiAccountCircleLine className="icon" /> User Account Management
+                        </li>
+                    </Link>
+                    <Link to="/chat-support" className="menu-link">
+                        <li className="menu-item">
+                            <FiMessageSquare className="icon" /> Chat Support
+                        </li>
                     </Link>
                 </ul>
-                <Link to="/settings" className='menu-link'>
-                <div className="settings-section">
-                    <FiSettings className="icon" /> Settings
-                </div>
+                <Link to="/settings" className="menu-link">
+                    <div className="settings-section">
+                        <FiSettings className="icon" /> Settings
+                    </div>
                 </Link>
-             </aside>
+            </aside>
 
             <main className="inventory-content">
                 {/* Inventory Header */}
@@ -143,7 +142,7 @@ const AdminInventory = () => {
 
                     <button
                         className="add-product-rectangle"
-                        onClick={() => navigate("/add")} // Properly attach the onClick handler
+                        onClick={() => navigate("/add")}
                     >
                         Add Product
                     </button>
@@ -226,17 +225,8 @@ const AdminInventory = () => {
                                         <label className="toggle-switch">
                                             <input
                                                 type="checkbox"
-                                                checked={
-                                                    editProduct?.id === product.id
-                                                        ? editProduct.status
-                                                        : product.status
-                                                }
-                                                onChange={() =>
-                                                    setEditProduct({
-                                                        ...editProduct,
-                                                        status: !editProduct?.status,
-                                                    })
-                                                }
+                                                checked={product.status}
+                                                onChange={() => toggleProductStatus(product.id)} // Correct toggle logic
                                             />
                                             <span className="slider"></span>
                                         </label>
