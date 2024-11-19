@@ -84,7 +84,7 @@ const AdminInventory = () => {
 
     return (
         <div className="admin-container">
-            {/* Sidebar */}
+            
             <aside className="sidebar">
                 <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
@@ -128,8 +128,14 @@ const AdminInventory = () => {
                     </div>
                 </Link>
             </aside>
+            
 
-            <main className="inventory-content">
+            <main className="main-content">
+                {/* Header Rectangle */}
+                <div className="header-rectangle">
+                <div className='headtext'> Inventory </div> 
+                </div>
+
                 {/* Inventory Header */}
                 <div className="inventory-header">
                     <input

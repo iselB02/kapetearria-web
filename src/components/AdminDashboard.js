@@ -227,14 +227,12 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <main className="main-content">
-        <div className="top-bar">
-          <button className="profile-btn">Profile</button>
-        </div>
+      <div className="top-bar">
+    <div className="rectangle">Dashboard</div>
+    <button className="profile-btn">Profile</button> </div>
+        
 
-        <div className="rectangle-container">
-          <div className="rectangle">Dashboard</div>
-        </div>
-
+        
         {/* Card Section */}
         <div className="dashboard-overview">
           <div className="overview-card alert">
