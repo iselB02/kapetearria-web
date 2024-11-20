@@ -1,60 +1,118 @@
-.admin-containter{
-    display: flex;
-}
+    .admin-containter{
+        display: flex;
+    }
 
-.header{
-    color: azure;
-    text-align: center;
-    width: 90%;
-    max-width:100%;
-    border-radius: 11px;
-    height: 30px;
-    margin: 6px;
-    font-weight: bold;
-    font-size: larger;
-}
+    .header{
+        color: azure;
+        text-align: center;
+        width: 90%;
+        max-width:100%;
+        border-radius: 11px;
+        height: 30px;
+        margin: 6px;
+        font-weight: bold;
+        font-size: larger;
+    }
 
-.headest{
-    display: flex;
-    border-radius: 11px;
-    background: #5C8F4C;
-    margin-bottom: 20px;
-    width: 96%;
-    max-width:100%;
-    height: 36px;
-    color: azure;
-    justify-self: center;
-    margin-top: 30px;
-    justify-content: center ;
-    align-self: center;
-}
+    .headest{
+        display: flex;
+        border-radius: 11px;
+        background: #5C8F4C;
+        margin-bottom: 20px;
+        width: 96%;
+        max-width:100%;
+        height: 36px;
+        color: azure;
+        justify-self: center;
+        margin-top: 30px;
+        justify-content: center ;
+        align-self: center;
+    }
 
-.add-content{
-    flex:1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .add-content{
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .upload-btn {
+        position: absolute;
+        margin-top: 150px;
+        left: 50%; /* Centers the button horizontally */
+        transform: translate(-50%, 50%); /* Ensures it's visually aligned with the circle */
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
 
-.add-profile{
-        height: 300px;
-        width: 300px;
-        border-radius: 200px;
-        background-color: aqua;
+      /*.upload-btn:hover{
+        font
+      }
+      */
+
+      .profile-wrapper {
+        position: relative;
+        overflow: hidden; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+
+    .add-profile{
+            height: 200px;
+            width: 200px;
+            border-radius: 200px;
+            background-color: aqua;
+            margin: 20px;
+    }
+
+    .fname , .lname , .em ,.pnumber,.dob,.gender{
+        width: 25rem;
+        height: 50px;
+        border-radius: 10px;
+        margin: 10px;
+    }
+
+    .Add-Info{
+        display: flex;
         margin: 20px;
-}
+        flex-wrap: wrap;
+        width: 60rem;
+        height: auto; 
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+    }
 
-.fname , .lname , .em ,.pnumber,.dob,.gender{
-    width: 25rem;
+.savebtn{
+    background-color: #5C8F4C;
+    margin: 30px;
+    padding: 10px;
+    color: aliceblue;
     height: 50px;
+    width: 150px;
+    font-weight: bold;
+    font-size: medium;
     border-radius: 10px;
 }
 
-.Add-Info{
-    display: flex;
-    background-color: aqua;
-    width: 60rem;
-    flex-direction: column;
-
+.savebtn:hover{
+    background-color: #3a1c17;
+    margin: 30px;
+    padding: 10px;
+    color: aliceblue;
+    height: 50px;
+    width: 150px;
+    font-weight: bold;
+    font-size: medium;
+    border-radius: 10px;  
+    font-style:normal ;
 }
 
