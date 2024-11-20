@@ -7,7 +7,7 @@ import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 
 function AddStaff() {
   return (
-    <div className='add-staff'>
+    <div className='admin-container'>
         <aside className="sidebar">
                 <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
@@ -52,7 +52,24 @@ function AddStaff() {
                 </Link>
         </aside>
 
+        <div className='add-content'>
+            <div className='headest'>
+                 <div className='header'>
+                    Add New Staff
+                </div>
+            </div>    
             
+            <img src='/image/shrek.png' alt='shrek' className='add-profile' />
+            
+            <div className='Add-Info'>
+                <input className='fname' placeholder='First Name'/>
+                <input className='lname' placeholder='Last Name'/>
+                <input className='em' placeholder='Email'/>
+                <input className='pnumber' placeholder='Phone Number'/>
+                <input className='dob' placeholder='Date of Birth'/>
+                <input className='gender' placeholder='Gender'/>
+            </div>
+        </div>  
     </div>
   )
 }
