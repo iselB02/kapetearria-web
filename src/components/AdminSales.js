@@ -131,7 +131,7 @@ const AdminSales = () => {
 
         {/* Bar Chart Section */}
         <div className="chart-section">
-          <h3>Total Revenue</h3>
+          <h5>Total Revenue</h5>
           <div className="chart-container">
             <Bar data={data} options={options} />
           </div>
