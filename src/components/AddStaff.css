@@ -1,3 +1,60 @@
-.add-staff{
-    background-color: aquamarine;
+.admin-containter{
+    display: flex;
 }
+
+.header{
+    color: azure;
+    text-align: center;
+    width: 90%;
+    max-width:100%;
+    border-radius: 11px;
+    height: 30px;
+    margin: 6px;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.headest{
+    display: flex;
+    border-radius: 11px;
+    background: #5C8F4C;
+    margin-bottom: 20px;
+    width: 96%;
+    max-width:100%;
+    height: 36px;
+    color: azure;
+    justify-self: center;
+    margin-top: 30px;
+    justify-content: center ;
+    align-self: center;
+}
+
+.add-content{
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-profile{
+        height: 300px;
+        width: 300px;
+        border-radius: 200px;
+        background-color: aqua;
+        margin: 20px;
+}
+
+.fname , .lname , .em ,.pnumber,.dob,.gender{
+    width: 25rem;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.Add-Info{
+    display: flex;
+    background-color: aqua;
+    width: 60rem;
+    flex-direction: column;
+
+}
+
