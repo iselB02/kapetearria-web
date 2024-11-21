@@ -8,7 +8,7 @@ const CustomerInfo = ({ isOpen, onClose, user }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className='headCI'>
-            <h2>Customer Information</h2>
+            <div className='headCItext'>Customer Information</div>
         </div>
         <p><strong>ID:</strong> {user.id}</p>
         <p><strong>Name:</strong> {user.name}</p>
@@ -16,6 +16,9 @@ const CustomerInfo = ({ isOpen, onClose, user }) => {
         <p><strong>Contact Number:</strong> {user.contact}</p>
         <button onClick={onClose}>Close</button>
       </div>
+
+    <img src='image/cup-logo.png' alt='cup' className='cup' />
+
     </div>
   );
 };

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './AddStaff.css';
 import { Link } from 'react-router-dom';
-import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare } from 'react-icons/fi';
+import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiCamera } from 'react-icons/fi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 
 function AddStaff() {
-  const [profileImage, setProfileImage] = useState("/image/shrek.png");
+  const [profileImage, setProfileImage] = useState("/image/aby.jpg");
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -78,7 +78,9 @@ function AddStaff() {
               style={{ display: 'none' }}
               onChange={handleImageUpload}
             />
-            <label htmlFor="upload" className="upload-btn">Upload</label>
+            <label htmlFor="upload" className="upload-btn">
+              <FiCamera/>
+            </label>
           </div>
         </div>
 

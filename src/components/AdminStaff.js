@@ -120,10 +120,10 @@ const AdminStaff = () => {
                                 <td>
                                     {/* Action Buttons with Icons */}
                                     <button className="btn btn-edit" onClick={() => handleEdit('Mark Otto')}>
-                                        <FiEdit /> {/* Edit Icon */}
+                                        <FiEdit /> 
                                     </button>
                                     <button className="btn btn-delete" onClick={() => handleDelete('Mark Otto')}>
-                                        <FiTrash2 /> {/* Delete Icon */}
+                                        <FiTrash2 /> 
                                     </button>
                                 </td>
                             </tr>
@@ -140,12 +140,11 @@ const AdminStaff = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    {/* Action Buttons with Icons */}
                                     <button className="btn btn-edit" onClick={() => handleEdit('Mark Otto')}>
-                                        <FiEdit /> {/* Edit Icon */}
+                                        <FiEdit /> 
                                     </button>
                                     <button className="btn btn-delete" onClick={() => handleDelete('Mark Otto')}>
-                                        <FiTrash2 /> {/* Delete Icon */}
+                                        <FiTrash2 />
                                     </button>
                                 </td>
                             </tr>
@@ -162,12 +161,11 @@ const AdminStaff = () => {
                                     </div>
                                 </td>
                                 <td>
-                                    {/* Action Buttons with Icons */}
                                     <button className="btn btn-edit" onClick={() => handleEdit('Mark Otto')}>
-                                        <FiEdit /> {/* Edit Icon */}
+                                        <FiEdit /> 
                                     </button>
                                     <button className="btn btn-delete" onClick={() => handleDelete('Mark Otto')}>
-                                        <FiTrash2 /> {/* Delete Icon */}
+                                        <FiTrash2 /> 
                                     </button>
                                 </td>
                             </tr>

@@ -1,118 +1,124 @@
-    .admin-containter{
-        display: flex;
-    }
+        .admin-containter{
+            display: flex;
+        }
 
-    .header{
-        color: azure;
-        text-align: center;
-        width: 90%;
-        max-width:100%;
-        border-radius: 11px;
-        height: 30px;
-        margin: 6px;
-        font-weight: bold;
-        font-size: larger;
-    }
+        .header{
+            color: azure;
+            text-align: center;
+            width: 90%;
+            max-width:100%;
+            border-radius: 11px;
+            height: 30px;
+            margin: 6px;
+            font-weight: bold;
+            font-size: larger;
+        }
 
-    .headest{
-        display: flex;
-        border-radius: 11px;
-        background: #5C8F4C;
-        margin-bottom: 20px;
-        width: 96%;
-        max-width:100%;
-        height: 36px;
-        color: azure;
-        justify-self: center;
-        margin-top: 30px;
-        justify-content: center ;
-        align-self: center;
-    }
+        .headest{
+            display: flex;
+            border-radius: 11px;
+            background: #5C8F4C;
+            margin-bottom: 20px;
+            width: 96%;
+            max-width:100%;
+            height: 36px;
+            color: azure;
+            justify-self: center;
+            margin-top: 30px;
+            justify-content: center ;
+            align-self: center;
+        }
 
-    .add-content{
-        flex:1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .upload-btn {
-        position: absolute;
-        margin-top: 150px;
-        left: 50%; /* Centers the button horizontally */
-        transform: translate(-50%, 50%); /* Ensures it's visually aligned with the circle */
-        background-color: rgba(0, 0, 0, 0.6);
-        color: white;
-        border: none;
-        padding: 8px 12px;
-        font-size: 12px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
+        .add-content{
+            flex:1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .upload-btn {
+            position: absolute;
+            margin-top: 120px;
+            left: 70%;
+            transform: translate(-50%, 50%);
+            background-color: rgba(61, 61, 61, 0.475);
+            color: white;
+            border: none;
+            height: 40px;
+            width: 40px;
+            padding: 5px 8px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-      /*.upload-btn:hover{
-        font
-      }
-      */
+        .upload-btn:hover{
+            background-color: #5c8f4ca0;
+        }
 
-      .profile-wrapper {
-        position: relative;
-        overflow: hidden; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
 
-    .add-profile{
-            height: 200px;
-            width: 200px;
-            border-radius: 200px;
-            background-color: aqua;
+        .profile-wrapper {
+            position: relative;
+            overflow: hidden; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .add-profile{
+                height: 200px;
+                width: 200px;
+                border-radius: 200px;
+                margin: 20px;
+        }
+
+        .fname , .lname , .em ,.pnumber,.dob,.gender{
+            width: 25rem;
+            height: 50px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        .fname::placeholder , .lname::placeholder , .em::placeholder ,.pnumber::placeholder,.dob::placeholder,.gender::placeholder{
+            transition: 18s;
+        }
+
+
+        .Add-Info{
+            display: flex;
             margin: 20px;
-    }
+            flex-wrap: wrap;
+            width: 60rem;
+            height: auto; 
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+        }
 
-    .fname , .lname , .em ,.pnumber,.dob,.gender{
-        width: 25rem;
+        
+
+    .savebtn{
+        background-color: #5C8F4C;
+        margin: 30px;
+        padding: 10px;
+        color: aliceblue;
         height: 50px;
+        width: 150px;
+        font-weight: bold;
+        font-size: medium;
         border-radius: 10px;
-        margin: 10px;
     }
 
-    .Add-Info{
-        display: flex;
-        margin: 20px;
-        flex-wrap: wrap;
-        width: 60rem;
-        height: auto; 
-        flex-direction: row;
-        justify-content: center;
-        align-content: center;
+    .savebtn:hover{
+        background-color: #3a1c17;
+        margin: 30px;
+        padding: 10px;
+        color: aliceblue;
+        height: 50px;
+        width: 150px;
+        font-weight: bold;
+        font-size: medium;
+        border-radius: 10px;  
+        font-style:normal ;
     }
-
-.savebtn{
-    background-color: #5C8F4C;
-    margin: 30px;
-    padding: 10px;
-    color: aliceblue;
-    height: 50px;
-    width: 150px;
-    font-weight: bold;
-    font-size: medium;
-    border-radius: 10px;
-}
-
-.savebtn:hover{
-    background-color: #3a1c17;
-    margin: 30px;
-    padding: 10px;
-    color: aliceblue;
-    height: 50px;
-    width: 150px;
-    font-weight: bold;
-    font-size: medium;
-    border-radius: 10px;  
-    font-style:normal ;
-}
 
