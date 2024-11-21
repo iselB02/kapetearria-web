@@ -67,3 +67,9 @@
     border-top-right-radius: 6px;
 }
 
+.btnUAM {
+    color: rgb(103, 2, 2);
+    border: none;
+    background-color: rgba(255, 0, 0, 0);
+  }
+

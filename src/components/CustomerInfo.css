@@ -23,7 +23,7 @@
   .headCItext{
       display: flex;
       font-weight:bold;
-      font-size: small;
+      font-size: 15px;
       text-align: center;
       align-self: center;
   } 
@@ -37,19 +37,26 @@
       text-align: left;
     }
     
-    button {
-      color: rgb(103, 2, 2);
-      border: none;
-      background-color: rgba(255, 0, 0, 0);
+    .btnCI{
+      display: flex;
+      justify-content: center;
+      color: rgb(253, 246, 246);
+      width: 10rem;
+      height: 20px;
+      font-weight:500;
+      border-radius: 5px;
+      background-color: #5e2d26;
     }
 
-    p{
-      border: 2px solid black;
+    .btnCI:hover{
+      background-color: #5C8F4C;
+      font-style: italic;
     }
 
     .cup{
       position: absolute;
-      background-color: #5C8F4C;
-      opacity: 100%;
+      width: 20rem;
+      height: 20rem;
+      opacity: 5%;
       z-index: 10000;
     }

@@ -10,11 +10,11 @@ const CustomerInfo = ({ isOpen, onClose, user }) => {
         <div className='headCI'>
             <div className='headCItext'>Customer Information</div>
         </div>
-        <p><strong>ID:</strong> {user.id}</p>
-        <p><strong>Name:</strong> {user.name}</p>
-        <p><strong>Address:</strong> {user.address}</p>
-        <p><strong>Contact Number:</strong> {user.contact}</p>
-        <button onClick={onClose}>Close</button>
+        <p className='userCI' ><strong>ID:</strong> {user.id}</p>
+        <p className='nameCI'><strong>Name:</strong> {user.name}</p>
+        <p className='addCI'><strong>Address:</strong> {user.address}</p>
+        <p className='numberCI'><strong>Contact Number:</strong> {user.contact}</p>
+        <button className='btnCI' onClick={onClose}>Close</button>
       </div>
 
     <img src='image/cup-logo.png' alt='cup' className='cup' />

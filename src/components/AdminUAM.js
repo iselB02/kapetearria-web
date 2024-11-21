@@ -101,7 +101,7 @@ const AdminUAM = () => {
                   <td>{user.address}</td>
                   <td>{user.contact}</td>
                   <td>
-                    <button onClick={() => handleSeeMore(user)}>See More</button>
+                    <button className='btnUAM' onClick={() => handleSeeMore(user)}>See More</button>
                   </td>
                 </tr>
               ))}
