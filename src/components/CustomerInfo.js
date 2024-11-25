@@ -8,12 +8,28 @@ const CustomerInfo = ({ isOpen, onClose, user }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className='headCI'>
-            <div className='headCItext'>Customer Information</div>
+            <div className='headCItext'>Account Information</div>
         </div>
-        <p className='userCI' ><strong>ID:</strong> {user.id}</p>
-        <p className='nameCI'><strong>Name:</strong> {user.name}</p>
-        <p className='addCI'><strong>Address:</strong> {user.address}</p>
-        <p className='numberCI'><strong>Contact Number:</strong> {user.contact}</p>
+        <div className='idCI'> <strong>ID Number: </strong> {user.id} </div>
+          <div className='contentCI'>
+              <div className='fnameCI'>
+                <label>Full Name</label>
+                <p className='nameCI'> {user.name}</p>
+              </div>
+              <div className='addressCI'>
+                <label>Address</label>
+                <p className='addCI'> {user.address}</p>
+              </div>
+              <div className='numCI'>
+                <label>Contact Number</label>
+                <p className='numberCI'>{user.contact}</p>
+              </div> 
+              <div className='emCI'>
+                <label>Email Address</label>
+                <p className='emailCI'>{user.email}</p>
+              </div> 
+          </div>
+       
         <button className='btnCI' onClick={onClose}>Close</button>
       </div>
 
