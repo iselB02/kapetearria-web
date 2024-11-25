@@ -277,7 +277,7 @@ function Navbar() {
                       ) : (
                         <p className='empty'>Your cart is empty.</p>
                       )}
-                      <div className='divider'></div>
+                      {/* <div className='divider'></div> */}
                       {cartItems.length > 0 && (
                         <div className='checkout-div'>
                           <div className='division'></div>
