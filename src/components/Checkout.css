@@ -4,8 +4,23 @@
     height: 645px;
     overflow-y: auto;
     margin-top: 85px;
-
 }
+
+/* Hide the scrollbar for WebKit browsers (like Chrome, Safari) */
+.menu-maincontainer::-webkit-scrollbar {
+    display: none; 
+}
+
+/* Hide scrollbar for Firefox */
+.menu-maincontainer {
+    scrollbar-width: none; /* Hides the scrollbar */
+}
+
+/* Optional: Customize scrolling appearance */
+.menu-maincontainer {
+    -ms-overflow-style: none; /* Hides the scrollbar for IE and Edge */
+}
+
 .main-checkout {
     display: flex;
     flex-direction: row;

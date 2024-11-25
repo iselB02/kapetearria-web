@@ -215,7 +215,7 @@ function AccountSettings() {
           {isEditing && <button onClick={handleSubmit}>Save</button>}
         </div>
       </div>
-
+            
 
       {/* OTP Modal */}
       {showOtpModal && (
@@ -237,6 +237,7 @@ function AccountSettings() {
         <Footer />
       </div>
     </div>
+    
   );
 }
 
