@@ -1,0 +1,62 @@
+  .modal-overlay {
+      display: flex;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+  .headCI{
+      display: flex;
+      border-radius: 11px;
+      background-color: #5C8F4C;
+      width: 100%;
+      max-width:100%;
+      margin-bottom: 40px;
+      height: 30px;
+      color: azure;
+      justify-content: center ;
+      align-self: center;
+      
+  }
+
+  .headCItext{
+      display: flex;
+      font-weight:bold;
+      font-size: 15px;
+      text-align: center;
+      align-self: center;
+  } 
+    
+    .modal-content {
+      background: rgb(241, 241, 241);
+      padding: 20px;
+      border-radius: 15px;
+      width: 45rem;
+      max-width: 100% ;
+      text-align: left;
+    }
+    
+    .btnCI{
+      display: flex;
+      justify-content: center;
+      color: rgb(253, 246, 246);
+      width: 10rem;
+      height: 20px;
+      font-weight:500;
+      border-radius: 5px;
+      background-color: #5e2d26;
+    }
+
+    .btnCI:hover{
+      background-color: #5C8F4C;
+      font-style: italic;
+    }
+
+    .cup{
+      position: absolute;
+      width: 20rem;
+      height: 20rem;
+      opacity: 5%;
+      z-index: 10000;
+    }

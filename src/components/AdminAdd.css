@@ -1,0 +1,122 @@
+.add-product-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .add-product-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .add-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .product-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    width: 150px;
+    border: 2px dashed #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: border-color 0.3s ease;
+  }
+  
+  .product-image-container.error-border {
+    border-color: red;
+  }
+
+  .product-image-preview {
+    height: 100%; /* Fill the height of the circle container */
+    width: 100%; /* Fill the width of the circle container */
+    object-fit: cover; /* Ensures the image fits perfectly without distortion */
+    border-radius: 50%; /* Keeps the image inside the circular shape */
+    overflow: hidden; /* Prevents image overflow outside the circle */
+  }
+  
+  
+  .product-image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: #999;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .upload-label {
+    cursor: pointer;
+  }
+  
+  .browse-text {
+    color: #68a45d;
+    font-weight: bold;
+  }
+  
+  .product-image-preview {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .input-field,
+  .textarea-field {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+  }
+  
+  .input-field.error-border,
+  .textarea-field.error-border {
+    border-color: red;
+  }
+  
+  .textarea-field {
+    height: 100px;
+    resize: none;
+  }
+  
+  .save-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #68a45d;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #568c4b;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 12px;
+    margin-top: -10px;
+  }
+  

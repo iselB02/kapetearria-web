@@ -122,16 +122,16 @@ const AdminSales = () => {
         </Link>
       </aside>
 
-      {/* Main Content */}
-      <main className="sales-content">
-        {/* Header */}
-        <div className="sales-header">
-          <h2>SALES & REPORTS</h2>
+  {/* Main Content */}
+  <main className="sales-content">
+        {/* Header Rectangle */}
+        <div className="header-rectangle">
+          <div className="headtext">Sales Reports</div>
         </div>
 
         {/* Bar Chart Section */}
         <div className="chart-section">
-          <h3>Total Revenue</h3>
+          <h5>Total Revenue</h5>
           <div className="chart-container">
             <Bar data={data} options={options} />
           </div>
@@ -152,7 +152,7 @@ const AdminSales = () => {
             <tbody>
               {topProducts.map((product) => (
                 <tr key={product.id}>
-                  <td>{product.id.toString().padStart(2, '0')}</td>
+                  <td>{product.id.toString().padStart(2, "0")}</td>
                   <td>{product.name}</td>
                   <td>
                     <div className="popularity-bar">

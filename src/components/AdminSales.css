@@ -68,7 +68,7 @@
     margin-left: 260px; /* Push content to the right of the sidebar */
     padding: 20px;
     overflow-y: auto; /* Enable scrolling for the main content */
-    background-color: #f9f9f9;
+    margin-top: 50px;
   }
   
   .sales-header h2 {
