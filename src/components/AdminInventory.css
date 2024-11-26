@@ -181,7 +181,7 @@ th, td {
 .product-image {
     width: 60px;
     height: 60px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 4px;
 }
 

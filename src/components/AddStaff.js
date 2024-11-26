@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
-import './AddStaff.css';
 import { Link } from 'react-router-dom';
 import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiCamera } from 'react-icons/fi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
+import { auth, database } from './firebaseConfig'; // Import Firebase config
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore';
+import './AddStaff.css';
 
 function AddStaff() {
-  
-    const history = useNavigate();
+  const navigate = useNavigate();
 
-  const handleBackClick = () => {
-    window.history.back();
-  };
-
-  const [profileImage, setProfileImage] = useState("/image/aby.jpg");
+  const [profileImage, setProfileImage] = useState("/image/person-circle.svg");
+  const [formData, setFormData] = useState({
+    firstname: '',
+    surname : '',
+    email: '',
+    phone: '',
+    password: '',
+    birthdate: '',
+    jobtitle: '',
+    gender: '',
+  });
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -23,6 +31,53 @@ function AddStaff() {
       const reader = new FileReader();
       reader.onload = () => setProfileImage(reader.result);
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async () => {
+    const { email, password, firstname, surname , phone, birthdate, jobtitle, gender } = formData;
+
+    if (!email || !password || !firstname || !surname || !phone || !birthdate || !jobtitle || !gender) {
+      alert('Please fill out all fields');
+      return;
+    }
+
+    try {
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Save additional user info to Firestore
+      const userInfo = {
+        uid: user.uid,
+        firstname,
+        surname ,
+        email,
+        phone,
+        birthdate,
+        gender,
+        jobtitle,
+        role: 'staff', // Assign the role as 'staff'
+        profileImage, // Include the uploaded image
+        createdAt: new Date(),
+      };
+
+      const userCollectionRef = collection(database, 'user_info');
+      await addDoc(userCollectionRef, userInfo);
+
+      alert('Staff added successfully');
+      navigate('/staff'); // Redirect to the staff page
+    } catch (error) {
+      console.error('Error adding staff:', error);
+      alert('Error adding staff: ' + error.message);
     }
   };
 
@@ -78,7 +133,7 @@ function AddStaff() {
         </div>
 
         <div className='backStaff'>
-          <BsArrowLeftCircleFill size={30} onClick={handleBackClick} />
+          <BsArrowLeftCircleFill size={30} onClick={() => navigate(-1)} />
         </div>
 
         <div className="profile-section">
@@ -98,15 +153,67 @@ function AddStaff() {
         </div>
 
         <div className='Add-Info'>
-          <input className='fname' placeholder='First Name' />
-          <input className='lname' placeholder='Last Name' />
-          <input className='em' placeholder='Email' />
-          <input className='pnumber' placeholder='Phone Number' />
-          <input className='dob' placeholder='Date of Birth' />
-          <input className='gender' placeholder='Gender' />
+          <input
+            className='fname'
+            name="firstname"
+            placeholder='First Name'
+            value={formData.firstname}
+            onChange={handleInputChange}
+          />
+          <input
+            className='lname'
+            name="surname"
+            placeholder='Last Name'
+            value={formData.surname}
+            onChange={handleInputChange}
+          />
+          <input
+            className='em'
+            name="email"
+            placeholder='Email'
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          <input
+            className='pnumber'
+            name="phone"
+            placeholder='Phone Number'
+            value={formData.phone}
+            onChange={handleInputChange}
+          />
+          <input
+            className='pnumber'
+            name="password"
+            type="password"
+            placeholder='Password'
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          <input
+            className='dob'
+            type='date'
+            name="birthdate"
+            placeholder='Date of Birth'
+            value={formData.birthdate}
+            onChange={handleInputChange}
+          />
+          <input
+            className='pnumber'
+            name="jobtitle"
+            placeholder='Job Title'
+            value={formData.jobtitle}
+            onChange={handleInputChange}
+          />
+          <input
+            className='gender'
+            name="gender"
+            placeholder='Gender'
+            value={formData.gender}
+            onChange={handleInputChange}
+          />
         </div>
 
-        <button className='savebtn'>Save</button>
+        <button className='savebtn' onClick={handleSave}>Save</button>
       </div>
     </div>
   );
