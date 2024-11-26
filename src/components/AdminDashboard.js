@@ -181,49 +181,43 @@ const AdminDashboard = () => {
     <div className="admin-container">
       {/* Sidebar */}
       <aside className="sidebar">
-        <div className="sidebar-header">
-          <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
-          <h6>ADMIN</h6>
-        </div>
-        <ul className="sidebar-menu">
-          <Link to="/admin" className="menu-link">
-            <li className="menu-item active">
-              <AiOutlineDashboard className="icon" /> Dashboard
-            </li>
-          </Link> 
-          <Link to="/inventory" className="menu-link">
-           <li className="menu-item">
-
-              <FiShoppingCart className="icon" /> Inventory
-           </li>
-          </Link>
-          <Link to="/sales" className="menu-link">
-            <li className="menu-item">    
-              <RiBarChartLine className="icon" /> Sales Reports
-            </li>
-          </Link>
-          <Link to="/staff" className='menu-link'>
-            <li className="menu-item">
-            <FiUser className="icon" /> Staff
-            </li>
-          </Link>
-          <Link to="/uam" className='menu-link'>
-            <li className="menu-item">
-              <RiAccountCircleLine className="icon" /> User Account Management
-            </li>
-          </Link>
-          <Link to="/chat-support" className='menu-link'>
-            <li className="menu-item">
-              <FiMessageSquare className="icon" /> Chat Support
-            </li>
-            </Link>
-        </ul>
-        <Link to="/settings" className='menu-link'>
-          <div className="settings-section">
-            <FiSettings className="icon" /> Settings
-          </div>
-        </Link>
-      </aside>
+                <div className="sidebar-header">
+                    <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+                    <h6>ADMIN</h6>
+                </div>
+                <ul className="sidebar-menu">
+                    <Link to="/admin" className="menu-link">
+                        <li className="menu-item active">
+                            <AiOutlineDashboard className="icon" /> Dashboard
+                        </li>
+                    </Link>
+                    <Link to="/inventory" className="menu-link">
+                        <li className="menu-item">
+                            <FiShoppingCart className="icon" /> Inventory
+                        </li>
+                    </Link>
+                    <Link to="/sales" className="menu-link">
+                        <li className="menu-item">
+                            <RiBarChartLine className="icon" /> Sales Reports
+                        </li>
+                    </Link>
+                    <Link to="/staff" className='menu-link'>
+                        <li className="menu-item">
+                            <FiUser className="icon" /> Staff
+                        </li>
+                    </Link>
+                    <Link to="/uam" className='menu-link'>
+                        <li className="menu-item">
+                            <RiAccountCircleLine className="icon" /> User Account Management
+                        </li>
+                    </Link>
+                </ul>
+                <Link to="/settings" className='menu-link'>
+                    <div className="settings-section">
+                        <FiSettings className="icon" /> Settings
+                    </div>
+                </Link>
+            </aside>
 
       {/* Main Content */}
       <main className="main-content">

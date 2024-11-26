@@ -141,23 +141,18 @@ const AdminInventory = () => {
                             <RiBarChartLine className="icon" /> Sales Reports
                         </li>
                     </Link>
-                    <Link to="/staff" className="menu-link">
+                    <Link to="/staff" className='menu-link'>
                         <li className="menu-item">
                             <FiUser className="icon" /> Staff
                         </li>
                     </Link>
-                    <Link to="/uam" className="menu-link">
+                    <Link to="/uam" className='menu-link'>
                         <li className="menu-item">
                             <RiAccountCircleLine className="icon" /> User Account Management
                         </li>
                     </Link>
-                    <Link to="/chat-support" className="menu-link">
-                        <li className="menu-item">
-                            <FiMessageSquare className="icon" /> Chat Support
-                        </li>
-                    </Link>
                 </ul>
-                <Link to="/settings" className="menu-link">
+                <Link to="/settings" className='menu-link'>
                     <div className="settings-section">
                         <FiSettings className="icon" /> Settings
                     </div>
