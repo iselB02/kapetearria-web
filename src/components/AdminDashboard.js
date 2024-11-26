@@ -176,8 +176,8 @@ const AdminDashboard = () => {
       <main className="main-content">
         <div className="top-bar">
           <div className="rectangle">Dashboard</div>
-          <button className="profile-btn">Profile</button>
         </div>
+
 
         {/* Card Section */}
         <div className="dashboard-overview">
