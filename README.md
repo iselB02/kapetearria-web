@@ -71,6 +71,9 @@ npm install leaflet
 ```
 Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
 
+
+## Folder Stucture for this Project
+
 ```bash
 Kapetearria-web/
 ├── >node_modules
