@@ -185,7 +185,7 @@ const Content = () => {
            {/*  Admin Inventory Route*/}<Route path="/inventory" element={<AdminInventory />} /> 
            {/*  Admin Add Product Route*/} <Route path="/add" element={<AddProduct />} />
            {/*  Admin Sales Report Route*/}<Route path="/sales" element={<AdminSales />} />
-           <Route path="/staff" element={<AdminStaff/>} />
+           <Route path="/staff" element={<AdminStaff />}/>
            <Route path="/add-staff" element={<AddStaff />} />
            <Route path='/uam' element={<AdminUAM/>}/>
            <Route path='/chat-support' element={<AdminChat/>}/>

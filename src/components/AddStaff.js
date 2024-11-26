@@ -4,8 +4,17 @@ import { Link } from 'react-router-dom';
 import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiCamera } from 'react-icons/fi';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
+import { BsArrowLeftCircleFill } from "react-icons/bs";
+import { useNavigate } from 'react-router-dom';
 
 function AddStaff() {
+  
+    const history = useNavigate();
+
+  const handleBackClick = () => {
+    window.history.back();
+  };
+
   const [profileImage, setProfileImage] = useState("/image/aby.jpg");
 
   const handleImageUpload = (e) => {
@@ -66,6 +75,10 @@ function AddStaff() {
       <div className='add-content'>
         <div className='headest'>
           <div className='header'>Add New Staff</div>
+        </div>
+
+        <div className='backStaff'>
+          <BsArrowLeftCircleFill size={30} onClick={handleBackClick} />
         </div>
 
         <div className="profile-section">

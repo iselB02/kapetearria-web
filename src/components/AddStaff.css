@@ -80,9 +80,21 @@
         }
 
         .fname::placeholder , .lname::placeholder , .em::placeholder ,.pnumber::placeholder,.dob::placeholder,.gender::placeholder{
-            transition: 18s;
+            padding:5px;
+
         }
 
+        .backStaff{
+            display: flex;
+            align-self: self-start;
+            cursor: pointer;
+            color: #5C8F4C;
+            padding-left: 25px;
+        }
+
+        .backStaff.backStaff:hover{
+            color: #3a1c17;
+        }
 
         .Add-Info{
             display: flex;

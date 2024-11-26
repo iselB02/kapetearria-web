@@ -21,8 +21,8 @@ const AdminUAM = () => {
   };
 
   const users = [
-    { id: 1, name: 'Mark Otto', address: '123 Switzerlan Tondo', contact: '0912391293' },
-    { id: 2, name: 'Mirabel De Guzman', address: '432 Tokyo, Mandaluyon', contact: '0912391293' },
+    { id: 1, name: 'Mark Otto', address: '123 Switzerlan Tondo', contact: '0912391293', email: 'markotto@gmail.com' },
+    { id: 2, name: 'Mirabel De Guzman', address: '432 Tokyo, Mandaluyon', contact: '0912391293', email: 'mirabel@gmail.com' },
   ];
 
   return (
