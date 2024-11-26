@@ -71,6 +71,20 @@ npm install leaflet
 ```
 Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
 
+```bash
+Kapetearria-web/
+├── >node_modules
+├── >public 
+│   ├── >image           # The images used in this project resides in this file. 
+│   └── >video           # The videos used in this project resides in this folder.
+├── >src          # This folder contains all the files of source codes used for building this application.
+│   ├── >backend            
+│   ├── >components
+│   │      └──  # This section all has the components and other sections of the web.
+│   ├── App.css    # The style of App.js
+│   └── App.js     # Main source code for the app.
+```
+
 ## App.js and App.css
 The App.Js file inside the src folder is where the main code of the program resides. It includes the header, the footer, the menu, etc.
 The App.css is the style of the app.js. 
