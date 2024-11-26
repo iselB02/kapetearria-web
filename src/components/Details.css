@@ -120,3 +120,20 @@
 #btn1 {
     margin-left: 30px;
 }
+
+
+.add-btn.unavailable {
+    background-color: gray;
+    color: rgb(137, 15, 15);
+    cursor: not-allowed;
+    border: 1px solid darkgray;
+    opacity: 0.7;
+    pointer-events: none; /* Ensures no hover effects or clicks */
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.add-btn.unavailable:hover {
+    background-color: gray; /* No hover effect */
+    color: white; /* Ensures hover color remains consistent */
+}
