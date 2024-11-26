@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Kapetearria Website with React and Firebase 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Learn More about the Company
+
+Kapetearria is a coffee shop located in Biñan, Laguna, that prides itself on offering a cozy atmosphere perfect for coffee enthusiasts. The shop provides a diverse selection of coffee blends, ranging from classic brews to specialty blends, all sourced from high-quality beans. Whether you're looking for a strong espresso, a creamy cappuccino, or a refreshing iced coffee, Kapetearria has something for every taste.
+
+In addition to coffee, the shop offers a variety of delectable treats, such as freshly baked pastries, sandwiches, and light snacks, that perfectly complement the rich flavors of the coffee. The cozy ambiance, combined with friendly service and great food, makes Kapetearria an ideal spot for casual hangouts, work meetings, or simply relaxing with a cup of your favorite brew.
+
+The website provides a seamless way for customers to browse the menu, place orders for pickup or delivery, and explore the latest offerings and promotions. Whether you're visiting in person or ordering online, Kapetearria ensures an enjoyable experience every time.
+
+
 
 ## Available Scripts
 
@@ -9,25 +17,10 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 ### `npm test`
 
 Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 
@@ -35,45 +28,45 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Program Installation
+To get started with the program, clone the repositories and install these dependencies ton ensure no module is missing.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Cloning the repository by 
+```bash
+ git clone <repository-url> 
+```
 
+2. Install Dependencies
+### npm install react-script
+A utility to manage scripts in a React application. This helps with the running and building of the app.
 
-
-FOR OTHER DEPENDENCIES
-
-### npm install react react-dom
 ### npm install firebase
+Firebase is used to integrate cloud services such as authentication, database, and file storage into the application.
 
- 
+### npm install jspdf jspd-autotable
+These libraries are used for generating PDFs and allow downloading of this file for the sales report section in Admin.
 
-## Learn More
+### npm install react router dom
+A library for adding navigation to the application. It enables routing between different components or pages.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### npm install chatbotify 
+This is a chatbot integration library, which allows us to implement a chatbot feature into this application where an automated answering machine accomodating customers with their inquiries.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### npm install react chart.js
+A wrapper for Chart.js, which helps in integrating interactive charts and graphs for data visualization used on the Admin section of the website to visualize their sales.
 
-### Code Splitting
+### npm install react-icons
+This library provides a collection of icons to use in this project. It was used for adding visual elements like buttons, navigation links, and more.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### npm install leaflet
+Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
 
-### Analyzing the Bundle Size
+### App.js and App.css
+The App.Js file inside the src folder is where the main code of the program resides. It includes the header, the footer, the menu, etc.
+The App.css is the style of the app.js. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Components Folder
+The Components Folder is where the content of the app.js is located. All the files are coded here along with its corressponding design file (css).
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Database File
+The Database file is named Kaperterria in a json file format. 
