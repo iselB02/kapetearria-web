@@ -1,9 +1,11 @@
 
 .main-setup-container {
     width: 100%;
-    height: 700px; 
-    background-color: bisque;
+    height: 100vh; 
+    /* background-color: bisque; */
 }
+
+
 
 #title-account {
     color: #3B1C18;
@@ -26,7 +28,7 @@
     display: flex;
     flex-direction: column;
     justify-self: center;
-    height: 630px;
+    height: 91vh;
     width: 80%;
     /* background-color: aqua; */
     padding: 150px 50px 50px 50px;

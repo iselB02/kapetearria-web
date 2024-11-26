@@ -402,11 +402,15 @@ useEffect(() => {
                                                 </div>
                                             </div>
                                             <button
-                                                className="add-btn"
+                                                className={`add-btn ${!drink.is_available ? 'unavailable' : ''}`}
                                                 onClick={() => openModal(drink)}
-                                                disabled={drink.stock_number === 0}
+                                                disabled={!drink.is_available || drink.stock_number === 0}
                                             >
-                                                {drink.stock_number === 0 ? 'Out of Stock' : '+'}
+                                                {!drink.is_available
+                                                    ? 'Unavailable'
+                                                    : drink.stock_number === 0
+                                                    ? 'Out of Stock'
+                                                    : '+'}
                                             </button>
                                         </div>
                                     </div>

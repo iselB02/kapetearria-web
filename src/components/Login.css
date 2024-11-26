@@ -1,6 +1,6 @@
 .main {
   width: 100%;
-  height: 100%;
+  height: 91vh;
 }
 
 .main-body {
@@ -8,7 +8,8 @@
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  height: auto;
+  height: 91vh;
+  /* background-color: #5E2D26; */
 }
 
 

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { database } from "./firebaseConfig"; // Import Firestore instance
+import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import "./AdminInventory.css";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -13,39 +15,36 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { RiAccountCircleLine, RiBarChartLine } from "react-icons/ri";
 
 const AdminInventory = () => {
-    const [products, setProducts] = useState([
-        {
-            id: 1,
-            image: "/image/drink1.png",
-            name: "Milkshake",
-            category: "Snacks",
-            price: "₱99.00",
-            status: true,
-        },
-        {
-            id: 2,
-            image: "/image/drink1.png",
-            name: "Latte",
-            category: "Beverages",
-            price: "₱150.00",
-            status: true,
-        },
-        {
-            id: 3,
-            image: "/image/drink1.png",
-            name: "Smoothie",
-            category: "Snacks",
-            price: "₱99.00",
-            status: false,
-        },
-    ]);
-
+    const [products, setProducts] = useState([]);
     const [editProduct, setEditProduct] = useState(null);
     const [searchQuery, setSearchQuery] = useState("");
     const navigate = useNavigate();
 
-    // Save edits to a product
-    const handleSaveEdit = () => {
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const productsCollection = collection(database, "menu_info");
+                const productsSnapshot = await getDocs(productsCollection);
+                const productsList = productsSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    name: doc.data().product_name, // Map Firestore's product_name to name
+                    type: doc.data().type,
+                    price: `₱${doc.data().price}`, // Format price with PHP currency symbol
+                    status: doc.data().is_available,
+                    image: doc.data().src, // Use src for the image field
+                }));
+                setProducts(productsList);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+    
+        fetchProducts();
+    }, []);
+    
+
+    // Save edits to a product in Firestore
+    const handleSaveEdit = async () => {
         if (
             !editProduct.name.trim() ||
             !editProduct.category.trim() ||
@@ -55,36 +54,72 @@ const AdminInventory = () => {
             return;
         }
 
-        setProducts((prevProducts) =>
-            prevProducts.map((product) =>
-                product.id === editProduct.id ? editProduct : product
-            )
-        );
-        setEditProduct(null);
+        try {
+            const productRef = doc(database, "menu_info", editProduct.id);
+            await updateDoc(productRef, {
+                name: editProduct.name,
+                type: editProduct.category,
+                price: editProduct.price,
+                status: editProduct.status,
+            });
+
+            setProducts((prevProducts) =>
+                prevProducts.map((product) =>
+                    product.id === editProduct.id ? editProduct : product
+                )
+            );
+            setEditProduct(null);
+        } catch (error) {
+            console.error("Error updating product:", error);
+        }
     };
 
     // Toggle the status of a product
-    const toggleProductStatus = (id) => {
-        setProducts((prevProducts) =>
-            prevProducts.map((product) =>
-                product.id === id ? { ...product, status: !product.status } : product
-            )
-        );
+        const toggleProductStatus = async (id) => {
+        const product = products.find((p) => p.id === id);
+        if (!product) return;
+    
+        try {
+            const productRef = doc(database, "menu_info", id);
+            const newStatus = !product.status;
+    
+            // Update Firestore
+            await updateDoc(productRef, { is_available: newStatus });
+    
+            // Update local state
+            setProducts((prevProducts) =>
+                prevProducts.map((product) =>
+                    product.id === id ? { ...product, status: newStatus } : product
+                )
+            );
+        } catch (error) {
+            console.error("Error toggling product status:", error);
+        }
     };
+    
 
-    // Delete a product
-    const handleDeleteProduct = (id) => {
-        setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
+    // Delete a product from Firestore
+    const handleDeleteProduct = async (id) => {
+        try {
+            const productRef = doc(database, "menu_info", id);
+            await deleteDoc(productRef);
+
+            setProducts((prevProducts) =>
+                prevProducts.filter((product) => product.id !== id)
+            );
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
     };
 
     // Search functionality
     const filteredProducts = products.filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+        product.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
         <div className="admin-container">
-            
+            {/* Sidebar */}
             <aside className="sidebar">
                 <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
@@ -128,15 +163,12 @@ const AdminInventory = () => {
                     </div>
                 </Link>
             </aside>
-            
 
+            {/* Main Content */}
             <main className="main-content">
-                {/* Header Rectangle */}
                 <div className="header-rectangle">
-                <div className='headtext'> Inventory </div> 
+                    <div className="headtext">Inventory</div>
                 </div>
-
-                {/* Inventory Header */}
                 <div className="inventory-header">
                     <input
                         type="text"
@@ -145,7 +177,6 @@ const AdminInventory = () => {
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
-
                     <button
                         className="add-product-rectangle"
                         onClick={() => navigate("/add")}
@@ -153,10 +184,7 @@ const AdminInventory = () => {
                         Add Product
                     </button>
                 </div>
-
                 <div className="divider"></div>
-
-                {/* Inventory Table */}
                 <div className="inventory-table">
                     <table>
                         <thead>
@@ -208,7 +236,7 @@ const AdminInventory = () => {
                                                 }
                                             />
                                         ) : (
-                                            product.category
+                                            product.type
                                         )}
                                     </td>
                                     <td>
@@ -232,7 +260,7 @@ const AdminInventory = () => {
                                             <input
                                                 type="checkbox"
                                                 checked={product.status}
-                                                onChange={() => toggleProductStatus(product.id)} // Correct toggle logic
+                                                onChange={() => toggleProductStatus(product.id)}
                                             />
                                             <span className="slider"></span>
                                         </label>
