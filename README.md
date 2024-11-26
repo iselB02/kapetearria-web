@@ -1,7 +1,6 @@
 # Kapetearria Website with React and Firebase 
 
-## Learn More about the Company
-
+### Learn More about the Company
 Kapetearria is a coffee shop located in Biñan, Laguna, that prides itself on offering a cozy atmosphere perfect for coffee enthusiasts. The shop provides a diverse selection of coffee blends, ranging from classic brews to specialty blends, all sourced from high-quality beans. Whether you're looking for a strong espresso, a creamy cappuccino, or a refreshing iced coffee, Kapetearria has something for every taste.
 
 In addition to coffee, the shop offers a variety of delectable treats, such as freshly baked pastries, sandwiches, and light snacks, that perfectly complement the rich flavors of the coffee. The cozy ambiance, combined with friendly service and great food, makes Kapetearria an ideal spot for casual hangouts, work meetings, or simply relaxing with a cup of your favorite brew.
@@ -11,21 +10,16 @@ The website provides a seamless way for customers to browse the menu, place orde
 
 
 ## Available Scripts
-
 In the project directory, you can run:
 
 ### `npm start`
-
 Runs the app in the development mode.\
 
 ### `npm test`
-
 Launches the test runner in the interactive watch mode.\
 
 ### `npm run eject`
-
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
 If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
 ### Program Installation
@@ -37,28 +31,46 @@ To get started with the program, clone the repositories and install these depend
 ```
 
 2. Install Dependencies
-### npm install react-script
+
+```bash
+npm install react-script
+```
+
 A utility to manage scripts in a React application. This helps with the running and building of the app.
 
-### npm install firebase
+```bash
+npm install firebase
+```
 Firebase is used to integrate cloud services such as authentication, database, and file storage into the application.
 
-### npm install jspdf jspd-autotable
+```bash
+npm install jspdf jspd-autotable
+```
 These libraries are used for generating PDFs and allow downloading of this file for the sales report section in Admin.
 
-### npm install react router dom
+```bash
+npm install react router dom
+```
 A library for adding navigation to the application. It enables routing between different components or pages.
 
-### npm install chatbotify 
+```bash
+npm install chatbotify 
+```
 This is a chatbot integration library, which allows us to implement a chatbot feature into this application where an automated answering machine accomodating customers with their inquiries.
 
-### npm install react chart.js
+```bash
+npm install react chart.js
+```
 A wrapper for Chart.js, which helps in integrating interactive charts and graphs for data visualization used on the Admin section of the website to visualize their sales.
 
-### npm install react-icons
+```bash
+npm install react-icons
+```
 This library provides a collection of icons to use in this project. It was used for adding visual elements like buttons, navigation links, and more.
 
-### npm install leaflet
+```bash
+npm install leaflet
+```
 Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
 
 ### App.js and App.css
