@@ -1,12 +1,11 @@
-import React from 'react';
-import './AdminSales.css';
-import { Link } from 'react-router-dom';
-import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare } from 'react-icons/fi';
-import { AiOutlineDashboard } from 'react-icons/ai';
-import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
+import React, { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { database } from './firebaseConfig';
 import { Bar } from 'react-chartjs-2';
-
-// Import Chart.js and register components
+import { Link } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import './AdminSales.css';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -16,67 +15,121 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare } from 'react-icons/fi';
+import { AiOutlineDashboard } from 'react-icons/ai';
+import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
 
-// Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AdminSales = () => {
-  // Bar chart data
-  const data = {
-    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+  const [salesData, setSalesData] = useState({});
+  const [topProducts, setTopProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchSalesData = async () => {
+      try {
+        const ordersRef = collection(database, 'order_history');
+        const querySnapshot = await getDocs(ordersRef);
+
+        const productSales = {};
+
+        querySnapshot.forEach((doc) => {
+          const order = doc.data();
+          const { orders } = order;
+
+          if (orders) {
+            orders.forEach((item) => {
+              if (!productSales[item.productName]) {
+                productSales[item.productName] = {
+                  name: item.productName,
+                  totalSales: 0,
+                  totalQuantity: 0,
+                };
+              }
+              productSales[item.productName].totalSales += item.price * item.quantity;
+              productSales[item.productName].totalQuantity += item.quantity;
+            });
+          }
+        });
+
+        const salesArray = Object.values(productSales);
+        salesArray.sort((a, b) => b.totalSales - a.totalSales);
+
+        setSalesData(productSales);
+        setTopProducts(salesArray.slice(0, 5)); // Top 5 products
+      } catch (error) {
+        console.error('Error fetching sales data:', error);
+      }
+    };
+
+    fetchSalesData();
+  }, []);
+
+  const chartData = {
+    labels: topProducts.map((product) => product.name),
     datasets: [
       {
-        label: 'Drinks',
+        label: 'Total Sales (₱)',
         backgroundColor: '#FF6F61',
-        data: [15, 20, 18, 25, 22, 24, 20],
+        data: topProducts.map((product) => product.totalSales),
       },
       {
-        label: 'Meals',
+        label: 'Total Quantity Sold',
         backgroundColor: '#92C57D',
-        data: [18, 15, 22, 20, 25, 19, 21],
-      },
-      {
-        label: 'Snacks',
-        backgroundColor: '#C7B19C',
-        data: [12, 14, 16, 18, 20, 15, 17],
-      },
-      {
-        label: 'Cakes',
-        backgroundColor: '#9B6B5F',
-        data: [10, 12, 15, 14, 16, 18, 20],
+        data: topProducts.map((product) => product.totalQuantity),
       },
     ],
   };
 
-  // Bar chart options
-  const options = {
+  const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false, // Allow control over chart size
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: true, // Ensure the legend is displayed
-        position: 'bottom', // Position the legend below the chart
+        position: 'bottom',
       },
     },
     scales: {
       y: {
         beginAtZero: true,
-        max: 30, // Adjust the Y-axis scale to fit better
       },
     },
   };
 
-  // Data for the top products table
-  const topProducts = [
-    { id: 1, name: 'Matcha Latte', popularity: 45, color: '#FF6F61' },
-    { id: 2, name: 'Tapa Rice', popularity: 29, color: '#92C57D' },
-    { id: 3, name: 'Fries', popularity: 18, color: '#C7B19C' },
-    { id: 4, name: 'Cookies and Cream Cake', popularity: 25, color: '#9B6B5F' },
-  ];
+  // Download Report Functionality
+  const downloadReport = () => {
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(18);
+    doc.text('Sales Report', 14, 20);
+
+    // Subtitle
+    doc.setFontSize(12);
+    doc.text(`Date: ${new Date().toLocaleDateString()}`, 14, 30);
+
+    // Table Headers
+    const headers = [['#', 'Name', 'Total Sales (₱)', 'Total Quantity Sold']];
+    const data = topProducts.map((product, index) => [
+      index + 1,
+      product.name,
+      `₱${product.totalSales.toFixed(2)}`,
+      product.totalQuantity,
+    ]);
+
+    // Auto Table
+    doc.autoTable({
+      startY: 40,
+      head: headers,
+      body: data,
+    });
+
+    // Save PDF
+    doc.save('Sales_Report.pdf');
+  };
 
   return (
     <div className="admin-container">
-      {/* Sidebar */}
       <aside className="sidebar3">
         <div className="sidebar-header">
           <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
@@ -84,88 +137,78 @@ const AdminSales = () => {
         </div>
         <ul className="sidebar-menu">
           <Link to="/admin" className="menu-link">
-            <li className="menu-item ">
+            <li className="menu-item">
               <AiOutlineDashboard className="icon" /> Dashboard
             </li>
-          </Link> 
+          </Link>
           <Link to="/inventory" className="menu-link">
-           <li className="menu-item">
-
+            <li className="menu-item">
               <FiShoppingCart className="icon" /> Inventory
-           </li>
+            </li>
           </Link>
           <Link to="/sales" className="menu-link">
-            <li className="menu-item active">    
+            <li className="menu-item active">
               <RiBarChartLine className="icon" /> Sales Reports
             </li>
           </Link>
-          <Link to="/staff" className='menu-link'>
+          <Link to="/staff" className="menu-link">
             <li className="menu-item">
-            <FiUser className="icon" /> Staff
+              <FiUser className="icon" /> Staff
             </li>
           </Link>
-          <Link to="/uam" className='menu-link'>
+          <Link to="/uam" className="menu-link">
             <li className="menu-item">
               <RiAccountCircleLine className="icon" /> User Account Management
             </li>
           </Link>
-          <Link to="/chat-support" className='menu-link'>
+          <Link to="/chat-support" className="menu-link">
             <li className="menu-item">
               <FiMessageSquare className="icon" /> Chat Support
             </li>
-            </Link>
+          </Link>
         </ul>
-        <Link to="/settings" className='menu-link'>
+        <Link to="/settings" className="menu-link">
           <div className="settings-section">
             <FiSettings className="icon" /> Settings
           </div>
         </Link>
       </aside>
 
-  {/* Main Content */}
-  <main className="sales-content">
-        {/* Header Rectangle */}
+      <main className="sales-content">
         <div className="header-rectangle">
           <div className="headtext">Sales Reports</div>
         </div>
 
-        {/* Bar Chart Section */}
         <div className="chart-section">
           <h5>Total Revenue</h5>
           <div className="chart-container">
-            <Bar data={data} options={options} />
+            <Bar data={chartData} options={chartOptions} />
           </div>
         </div>
 
-        {/* Top Products Section */}
         <div className="top-products-section">
-          <h3>Top Products</h3>
+          <div className="title-sales">
+            <h3>Top Products</h3>
+            <button className="generate-report" onClick={downloadReport}>
+              Download Report
+            </button>
+          </div>
           <table className="top-products-table">
             <thead>
               <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Popularity</th>
-                <th>Sales</th>
+                <th>Total Sales</th>
+                <th>Total Quantity Sold</th>
               </tr>
             </thead>
             <tbody>
-              {topProducts.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.id.toString().padStart(2, "0")}</td>
+              {topProducts.map((product, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
                   <td>{product.name}</td>
-                  <td>
-                    <div className="popularity-bar">
-                      <div
-                        className="popularity-fill"
-                        style={{
-                          width: `${product.popularity}%`,
-                          backgroundColor: product.color,
-                        }}
-                      ></div>
-                    </div>
-                  </td>
-                  <td>{product.popularity}%</td>
+                  <td>₱{product.totalSales.toFixed(2)}</td>
+                  <td>{product.totalQuantity}</td>
                 </tr>
               ))}
             </tbody>

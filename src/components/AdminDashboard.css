@@ -127,15 +127,17 @@
     .main-content {
         flex: 1;
         padding: 20px;
-        background-color: #f8f8f8;
+        /* padding-bottom: 50px; */
+        background-color: transparent;
         display: flex;
         flex-direction: column;
         gap: 20px;
         overflow-y: auto; /* Enables vertical scrolling */
-        height: 100%; /* Ensures it spans the full height */
+        height: 650px; /* Ensures it spans the full height */
         box-sizing: border-box; /* Includes padding in height calculations */
         scroll-behavior: smooth; /* Smooth scrolling */
-        margin-top: 50px;
+        margin-top: 70px;
+        overflow-y: scroll;
     }
 
     /* Top Bar Responsiveness */

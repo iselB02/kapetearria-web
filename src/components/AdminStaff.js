@@ -9,58 +9,107 @@ import { useNavigate } from "react-router-dom";
 
 const AdminStaff = () => {
   const navigate = useNavigate();
+  const [staffList, setStaffList] = useState([]);
+  const [editStaff, setEditStaff] = useState(null); // State to hold the staff being edited
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Dummy staff data
-  const [staff, setStaff] = useState([
-    {
-      id: 1,
-      name: "Mark Otto",
-      jobTitle: "Barista",
-      status: true,
-      image: "image/shrek.png",
-    },
-    {
-      id: 2,
-      name: "Jacob Batungbakal",
-      jobTitle: "Barista",
-      status: false,
-      image: "image/shrek.png",
-    },
-    {
-      id: 3,
-      name: "DingDong Dantes",
-      jobTitle: "Barista",
-      status: true,
-      image: "image/shrek.png",
-    },
-  ]);
+  useEffect(() => {
+    // Fetch all users with the role 'staff' from Firestore
+    const fetchStaff = async () => {
+      try {
+        const userCollectionRef = collection(database, 'user_info');
+        const q = query(userCollectionRef, where('role', '==', 'staff'));
+        const querySnapshot = await getDocs(q);
 
-  const [editStaff, setEditStaff] = useState(null);
+        const staff = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-  // Handle edit functionality
-  const handleEdit = (staffMember) => {
-    setEditStaff(staffMember); // Open editing for this staff member
+        setStaffList(staff);
+      } catch (error) {
+        console.error('Error fetching staff:', error);
+      }
+    };
+
+    fetchStaff();
+  }, []);
+
+  // Save edits to the exact user in Firestore
+  const handleSaveEdit = async () => {
+    if (
+      !editStaff.firstname.trim() ||
+      !editStaff.surname.trim() ||
+      !editStaff.jobtitle.trim()
+    ) {
+      alert('Please fill out all required fields.');
+      return;
+    }
+  
+    try {
+      // Construct updated data without the 'status' field
+      const updatedData = {
+        firstname: editStaff.firstname,
+        surname: editStaff.surname,
+        jobtitle: editStaff.jobtitle,
+      };
+  
+      const staffRef = doc(database, 'user_info', editStaff.id);
+      await updateDoc(staffRef, updatedData);
+  
+      // Update the local state with the changes
+      setStaffList((prevStaff) =>
+        prevStaff.map((staff) =>
+          staff.id === editStaff.id ? { ...staff, ...updatedData } : staff
+        )
+      );
+      setEditStaff(null); // Exit edit mode
+      alert('Staff updated successfully!');
+    } catch (error) {
+      console.error('Error updating staff:', error);
+      alert('Error updating staff: ' + error.message);
+    }
   };
+  
+  // Delete a staff member
+  const handleDeleteStaff = async (id) => {
+    if (window.confirm('Are you sure you want to delete this staff member?')) {
+      try {
+        const staffRef = doc(database, 'user_info', id);
+        await deleteDoc(staffRef);
 
-  const handleSaveEdit = () => {
-    setStaff((prevStaff) =>
-      prevStaff.map((member) =>
-        member.id === editStaff.id ? editStaff : member
-      )
-    );
-    setEditStaff(null); // Close editing
-  };
-
-  // Handle delete functionality
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this staff member?")) {
-      setStaff((prevStaff) => prevStaff.filter((member) => member.id !== id));
+        setStaffList((prevStaff) =>
+          prevStaff.filter((staff) => staff.id !== id)
+        );
+        alert('Staff deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting staff:', error);
+      }
     }
   };
 
-  const handleAddStaff = () => {
-    navigate("/add-staff");
+  // Toggle the status of a staff member
+  const handleToggleStatus = async (id, currentStatus) => {
+    try {
+      const staffRef = doc(database, 'user_info', id);
+      const newStatus = !currentStatus;
+
+      await updateDoc(staffRef, { status: newStatus });
+
+      setStaffList((prevStaff) =>
+        prevStaff.map((staff) =>
+          staff.id === id ? { ...staff, status: newStatus } : staff
+        )
+      );
+    } catch (error) {
+      console.error('Error toggling staff status:', error);
+    }
   };
+
+  // Filter staff based on search query
+  const filteredStaff = staffList.filter((staff) =>
+    `${staff.firstname} ${staff.surname}`.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="admin-container">
@@ -115,109 +164,87 @@ const AdminStaff = () => {
         </div>
 
         <div className="second">
-          <input className="search" placeholder="Search" />
-          <nav className="addstaff">
-            <form className="addbutton">
-              <button
-                className="btnadd"
-                type="button"
-                onClick={handleAddStaff}
-              >
-                Add Staff
-              </button>
-            </form>
-          </nav>
+          <input
+            className="search"
+            placeholder="Search staff by name..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button className="btnadd" type="button" onClick={() => navigate('/add-staff')}>
+            Add Staff
+          </button>
         </div>
 
         <div className="staff">
           <table className="table">
             <thead>
-              <tr className="tr1">
+              <tr>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Job Title</th>
-                <th>DTR</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody className="tablebody">
-              {staff.map((member) => (
-                <tr key={member.id} className={`tr${member.id}`}>
+            <tbody>
+              {filteredStaff.map((staff) => (
+                <tr key={staff.id}>
                   <td>
                     <img
-                      src={member.image}
-                      alt={member.name}
+                      src={staff.profileImage || '/image/person-circle.svg'}
+                      alt={`${staff.firstname} ${staff.surname}`}
                       className="staff-image"
                     />
                   </td>
                   <td>
-                    {editStaff?.id === member.id ? (
+                    {editStaff?.id === staff.id ? (
                       <input
                         type="text"
-                        value={editStaff.name}
+                        value={editStaff.firstname}
                         onChange={(e) =>
-                          setEditStaff({ ...editStaff, name: e.target.value })
+                          setEditStaff({ ...editStaff, firstname: e.target.value })
                         }
                       />
                     ) : (
-                      member.name
+                      `${staff.firstname} ${staff.surname}`
                     )}
                   </td>
                   <td>
-                    {editStaff?.id === member.id ? (
+                    {editStaff?.id === staff.id ? (
                       <input
                         type="text"
-                        value={editStaff.jobTitle}
+                        value={editStaff.jobtitle}
                         onChange={(e) =>
-                          setEditStaff({
-                            ...editStaff,
-                            jobTitle: e.target.value,
-                          })
+                          setEditStaff({ ...editStaff, jobtitle: e.target.value })
                         }
                       />
                     ) : (
-                      member.jobTitle
+                      staff.jobtitle || 'N/A'
                     )}
                   </td>
-                  <td>Date</td>
                   <td>
-                    <div className="form-check form-switch">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        checked={member.status}
-                        onChange={() =>
-                          setStaff((prevStaff) =>
-                            prevStaff.map((m) =>
-                              m.id === member.id
-                                ? { ...m, status: !m.status }
-                                : m
-                            )
-                          )
-                        }
-                      />
-                    </div>
+                    <input
+                      type="checkbox"
+                      checked={staff.status || false}
+                      onChange={() => handleToggleStatus(staff.id, staff.status)}
+                    />
                   </td>
                   <td>
-                    {editStaff?.id === member.id ? (
-                      <button
-                        className="btnsave"
-                        onClick={handleSaveEdit}
-                      >
+                    {editStaff?.id === staff.id ? (
+                      <button className="save-btn" onClick={handleSaveEdit}>
                         Save
                       </button>
                     ) : (
                       <>
                         <button
-                          className="btn btn-edit"
-                          onClick={() => handleEdit(member)}
+                          className="edit-btn"
+                          onClick={() => setEditStaff(staff)}
                         >
                           <FiEdit2 />
                         </button>
                         <button
-                          className="btn btn-delete"
-                          onClick={() => handleDelete(member.id)}
+                          className="delete-btn"
+                          onClick={() => handleDeleteStaff(staff.id)}
                         >
                           <FiTrash2 />
                         </button>
@@ -226,6 +253,11 @@ const AdminStaff = () => {
                   </td>
                 </tr>
               ))}
+              {filteredStaff.length === 0 && (
+                <tr>
+                  <td colSpan="5">No staff members found.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

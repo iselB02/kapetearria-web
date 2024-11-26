@@ -1,13 +1,19 @@
-import './Login.css';
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import {
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  sendPasswordResetEmail,
+} from 'firebase/auth';
+import { collection, addDoc } from 'firebase/firestore'; // Import Firestore
+import { auth, database } from './firebaseConfig'; // Firebase config
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
-import { useAuth } from '../backend/AuthContext'; // Import AuthContext
+import { useAuth } from '../backend/AuthContext'; // Auth context for login
+import './Login.css'
 
 function Login() {
-  const { login, user } = useAuth(); // Destructure login and user from context
+  const { login } = useAuth(); // Destructure login from AuthContext
   const [input, setInput] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -17,12 +23,32 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  const logVisitor = async (userId, email, method) => {
+    try {
+      const visitorRef = collection(database, 'visitor_logs'); // Firestore collection
+      await addDoc(visitorRef, {
+        userId: userId || 'Anonymous',
+        email: email || 'Anonymous',
+        method, // Login method (e.g., Google or Email/Password)
+        timestamp: new Date().toISOString(), // Log timestamp
+      });
+      console.log('Visitor logged successfully');
+    } catch (error) {
+      console.error('Error logging visitor:', error);
+    }
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
 
     try {
-      await login(input, password); // Use the login function from context
+      const userCredential = await signInWithEmailAndPassword(auth, input, password);
+      const user = userCredential.user;
+
+      // Log the login event to Firestore
+      await logVisitor(user.uid, user.email, 'Email/Password');
+
       navigate('/home');
     } catch (error) {
       setError('Failed to sign in. Please check your credentials and try again.');
@@ -33,7 +59,11 @@ function Login() {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log('Google User logged in:', result.user);
+      const user = result.user;
+
+      // Log the login event to Firestore
+      await logVisitor(user.uid, user.email, 'Google');
+
       navigate('/home');
     } catch (error) {
       console.error('Error with Google login:', error);
@@ -54,19 +84,19 @@ function Login() {
   };
 
   return (
-    <div className='main'>
+    <div className="main">
       {error && <div className="error-banner">{error}</div>}
-      <div className='main-body'>
-        <div className='icon-side'>
-          <img src='image/singin-signup-logo.png' alt='signin-signup-logo' />
+      <div className="main-body">
+        <div className="icon-side">
+          <img src="image/singin-signup-logo.png" alt="signin-signup-logo" />
           <button type="button" onClick={() => navigate('/home')}>Continue without signing in</button>
         </div>
-        <div className='login-side'>
+        <div className="login-side">
           <div className="login-form">
             <h2>Log in</h2>
             {isReset ? (
               <form onSubmit={handlePasswordReset}>
-                <div className='reset-email'>
+                <div className="reset-email">
                   <label>Enter your email:</label>
                   <input
                     type="email"
@@ -77,15 +107,14 @@ function Login() {
                   />
                 </div>
                 {resetError && <div className="error-banner">{resetError}</div>}
-                <div className='reset-div'>
-                  <button id='reset-cancel-btn' type="submit">Reset</button>
-                  {/* <button className='reset-cancel-btn' type="button" onClick={() => setIsReset(false)}>Cancel</button> */}
+                <div className="reset-div">
+                  <button id="reset-cancel-btn" type="submit">Reset</button>
                 </div>
               </form>
             ) : (
               <form onSubmit={handleLogin}>
-                <div className='email'>
-                  <label className='label'>Email:</label>
+                <div className="email">
+                  <label className="label">Email:</label>
                   <input
                     type="text"
                     value={input}
@@ -94,8 +123,8 @@ function Login() {
                     required
                   />
                 </div>
-                <div className='password'>
-                  <label className='label'>Password:</label>
+                <div className="password">
+                  <label className="label">Password:</label>
                   <div className="password-input-container">
                     <input
                       type={showPassword ? 'text' : 'password'}
@@ -109,23 +138,23 @@ function Login() {
                       className="toggle-password"
                       onClick={() => setShowPassword(!showPassword)}
                     >
-                      {showPassword ? <img src='image/hide.svg' /> : <img src='image/show.svg' />}
+                      {showPassword ? <img src="image/hide.svg" alt="hide" /> : <img src="image/show.svg" alt="show" />}
                     </button>
                   </div>
                 </div>
                 <button type="submit">Login</button>
               </form>
             )}
-            <div className='div-border'></div>
-            <button className='google-btn' onClick={handleGoogleLogin}>
-              <img src='image/google-icon.png' alt='google-icon' />Sign in with Google
+            <div className="div-border"></div>
+            <button className="google-btn" onClick={handleGoogleLogin}>
+              <img src="image/google-icon.png" alt="google-icon" />Sign in with Google
             </button>
-            <button className='signup' onClick={() => navigate('/signup')}>Don't have an account? Sign up now</button>
-            <button className='forgot-pass' onClick={() => setIsReset(true)}>Forgot your password?</button>
+            <button className="signup" onClick={() => navigate('/signup')}>Don't have an account? Sign up now</button>
+            <button className="forgot-pass" onClick={() => setIsReset(true)}>Forgot your password?</button>
           </div>
         </div>
       </div>
-      <div className='footer'>
+      <div className="footer">
         <Footer />
       </div>
     </div>
