@@ -160,6 +160,7 @@ const POSmodal = ({ order, closeModal, handleAccept, handleDecline, setReason, r
             <select id="status" value={selectedStatus} onChange={handleStatusChange}>
               <option value="preparing">Preparing</option>
               <option value="out for delivery">Out for Delivery</option>
+              <option value="ready for pickup">Ready for Pickup</option>
               <option value="order completed">Order Completed</option>
             </select>
           </div>
@@ -293,7 +294,7 @@ function POS() {
     const forApprovalOrders = orders.filter(order => order.status === 'for approval');
 
     // Filter orders for preparing status
-    const preparingOrders = orders.filter(order => order.status === 'preparing' || order.status === 'out for delivery');
+    const preparingOrders = orders.filter(order => order.status === 'preparing' || order.status === 'out for delivery' || order.status === 'ready for pickup');
 
   return (
     <div className='POS-main'>

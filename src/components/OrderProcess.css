@@ -18,6 +18,13 @@
     background-repeat: no-repeat;
 }
 
+.status-description {
+    /* background-color: #5E2D26; */
+    font-size: 20px;
+    padding: 5px;
+    color: #5E2D26;
+}
+
 .container-process {
     justify-self: center;
     width: 60%;

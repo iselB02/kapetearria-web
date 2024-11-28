@@ -175,11 +175,11 @@ const Content = () => {
         </Routes>
       </div>
 
-      <ChatBot
+      {/* <ChatBot
         config={config}
         messageParser={messageParser}
         actionProvider={actionProvider}
-      />
+      /> */}
     </div>
   );
 };

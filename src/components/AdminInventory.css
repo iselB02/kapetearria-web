@@ -149,7 +149,7 @@
 
 .inventory-table {
     max-height: 600px; 
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: scroll; /* Enable vertical scrolling */
     overflow-x: hidden; /* Disable horizontal scrolling */
     border: 1px solid #ddd; /* Optional: Add a border for better visibility */
     margin-bottom: 20px; /* Add spacing below the table */
