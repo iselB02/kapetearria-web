@@ -16,56 +16,56 @@ To get started with the program, clone the repositories and install these depend
 
 ### 2. Install Dependencies
 
-        ```bash
-        npm install react-script
-        ```
+ ```bash
+npm install react-script
+```
 
-        A utility to manage scripts in a React application. This helps with the running and building of the app.
+A utility to manage scripts in a React application. This helps with the running and building of the app.
 
-        ```bash
-        npm install firebase
-        ```
-        Firebase is used to integrate cloud services such as authentication, database, and file storage into the application.
+```bash
+npm install firebase
+```
+Firebase is used to integrate cloud services such as authentication, database, and file storage into the application.
 
-        ```bash
-        npm install jspdf jspd-autotable
-        ```
-        These libraries are used for generating PDFs and allow downloading of this file for the sales report section in Admin.
+```bash
+npm install jspdf jspd-autotable
+```
+These libraries are used for generating PDFs and allow downloading of this file for the sales report section in Admin.
 
-        ```bash
-        npm install react router dom
-        ```
-        A library for adding navigation to the application. It enables routing between different components or pages.
+```bash
+npm install react router dom
+```
+A library for adding navigation to the application. It enables routing between different components or pages.
 
-        ```bash
-        npm install chatbotify 
-        ```
-        This is a chatbot integration library, which allows us to implement a chatbot feature into this application where an automated answering machine accomodating customers with their inquiries.
+```bash
+npm install chatbotify 
+```
+This is a chatbot integration library, which allows us to implement a chatbot feature into this application where an automated answering machine accomodating customers with their inquiries.
 
-        ```bash
-        npm install react chart.js
-        ```
-        A wrapper for Chart.js, which helps in integrating interactive charts and graphs for data visualization used on the Admin section of the website to visualize their sales.
+```bash
+npm install react chart.js
+```
+A wrapper for Chart.js, which helps in integrating interactive charts and graphs for data visualization used on the Admin section of the website to visualize their sales.
 
-        ```bash
-        npm install react-icons
-        ```
-        This library provides a collection of icons to use in this project. It was used for adding visual elements like buttons, navigation links, and more.
+```bash
+npm install react-icons
+```
+This library provides a collection of icons to use in this project. It was used for adding visual elements like buttons, navigation links, and more.
 
-        ```bash
-        npm install leaflet
-        ```
-        Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
+```bash
+npm install leaflet
+```
+Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
 
-        ```bash
-        npm install js-cookies
-        ```
-        js-cookies manages the cookies in the browser.
+```bash
+npm install js-cookies
+```
+js-cookies manages the cookies in the browser.
 
-        ```bash
-        npm install bootsrap
-        ```
-        Bootstrap framework for building responsive and modern web design.
+```bash
+npm install bootsrap
+```
+Bootstrap framework for building responsive and modern web design.
 
 
 ## Starting the Program
@@ -78,7 +78,7 @@ to enable backend functionalities such as handling requests, database connection
 Runs the app in the development mode.
 
 `npm test`
-Launches the test runner in the interactive watch mode.\
+Launches the test runner in the interactive watch mode.
 
 
 ## Folder Stucture for this Project
