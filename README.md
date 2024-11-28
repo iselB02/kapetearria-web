@@ -103,6 +103,3 @@ The App.css is the style of the app.js.
 
 ## Components Folder
 The Components Folder is where the content of the app.js is located. All the files are coded here along with its corressponding design file (css).
-
-## Database File
-The Database file is named Kaperterria in a json file format. 
