@@ -8,20 +8,6 @@ In addition to coffee, the shop offers a variety of delectable treats, such as f
 The website provides a seamless way for customers to browse the menu, place orders for pickup or delivery, and explore the latest offerings and promotions. Whether you're visiting in person or ordering online, Kapetearria ensures an enjoyable experience every time.
 
 
-
-## Available Scripts
-In the project directory, you can run:
-
-`npm start`
-Runs the app in the development mode.\
-
-`npm test`
-Launches the test runner in the interactive watch mode.\
-
-`npm run eject`
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
 ## Program Installation
 To get started with the program, clone the repositories and install these dependencies ton ensure no module is missing.
 
@@ -30,7 +16,7 @@ To get started with the program, clone the repositories and install these depend
 
 ### 2. Install Dependencies
 
-```bash
+ ```bash
 npm install react-script
 ```
 
@@ -71,6 +57,29 @@ npm install leaflet
 ```
 Leaflet is a library for interactive maps. It is used to display maps and geo-location features on the landing page of the application as well as in the checkout processing.
 
+```bash
+npm install js-cookies
+```
+js-cookies manages the cookies in the browser.
+
+```bash
+npm install bootsrap
+```
+Bootstrap framework for building responsive and modern web design.
+
+
+## Starting the Program
+In the project directory, you must run:
+
+`node src/backend/server.js`
+to enable backend functionalities such as handling requests, database connection, etc.
+
+`npm start`
+Runs the app in the development mode.
+
+`npm test`
+Launches the test runner in the interactive watch mode.
+
 
 ## Folder Stucture for this Project
 
@@ -81,9 +90,9 @@ Kapetearria-web/
 │   ├── >image           # The images used in this project resides in this file. 
 │   └── >video           # The videos used in this project resides in this folder.
 ├── >src          # This folder contains all the files of source codes used for building this application.
-│   ├── >backend            
+│   ├── >backend  # This section resides the authentication part of the code.
 │   ├── >components
-│   │      └──  # This section all has the components and other sections of the web.
+│   │      └──  # This section has all the components and other sections of the web.
 │   ├── App.css    # The style of App.js
 │   └── App.js     # Main source code for the app.
 ```
@@ -94,6 +103,3 @@ The App.css is the style of the app.js.
 
 ## Components Folder
 The Components Folder is where the content of the app.js is located. All the files are coded here along with its corressponding design file (css).
-
-## Database File
-The Database file is named Kaperterria in a json file format. 
