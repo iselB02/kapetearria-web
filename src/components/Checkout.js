@@ -512,7 +512,7 @@ function Checkout() {
                         </p>
                       </div>
                     </div>
-                    <h3 className='order-price'>₱{(order.price * order.quantity).toFixed(2)}</h3>
+                    <h3 className='order-price1'>₱{(order.price * order.quantity).toFixed(2)}</h3>
                   </div>
                 ))}
               </div>

@@ -13,7 +13,9 @@ function Navbar() {
   const [user] = useAuthState(auth);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [ongoingOrder, setOngoingOrder] = useState(false);
   const navigate = useNavigate();
+  
 
   const fetchCartItems = () => {
     const uid = user?.uid || Cookies.get('authToken');
@@ -47,7 +49,6 @@ function Navbar() {
     return () => unsubscribe && unsubscribe(); // Unsubscribe when the component unmounts
   }, [user]);
   
-
   // Handle user logout
   const handleLogout = async () => {
     try {
@@ -76,7 +77,6 @@ function Navbar() {
       }
     }
   };
-  
 
   // Handle adding quantity
   const handleAddQuantity = (cartItem, event) => {
@@ -91,7 +91,6 @@ function Navbar() {
     updateCartInFirestore(updatedCartItems);
   };
   
-
   // Handle decreasing quantity
   const handleRemoveQuantity = async (cartItem, event) => {
     event.stopPropagation();
@@ -124,69 +123,88 @@ function Navbar() {
       updateCartInFirestore(updatedCartItems);
     }
   };
-  
 
+  const checkForOngoingOrder = async (uid) => {
+    console.log("Checking for ongoing order...");
+  
+    // Check if there are any records with the user's UID in the 'order_info' collection
+    const ordersRef = collection(database, 'order_info');
+    const q = query(ordersRef, where('userId', '==', uid));
+  
+    const querySnapshot = await getDocs(q);
+    const isOngoingOrder = !querySnapshot.empty; // If any document is found, ongoing order exists
+  
+    if (isOngoingOrder) {
+      console.log("Ongoing order found for UID:", uid);
+    } else {
+      console.log("No ongoing orders for UID:", uid);
+    }
+  
+    return isOngoingOrder;  // Return the result directly
+  };
+  
   const handleCheckout = async () => {
     if (cartItems.length === 0) {
       alert('Your cart is empty!');
       return;
     }
   
-    const uid = user?.uid || Cookies.get('authToken'); // Retrieve UID from user state or cookies
-  
+    const uid = user?.uid || Cookies.get('authToken');
     if (!uid) {
       console.error('User UID is not available.');
       return;
     }
   
+    // Check if the user has any ongoing order by looking at the UID in 'order_info'
+    const ongoingOrder = await checkForOngoingOrder(uid); // Await the result of the check
+  
+    if (ongoingOrder) {
+      alert('You already have an ongoing order. Please complete your current order before placing a new one.');
+      return;  // Prevent checkout if there is an ongoing order
+    }
+  
     try {
-      // Reference the user's document in `checkout_info`
+      // Proceed with the checkout process if no ongoing order exists
       const checkoutRef = doc(database, 'checkout_info', uid);
       const checkoutSnap = await getDoc(checkoutRef);
   
       let existingItems = [];
-  
-      // Check if a `checkout_info` document already exists
       if (checkoutSnap.exists()) {
         const checkoutData = checkoutSnap.data();
         existingItems = checkoutData.items || [];
       }
   
-      // Merge new cart items with existing items
       const updatedItems = [...existingItems, ...cartItems];
   
-      // Prepare checkout data with the merged items
       const checkoutData = {
         items: updatedItems,
         checkoutDate: new Date(),
-        totalPrice: updatedItems.reduce((acc, item) => acc + item.totalPrice, 0), // Update total price based on all items
+        totalPrice: updatedItems.reduce((acc, item) => acc + item.totalPrice, 0),
       };
   
-      // Save the updated checkout data back to Firestore
       await setDoc(checkoutRef, checkoutData);
       console.log('Checkout data updated successfully');
   
-      // Clear the user's cart by deleting each document in the `cart_info` collection for this user
       const cartCollectionRef = collection(database, 'cart_info');
       const cartQuery = query(cartCollectionRef, where('userUid', '==', uid));
       const cartDocs = await getDocs(cartQuery);
   
-      // Loop through each document and delete it
       const deletePromises = cartDocs.docs.map((cartDoc) => deleteDoc(cartDoc.ref));
       await Promise.all(deletePromises);
   
       console.log('Cart cleared after checkout');
-      setCartItems([]); // Clear local cart items state
-      setTotalPrice(0); // Reset total price
+      setCartItems([]);
+      setTotalPrice(0);
   
       alert('Checkout successful!');
-      navigate('/myorder'); // Redirect user to the order confirmation or a relevant page
-      window.location.reload(); 
+      navigate('/myorder');
+      window.location.reload();  // Reload to reflect changes
     } catch (error) {
       console.error('Error during checkout:', error);
       alert('Checkout failed. Please try again.');
     }
   };
+  
   
 
   return (
@@ -277,7 +295,6 @@ function Navbar() {
                       ) : (
                         <p className='empty'>Your cart is empty.</p>
                       )}
-                      {/* <div className='divider'></div> */}
                       {cartItems.length > 0 && (
                         <div className='checkout-div'>
                           <div className='division'></div>

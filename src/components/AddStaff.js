@@ -7,7 +7,7 @@ import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { auth, database } from './firebaseConfig'; // Import Firebase config
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore'; // Import Firestore functions
 import './AddStaff.css';
 
 function AddStaff() {
@@ -55,23 +55,24 @@ function AddStaff() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Save additional user info to Firestore
+      // Save additional user info to Firestore using the uid as the document ID
       const userInfo = {
         uid: user.uid,
         firstname,
-        surname ,
+        surname,
         email,
         phone,
         birthdate,
         gender,
         jobtitle,
-        role: 'staff', // Assign the role as 'staff'
+        role: jobtitle.toLowerCase(),
         profileImage, // Include the uploaded image
         createdAt: new Date(),
       };
 
-      const userCollectionRef = collection(database, 'user_info');
-      await addDoc(userCollectionRef, userInfo);
+      // Use setDoc with user.uid to set the doc ID
+      const userDocRef = doc(database, 'user_info', user.uid);
+      await setDoc(userDocRef, userInfo);
 
       alert('Staff added successfully');
       navigate('/staff'); // Redirect to the staff page
@@ -83,44 +84,44 @@ function AddStaff() {
 
   return (
     <div className='admin-container'>
-            <aside className="sidebar">
-                <div className="sidebar-header">
-                    <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
-                    <h6>ADMIN</h6>
-                </div>
-                <ul className="sidebar-menu">
-                    <Link to="/admin" className="menu-link">
-                        <li className="menu-item">
-                            <AiOutlineDashboard className="icon" /> Dashboard
-                        </li>
-                    </Link>
-                    <Link to="/inventory" className="menu-link">
-                        <li className="menu-item">
-                            <FiShoppingCart className="icon" /> Inventory
-                        </li>
-                    </Link>
-                    <Link to="/sales" className="menu-link">
-                        <li className="menu-item">
-                            <RiBarChartLine className="icon" /> Sales Reports
-                        </li>
-                    </Link>
-                    <Link to="/staff" className='menu-link'>
-                        <li className="menu-item active">
-                            <FiUser className="icon" /> Staff
-                        </li>
-                    </Link>
-                    <Link to="/uam" className='menu-link'>
-                        <li className="menu-item">
-                            <RiAccountCircleLine className="icon" /> User Account Management
-                        </li>
-                    </Link>
-                </ul>
-                <Link to="/settings" className='menu-link'>
-                    <div className="settings-section">
-                        <FiSettings className="icon" /> Settings
-                    </div>
-                </Link>
-            </aside>
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+          <h6>ADMIN</h6>
+        </div>
+        <ul className="sidebar-menu">
+          <Link to="/admin" className="menu-link">
+            <li className="menu-item">
+              <AiOutlineDashboard className="icon" /> Dashboard
+            </li>
+          </Link>
+          <Link to="/inventory" className="menu-link">
+            <li className="menu-item">
+              <FiShoppingCart className="icon" /> Inventory
+            </li>
+          </Link>
+          <Link to="/sales" className="menu-link">
+            <li className="menu-item">
+              <RiBarChartLine className="icon" /> Sales Reports
+            </li>
+          </Link>
+          <Link to="/staff" className='menu-link'>
+            <li className="menu-item active">
+              <FiUser className="icon" /> Staff
+            </li>
+          </Link>
+          <Link to="/uam" className='menu-link'>
+            <li className="menu-item">
+              <RiAccountCircleLine className="icon" /> User Account Management
+            </li>
+          </Link>
+        </ul>
+        <Link to="/settings" className='menu-link'>
+          <div className="settings-section">
+            <FiSettings className="icon" /> Settings
+          </div>
+        </Link>
+      </aside>
 
       <div className='add-content'>
         <div className='headest'>

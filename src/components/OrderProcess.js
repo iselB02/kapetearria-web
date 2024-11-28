@@ -16,51 +16,69 @@ function OrderProcess() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [isOrderCompleted, setIsOrderCompleted] = useState(false);
+
+  // Function to fetch the order data
+  const fetchOrderData = async () => {
+    if (user) {
+      try {
+        const orderRef = doc(database, 'order_info', user.uid);
+        const orderSnap = await getDoc(orderRef);
+
+        if (orderSnap.exists()) {
+          const order = orderSnap.data();
+          setOrderData(order);
+
+          // Check if the order is completed
+          if (order.status.toLowerCase() === 'order completed') {
+            setIsOrderCompleted(true);
+            await handleOrderCompletion(order); // Handle order completion
+          } else {
+            setIsOrderCompleted(false);
+          }
+        } else {
+          navigate('/'); // Redirect if no order exists
+        }
+
+        const userRef = doc(database, 'user_info', user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setFirstName(userData.firstname);
+          setMI(userData.middleInitial);
+          setLastName(userData.surname);
+          setEmail(userData.email);
+          setPhone(userData.phone);
+        } else {
+          console.error('No user data found.');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        navigate('/'); // Redirect on error
+      }
+    } else {
+      navigate('/login'); // Redirect if not authenticated
+    }
+  };
 
   useEffect(() => {
-    const fetchOrderData = async () => {
-      if (user) {
-        try {
-          const orderRef = doc(database, 'order_info', user.uid);
-          const orderSnap = await getDoc(orderRef);
-
-          if (orderSnap.exists()) {
-            const order = orderSnap.data();
-            setOrderData(order);
-
-            // Redirect if the order is completed
-            if (order.status.toLowerCase() === 'order completed') {
-              await handleOrderCompletion(order);
-            }
-          } else {
-            // Redirect if no order exists
-            navigate('/');
-          }
-
-          const userRef = doc(database, 'user_info', user.uid);
-          const userSnap = await getDoc(userRef);
-
-          if (userSnap.exists()) {
-            const userData = userSnap.data();
-            setFirstName(userData.firstname);
-            setMI(userData.middleInitial);
-            setLastName(userData.surname);
-            setEmail(userData.email);
-            setPhone(userData.phone);
-          } else {
-            console.error('No user data found.');
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          navigate('/'); // Redirect on error
-        }
-      } else {
-        navigate('/login'); // Redirect if not authenticated
-      }
-    };
-
+    // Fetch initial data
     fetchOrderData();
-  }, [user, navigate]);
+
+    // Set up the interval to refresh the order data every 3 seconds
+    let intervalId;
+    if (!isOrderCompleted) {
+      intervalId = setInterval(() => {
+        fetchOrderData(); // Re-fetch the data
+      }, 3000);
+    }
+
+    // Clear the interval on component unmount or when order is completed
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [user, navigate, isOrderCompleted]);
 
   const handleOrderCompletion = async (order) => {
     try {

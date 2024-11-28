@@ -2,7 +2,7 @@
 .main-setup {
     width: 100%;
     height: 645px ; 
-    background-color: bisque;
+    background-color: white;
 }
 
 #title-account {
@@ -63,6 +63,7 @@
     border-radius: 15px;
     border: 2px solid var(--Color, #5E2D26);
     background: #EEECDD;
+    padding: 3px;
 }
 
 .mi-bod {

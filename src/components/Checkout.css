@@ -380,8 +380,9 @@ form {
     padding: 2px;
 }
 
-.order-price {
+.order-price1 {
     padding-top: 17px;
+    font-size: 20px;
 }
 
 .other-details {

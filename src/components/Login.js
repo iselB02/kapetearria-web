@@ -5,7 +5,7 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
 } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore'; // Import Firestore
+import { collection, addDoc, doc, getDoc } from 'firebase/firestore'; // Import Firestore
 import { auth, database } from './firebaseConfig'; // Firebase config
 import { useNavigate } from 'react-router-dom';
 import Footer from './Footer';
@@ -38,6 +38,14 @@ function Login() {
     }
   };
 
+   // Check if the user exists in the user_info collection
+   const checkUserInfo = async (uid) => {
+    const userInfoRef = doc(database, 'user_info', uid); // Reference to user info in Firestore
+    const userInfoSnap = await getDoc(userInfoRef);
+    return userInfoSnap.exists(); // Return true if user info exists, false otherwise
+  };
+
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
@@ -64,7 +72,16 @@ function Login() {
       // Log the login event to Firestore
       await logVisitor(user.uid, user.email, 'Google');
 
-      navigate('/home');
+      // Check if user exists in 'user_info' collection
+      const userExists = await checkUserInfo(user.uid);
+
+      if (userExists) {
+        // If the user exists in the 'user_info' collection, redirect to home
+        navigate('/home');
+      } else {
+        // If the user does not exist, redirect to setup account page
+        navigate('/setup-account');
+      }
     } catch (error) {
       console.error('Error with Google login:', error);
       setError('Google login failed. Please try again.');

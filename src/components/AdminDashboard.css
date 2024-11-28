@@ -1,3 +1,5 @@
+
+    
     /* Main Content Responsiveness */
     @media (max-width: 768px) {
         .main-content {
@@ -39,11 +41,10 @@
     .sidebar {
         display: flex;
         width: 260px; /* Reduce sidebar width */
-        background-color: #7a3333;
+        background-color: white !important;
         border-right: 1px solid #e6e6e6;
         flex-direction: column;
-        padding: 10px 10px; /* Reduce padding */
-        margin-top: 70px;
+        /* background-color: #444 !important; */
     }
 
     .sidebar-header {
@@ -73,7 +74,7 @@
 
     .menu-link {
         margin-bottom: 250px;
-        margin-top: 150px;
+        /* margin-top: 150px; */
         color: inherit; /* Inherit the color from the parent (to match others) */
         text-decoration: none; /* Remove underline */
     }
@@ -137,8 +138,10 @@
         height: 650px; /* Ensures it spans the full height */
         box-sizing: border-box; /* Includes padding in height calculations */
         scroll-behavior: smooth; /* Smooth scrolling */
-        margin-top: 70px;
+        /* margin-top: 70px; */
         overflow-y: scroll;
+        height: 100vh;
+        background-color: white !important;
     }
 
     /* Top Bar Responsiveness */
@@ -160,7 +163,7 @@
         align-items: center; /* Vertically center items */
         justify-content: space-between; /* Add space between the Profile and Dashboard */
         padding: 0 20px; /* Add padding around the top-bar */
-        background-color: #f8f8f8; /* Optional background color */
+        background-color: #ffffff; /* Optional background color */
         height: 60px; /* Adjust the height for a cleaner look */
     }
     
