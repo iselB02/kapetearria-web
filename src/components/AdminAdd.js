@@ -6,11 +6,16 @@ const AddProduct = () => {
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [details, setDetails] = useState(""); // Optional field
+  const [description, setDescription] = useState(""); 
   const [image, setImage] = useState(null);
+  const [sizes, setSizes] = useState(""); 
+  const [src, setSrc] = useState(""); 
+  const [stockNumber, setStockNumber] = useState(""); 
+  const [sugarLevels, setSugarLevels] = useState(""); 
+  const [type, setType] = useState(""); 
   const [errors, setErrors] = useState({});
 
-  const navigate = useNavigate(); // Initialize navigate function
+  const navigate = useNavigate();
 
   const validateFields = () => {
     const newErrors = {};
@@ -18,6 +23,8 @@ const AddProduct = () => {
     if (!category.trim()) newErrors.category = "Category is required!";
     if (!price || price <= 0) newErrors.price = "Enter a valid price!";
     if (!image) newErrors.image = "Product image is required!";
+    if (!sizes.trim()) newErrors.sizes = "Sizes are required!";
+    if (!stockNumber.trim()) newErrors.stockNumber = "Stock number is required!";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -49,14 +56,19 @@ const AddProduct = () => {
   const handleSave = () => {
     if (!validateFields()) return;
 
-    console.log({ productName, category, price, details, image });
+    console.log({ productName, category, price, description, image, sizes, src, stockNumber, sugarLevels, type });
     alert("Product added successfully!");
 
     setProductName("");
     setCategory("");
     setPrice("");
-    setDetails("");
+    setDescription("");
     setImage(null);
+    setSizes("");
+    setSrc("");
+    setStockNumber("");
+    setSugarLevels("");
+    setType("");
 
     // Navigate to Inventory Page after saving
     navigate("/inventory");
@@ -125,17 +137,60 @@ const AddProduct = () => {
         {errors.price && <p className="error-text">{errors.price}</p>}
 
         <textarea
-          placeholder="Details (Optional)"
-          value={details}
-          onChange={(e) => setDetails(e.target.value)}
+          placeholder="Description (Optional)"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           className="textarea-field"
         ></textarea>
+
+        <input
+          type="text"
+          placeholder="Sizes"
+          value={sizes}
+          onChange={(e) => setSizes(e.target.value)}
+          className={`input-field ${errors.sizes ? "error-border" : ""}`}
+        />
+        {errors.sizes && <p className="error-text">{errors.sizes}</p>}
+
+        <input
+          type="text"
+          placeholder="IMG SRC"
+          value={src}
+          onChange={(e) => setSrc(e.target.value)}
+          className={`input-field ${errors.src ? "error-border" : ""}`}
+        />
+        {errors.src && <p className="error-text">{errors.src}</p>}
+
+        <input
+          type="text"
+          placeholder="Stock Number"
+          value={stockNumber}
+          onChange={(e) => setStockNumber(e.target.value)}
+          className={`input-field ${errors.stockNumber ? "error-border" : ""}`}
+        />
+        {errors.stockNumber && <p className="error-text">{errors.stockNumber}</p>}
+
+        <input
+          type="text"
+          placeholder="Sugar Levels"
+          value={sugarLevels}
+          onChange={(e) => setSugarLevels(e.target.value)}
+          className="input-field"
+        />
+
+        <input
+          type="text"
+          placeholder="Type (e.g., Drink, Snack, Dessert)"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+          className="input-field"
+        />
 
         <div className="prod-buttons">
           <button onClick={handleSave} className="save-button">
             SAVE
           </button>
-          <button className="close-button" onClick={handleClose}>Cancel</button>
+          <button className="close-button" onClick={handleClose}>CANCEL</button>
         </div>
       </div>
     </div>
