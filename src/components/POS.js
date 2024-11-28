@@ -178,34 +178,45 @@ const POSmodal = ({ order, closeModal, handleAccept, handleDecline, setReason, r
   
   
 
-// Decline Modal Component (For Reason Input)
-const DeclineModal = ({ reason, setReason, handleDecline, closeDeclineModal }) => {
+  // DeclineModal Component
+const DeclineModal = ({ reason, setReason, handleDecline, closeDeclineModal, order }) => {
   const handleReasonChange = (e) => {
-    setReason(e.target.value);
+      setReason(e.target.value);
+  };
+
+  const handleDeclineClick = () => {
+      if (order && order.id) {  // Ensure order data is valid before calling handleDecline
+          handleDecline(order);
+      } else {
+          console.error("Order data is invalid or missing.", order);
+          alert("Order data is missing or invalid. Please try again.");
+      }
   };
 
   return (
-    <div className='declined-modal'>
-      <div className='declined-modal-content'>
-        <h3>Decline Order</h3>
-        <div className='reason'>
-          <label htmlFor='reason'>Reason:</label>
-          <input
-            type='text'
-            id='reason'
-            value={reason}
-            onChange={handleReasonChange}
-            placeholder='Enter reason for declining'
-          />
-        </div>
-        <div className='modal-actions'>
-          <button onClick={handleDecline}>Submit</button>
-          <button onClick={closeDeclineModal}>Cancel</button>
-        </div>
+      <div className='declined-modal'>
+          <div className='declined-modal-content'>
+              <h3>Decline Order</h3>
+              <div className='reason'>
+                  <label htmlFor='reason'>Reason:</label>
+                  <input
+                      type='text'
+                      id='reason'
+                      value={reason}
+                      onChange={handleReasonChange}
+                      placeholder='Enter reason for declining'
+                  />
+              </div>
+              <div className='modal-actions'>
+                  <button onClick={handleDeclineClick}>Submit</button>
+                  <button onClick={closeDeclineModal}>Cancel</button>
+              </div>
+          </div>
       </div>
-    </div>
   );
 };
+
+
 
 // Main POS Component
 function POS() {
@@ -231,9 +242,17 @@ function POS() {
         return () => clearInterval(intervalId);
     }, []);
 
-    const openDeclineModal = () => {
-        setIsDeclineModalOpen(true);
-    };
+    const openDeclineModal = (order) => {
+      if (order && order.id) { // Ensure order is valid
+          setSelectedOrder(order);
+          setIsDeclineModalOpen(true); // Open Decline Modal only when an order is selected
+      } else {
+          console.error("No order selected or order is invalid", order); // Log any issues with order
+          alert("Please select a valid order.");
+      }
+  };
+  
+  
 
     const closeDeclineModal = () => {
         setIsDeclineModalOpen(false);
@@ -280,15 +299,24 @@ function POS() {
     // Handle Decline function - Move it to POS
     const [reason, setReason] = useState("");
     const handleDecline = async (order) => {
-        // Update status to 'declined' and store the reason in Firebase
-        const orderRef = doc(database, 'order_info', selectedOrder.id);
-        await updateDoc(orderRef, {
-            status: 'declined',
-            reason: reason
-        });
-        closeModal();
-        window.location.reload();
-    };
+      // Ensure order is valid
+      if (!order || !order.id) {
+          console.error('Invalid order for decline');
+          return;
+      }
+
+      const orderRef = doc(database, 'order_info', order.id);
+      try {
+          await updateDoc(orderRef, {
+              status: 'declined',
+              reason: reason
+          });
+          closeModal();
+          window.location.reload();
+      } catch (error) {
+          console.error('Error declining order:', error);
+      }
+  };
 
     // Filter orders to only display those with status 'for approval'
     const forApprovalOrders = orders.filter(order => order.status === 'for approval');
@@ -313,7 +341,7 @@ function POS() {
                             </div>
                             <div className='incoming-detail2'>
                                 <div className='incoming-reject'>
-                                    <button onClick={openDeclineModal}>
+                                    <button onClick={() => openDeclineModal(order)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46" fill="none">
                                             <circle cx="22.7148" cy="22.5576" r="21.5" stroke="#B20000" stroke-width="2"/>
                                             <path d="M16.918 17.4209L28.39 28.4538" stroke="#B20000" stroke-width="2" stroke-linecap="round"/>
@@ -344,7 +372,7 @@ function POS() {
             <div className='prep-content' onClick={() => openPreparingModal(order)} key={order.id}>
               <div className='prep-detail1'>
                 <h2>Order #{order.orderNumber}</h2>
-                <h3>Pickup</h3>
+                <h3>{order.serviceOption}</h3>
               </div>
               <div className='prep-detail2'>
                 <h3>TOTAL: ₱{order.totalAmount}</h3>
@@ -368,15 +396,16 @@ function POS() {
 
             {isPreparingModalOpen && selectedOrder && <PreparingModal order={selectedOrder} closeModal={closePreparingModal} />}
 
-           {/* Decline Modal */}
             {isDeclineModalOpen && (
                 <DeclineModal 
                     reason={reason}
                     setReason={setReason}
                     handleDecline={handleDecline}
                     closeDeclineModal={closeDeclineModal} 
+                    order={selectedOrder} // Pass the selectedOrder as a prop to DeclineModal
                 />
-            )} 
+            )}
+
     </div>
   );
 }

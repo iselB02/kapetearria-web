@@ -784,6 +784,111 @@
     gap: 10px;
 }
 
+/*history modal*/
+/* order-history-modal.css */
+
+/* Overlay that covers the entire screen */
+.order-history-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure the modal is on top of other content */
+}
+
+/* Modal content container */
+.order-history-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px; /* Fixed width for the modal */
+    max-width: 90%; /* Ensure it's responsive */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Modal header */
+.order-history-modal-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Styling for the order details section */
+.order-history-details p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Strong text styling for labels */
+.order-history-details strong {
+    color: #333;
+    font-weight: 600;
+}
+
+/* Modal button container */
+.historyModal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Button styling */
+.historyModal-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 150px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons */
+.historyModal-buttons button:hover {
+    background-color: #45a049;
+}
+
+/* Close button with a red background */
+.historyModal-buttons button:nth-child(1) {
+    background-color: #5E2D26;
+}
+
+/* Close button hover effect */
+.historyModal-buttons button:nth-child(1):hover {
+    background-color: #4f2822;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .order-history-modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .order-history-modal-content h2 {
+        font-size: 20px;
+    }
+
+    .order-history-details p {
+        font-size: 14px;
+    }
+
+    .modal-buttons button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

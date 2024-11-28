@@ -17,13 +17,15 @@ function OrderProcess() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [isOrderCompleted, setIsOrderCompleted] = useState(false);
+  const [isOrderDeclined, setIsOrderDeclined] = useState(false);
 
   const statusDescriptions = {
     'for approval': 'Your order is waiting for approval.',
     'preparing': 'We are preparing your food, please be patient.',
     'out for delivery': 'Your order is out for delivery. It will arrive soon!',
     'ready for pickup': 'The food is ready for pick-up. You can get it anytime.',
-    'order completed': 'Your order has been successfully completed. Thank you for choosing us!'
+    'order completed': 'Your order has been successfully completed. Thank you for choosing us!',
+    'declined': 'Your order has been declined. Please check the reason below.'
   };
 
   const getStatusDescription = (status) => {
@@ -43,16 +45,24 @@ function OrderProcess() {
           const order = orderSnap.data();
           setOrderData(order);
 
-          // Check if the order is completed
           if (order.status.toLowerCase() === 'order completed') {
             setIsOrderCompleted(true);
             await handleOrderCompletion(order); // Handle order completion
+          } else if (order.status.toLowerCase() === 'declined') {
+            // Show decline alert
+            const userConfirmed = window.confirm(`Your order has been declined! Please check the reason below.\nReason: ${order.reason}`);
+
+            if (userConfirmed) {
+              setIsOrderCompleted(false); // Ensure order is not considered completed
+              await handleDeclined(order); // Handle declined order
+            }
           } else {
             setIsOrderCompleted(false);
           }
         } else {
           navigate('/'); // Redirect if no order exists
         }
+
 
         const userRef = doc(database, 'user_info', user.uid);
         const userSnap = await getDoc(userRef);
@@ -96,6 +106,38 @@ function OrderProcess() {
 
   const handleOrderCompletion = async (order) => {
     try {
+      // Ask for user confirmation before proceeding
+      const userConfirmed = window.confirm('Your order has been completed! Click OK to proceed.');
+  
+      if (userConfirmed) {
+        // Store each item individually
+        const itemsCollection = orderData.orders.map(async (item) => {
+          const itemRef = doc(database, 'order_history', `${user.uid}_${item.productName}_${Date.now()}`);
+          await setDoc(itemRef, {
+            ...item,
+            userId: user.uid,
+            completedAt: new Date(),
+          });
+        });
+  
+        // Wait for all items to be stored
+        await Promise.all(itemsCollection);
+  
+        // Now delete the main order info
+        const orderRef = doc(database, 'order_info', user.uid);
+        await deleteDoc(orderRef);
+  
+        navigate('/'); // Redirect to home after order completion
+      } else {
+        console.log('User canceled the order completion.');
+      }
+    } catch (error) {
+      console.error('Error handling order completion:', error);
+    }
+  };
+  
+  const handleDeclined = async (order) => {
+    try {
       const historyRef = doc(database, 'order_history', user.uid);
       await setDoc(historyRef, {
         ...order,
@@ -105,7 +147,6 @@ function OrderProcess() {
       const orderRef = doc(database, 'order_info', user.uid);
       await deleteDoc(orderRef);
 
-      alert('Your order has been completed!');
       navigate('/'); // Redirect to home
     } catch (error) {
       console.error('Error handling order completion:', error);
@@ -199,7 +240,12 @@ function OrderProcess() {
               </div>
             </div>
             <div className='order-details-container'>
-              <h3 className='status-description'>{getStatusDescription(orderData.status)}</h3>
+              <div className='status-message'>
+                <h6>{getStatusDescription(orderData.status)}</h6>
+                {orderData.status.toLowerCase() === 'declined' && orderData.declineReason && (
+                  <p style={{ color: 'red' }}>Reason: {orderData.declineReason}</p>
+                )}
+              </div>
               <h6 className='details'>
                 Order placed on {new Date(orderData.timestamp.seconds * 1000).toLocaleString()}
               </h6>
@@ -257,6 +303,11 @@ function OrderProcess() {
                         <span className='total-itemPrice'>₱{orderData.totalAmount.toFixed(2)}</span>
                       </div>
                     </td>
+                  </tr>
+                  <tr className='ModePayment-container'>
+                    <td className='ModeOfPayment'></td>
+                    <td className='table-qty'></td>
+                    <td className='Payment'>{orderData.serviceOption}</td>
                   </tr>
                   <tr className='ModePayment-container'>
                     <td className='ModeOfPayment'>Mode of Payment</td>

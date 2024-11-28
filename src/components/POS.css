@@ -234,8 +234,11 @@
     border-radius: 8px;
     width: 50%;
     max-width: 500px;
+    height: 85%;
     text-align: center;
+    overflow-y: auto;
   }
+  
   
   
   .POS-main-modal{
