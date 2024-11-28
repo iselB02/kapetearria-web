@@ -150,6 +150,7 @@ function AccountSetup() {
           phone: phoneNumber,
           email: userEmail,
           verified: isVerified,
+          role: 'customer',
         });
         alert('Account setup successfully saved!');
         navigate('/home'); // Redirect to the home page after submission
