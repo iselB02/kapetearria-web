@@ -57,7 +57,7 @@ function Login() {
       // Log the login event to Firestore
       await logVisitor(user.uid, user.email, 'Email/Password');
 
-      navigate('/home');
+      navigate('/');
     } catch (error) {
       setError('Failed to sign in. Please check your credentials and try again.');
     }
@@ -77,7 +77,7 @@ function Login() {
 
       if (userExists) {
         // If the user exists in the 'user_info' collection, redirect to home
-        navigate('/home');
+        navigate('/');
       } else {
         // If the user does not exist, redirect to setup account page
         navigate('/setup-account');

@@ -212,6 +212,7 @@ function AccountSettings() {
           <button onClick={handleEditToggle}>
             {isEditing ? 'Cancel' : 'Edit'}
           </button>
+          
           {isEditing && <button onClick={handleSubmit}>Save</button>}
         </div>
       </div>

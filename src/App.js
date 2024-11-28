@@ -25,6 +25,7 @@ import './App.css';
 import ChatBot from "react-chatbotify";
 import "../node_modules/react-chatbotify/dist/style.css";
 import AddProduct from "./components/AdminAdd"; // Import the component
+import POS from './components/POS'
 
 
 
@@ -88,9 +89,10 @@ const App = () => {
 };
 
 const Content = () => {
-  const { user, loading } = useAuth();
+  const { user, role, loading } = useAuth(); // Use role and loading from context
   const location = useLocation();
-  const { type } = useParams();
+
+  const isAdminRoute = location.pathname.startsWith('/admin') || location.pathname === '/pos' || location.pathname === '/sales';
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -136,9 +138,9 @@ const Content = () => {
 
   return (
     <div className="full-page">
-      {user && <Navbar />}
+      {user && role === 'customer' ? <Navbar /> : null}
 
-      <div className={`scrollable ${type ? 'normal-scroll' : ''}`}>
+      <div className={`scrollable ${location.pathname === '/meals' ? 'normal-scroll' : ''}`}>
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/home" />} />
@@ -147,48 +149,29 @@ const Content = () => {
           <Route path="/myorder" element={user ? <Checkout /> : <Navigate to="/login" />} />
           <Route path="/my-account" element={user ? <AccountSettings /> : <Navigate to="/login" />} />
           <Route path="/order-process" element={user ? <OrderProcess /> : <Navigate to="/login" />} />
-          <Route
-            path="/home"
-            element={
-              <>
-                <Navbar />
-                <div className="section">
-                  <Banner />
-                </div>
-                <div className="section">
-                  <Details />
-                </div>
-                <div className="section">
-                  <Tagline />
-                </div>
-                <div className="section">
-                  <Faqs />
-                </div>
-              </>
-            }
-          />
-          {/* <Route path="/admin" element={user?.isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} /> */}
-          <Route path="/" element={<Navigate to="/home" />} />
-            
-           {/* Admin Dashboard Route */}
-           <Route path="/admin" element={<AdminDashboard />} />
-           
-          <Route path="/" element={<Navigate to="/home" />} /> {/* Redirect to home by default */}
-           {/*  Admin Inventory Route*/}
-           <Route path="/inventory" element={<AdminInventory />} />
-           <Route path="/sales" element={<AdminSales />} />
         
-      {/*  <Route path="/admin" element={user?.isAdmin ? <AdminDashboard /> : <Navigate to="/login" />} /> 
-        */}
-          <Route path="/" element={<Navigate to="/home" />} />
-           {/* Admin Dashboard Route */}<Route path="/admin" element={<AdminDashboard />} />
-           {/*  Admin Inventory Route*/}<Route path="/inventory" element={<AdminInventory />} /> 
-           {/*  Admin Add Product Route*/} <Route path="/add" element={<AddProduct />} />
-           {/*  Admin Sales Report Route*/}<Route path="/sales" element={<AdminSales />} />
-           <Route path="/staff" element={<AdminStaff />}/>
-           <Route path="/add-staff" element={<AddStaff />} />
-           <Route path='/uam' element={<AdminUAM/>}/>
-           <Route path='/chat-support' element={<AdminChat/>}/>
+          {/* Home route */}
+          <Route path="/home" element={
+            <>
+              <div className="section"><Banner /></div>
+              <div className="section"><Details /></div>
+              <div className="section"><Tagline /></div>
+              <div className="section"><Faqs /></div>
+            </>
+          } />
+
+          {/* Admin Routes */}
+          <Route path="/pos" element={user && (role === 'admin' || role === 'manager' || role === 'staff') ? <POS /> : <Navigate to="/" />} />
+          <Route path="/admin" element={user && (role === 'admin' || role === 'manager') ? <AdminDashboard /> : <Navigate to="/" />} />
+          <Route path="/inventory" element={user && (role === 'admin' || role === 'manager' || role === 'staff') ? <AdminInventory /> : <Navigate to="/" />} />
+          <Route path="/add" element={user && (role === 'admin' || role === 'manager' || role === 'staff') ? <AddProduct /> : <Navigate to="/" />} />
+          <Route path="/sales" element={user && (role === 'admin' || role === 'manager') ? <AdminSales /> : <Navigate to="/" />} />
+          <Route path="/staff" element={user && (role === 'admin' || role === 'manager') ? <AdminStaff /> : <Navigate to="/" />} />
+          <Route path="/add-staff" element={user && role === 'admin' ? <AddStaff /> : <Navigate to="/" />} />
+          <Route path="/uam" element={user && role === 'admin' ? <AdminUAM /> : <Navigate to="/" />} />
+
+          {/* Default redirect */}
+          <Route path="/"  element={user && (role === 'admin' || role === 'manager') ? <AdminDashboard /> : <Navigate to="/home" />} />
         </Routes>
       </div>
 
@@ -200,5 +183,6 @@ const Content = () => {
     </div>
   );
 };
+
 
 export default App;
