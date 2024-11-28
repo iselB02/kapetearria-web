@@ -39,10 +39,11 @@
     .sidebar {
         display: flex;
         width: 260px; /* Reduce sidebar width */
-        background-color: #fff;
+        background-color: #7a3333;
         border-right: 1px solid #e6e6e6;
         flex-direction: column;
         padding: 10px 10px; /* Reduce padding */
+        margin-top: 70px;
     }
 
     .sidebar-header {

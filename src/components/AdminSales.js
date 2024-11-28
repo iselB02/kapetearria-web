@@ -131,10 +131,10 @@ const AdminSales = () => {
   return (
     <div className="admin-container">
       <aside className="sidebar3">
-        <div className="sidebar-header">
+        {/* <div className="sidebar-header">
           <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
           <h6>ADMIN</h6>
-        </div>
+        </div> */}
         <ul className="sidebar-menu">
           <Link to="/admin" className="menu-link">
             <li className="menu-item">
@@ -161,17 +161,17 @@ const AdminSales = () => {
               <RiAccountCircleLine className="icon" /> User Account Management
             </li>
           </Link>
-          <Link to="/chat-support" className="menu-link">
+          {/* <Link to="/chat-support" className="menu-link">
             <li className="menu-item">
               <FiMessageSquare className="icon" /> Chat Support
             </li>
-          </Link>
+          </Link> */}
         </ul>
-        <Link to="/settings" className="menu-link">
+        {/* <Link to="/settings" className="menu-link">
           <div className="settings-section">
             <FiSettings className="icon" /> Settings
           </div>
-        </Link>
+        </Link> */}
       </aside>
 
       <main className="sales-content">

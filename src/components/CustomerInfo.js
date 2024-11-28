@@ -14,7 +14,7 @@ const CustomerInfo = ({ isOpen, onClose, user }) => {
           <div className='contentCI'>
               <div className='fnameCI'>
                 <label>Full Name</label>
-                <p className='nameCI'> {user.name}</p>
+                <p className='nameCI'> {`${user.firstname} ${user.surname}`}</p>
               </div>
               <div className='addressCI'>
                 <label>Address</label>
@@ -22,7 +22,7 @@ const CustomerInfo = ({ isOpen, onClose, user }) => {
               </div>
               <div className='numCI'>
                 <label>Contact Number</label>
-                <p className='numberCI'>{user.contact}</p>
+                <p className='numberCI'>{user.phone}</p>
               </div> 
               <div className='emCI'>
                 <label>Email Address</label>

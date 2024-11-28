@@ -25,8 +25,8 @@ const AddProduct = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert("File size should be less than 5MB!");
+      if (file.size > 25 * 1024 * 1024) {
+        alert("File size should be less than 25MB!");
         return;
       }
 
@@ -69,7 +69,6 @@ const AddProduct = () => {
 
   return (
     <div className="add-product-container">
-      <button className="close-button" onClick={handleClose}>X</button>
       <div className="add-product-header">
         <h2>ADD NEW PRODUCT</h2>
       </div>
@@ -132,9 +131,12 @@ const AddProduct = () => {
           className="textarea-field"
         ></textarea>
 
-        <button onClick={handleSave} className="save-button">
-          SAVE
-        </button>
+        <div className="prod-buttons">
+          <button onClick={handleSave} className="save-button">
+            SAVE
+          </button>
+          <button className="close-button" onClick={handleClose}>Cancel</button>
+        </div>
       </div>
     </div>
   );

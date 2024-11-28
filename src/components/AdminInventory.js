@@ -121,10 +121,10 @@ const AdminInventory = () => {
         <div className="admin-container">
             {/* Sidebar */}
             <aside className="sidebar">
-                <div className="sidebar-header">
+                {/* <div className="sidebar-header">
                     <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
                     <h6>ADMIN</h6>
-                </div>
+                </div> */}
                 <ul className="sidebar-menu">
                     <Link to="/admin" className="menu-link">
                         <li className="menu-item">
@@ -152,11 +152,11 @@ const AdminInventory = () => {
                         </li>
                     </Link>
                 </ul>
-                <Link to="/settings" className='menu-link'>
+                {/* <Link to="/settings" className='menu-link'>
                     <div className="settings-section">
                         <FiSettings className="icon" /> Settings
                     </div>
-                </Link>
+                </Link> */}
             </aside>
 
             {/* Main Content */}

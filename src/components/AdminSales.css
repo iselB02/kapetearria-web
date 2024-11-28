@@ -18,6 +18,7 @@
     height: 100vh; /* Full height of the viewport */
     top: 0;
     left: 0;
+    margin-top: 70px;
   }
   
   /* Sidebar Header */

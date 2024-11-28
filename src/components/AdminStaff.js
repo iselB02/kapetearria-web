@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import "./AdminStaff.css";
+import React, { useEffect, useState } from 'react';
+import { doc, deleteDoc, getDocs, updateDoc, where, query, collection } from 'firebase/firestore';
+import { database } from './firebaseConfig';
 import { Link } from "react-router-dom";
 import { FiSettings, FiUser, FiShoppingCart } from "react-icons/fi";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { RiAccountCircleLine, RiBarChartLine } from "react-icons/ri";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import "./AdminStaff.css";
 
 const AdminStaff = () => {
   const navigate = useNavigate();
@@ -115,14 +117,14 @@ const AdminStaff = () => {
     <div className="admin-container">
       {/* Sidebar */}
       <aside className="sidebar">
-        <div className="sidebar-header">
+        {/* <div className="sidebar-header">
           <img
             src="/image/logo.png"
             alt="Kape Tearria Admin"
             className="logo"
           />
           <h6>ADMIN</h6>
-        </div>
+        </div> */}
         <ul className="sidebar-menu">
           <Link to="/admin" className="menu-link">
             <li className="menu-item">
@@ -150,11 +152,11 @@ const AdminStaff = () => {
             </li>
           </Link>
         </ul>
-        <Link to="/settings" className="menu-link">
+        {/* <Link to="/settings" className="menu-link">
           <div className="settings-section">
             <FiSettings className="icon" /> Settings
           </div>
-        </Link>
+        </Link> */}
       </aside>
 
       {/* Main Content */}
