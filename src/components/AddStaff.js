@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiCamera } from 'react-icons/fi';
 import { AiOutlineDashboard } from 'react-icons/ai';
-import { RiAccountCircleLine, RiBarChartLine } from 'react-icons/ri';
+import { RiAccountCircleLine, RiBarChartLine, RiLogoutBoxRLine, RiStoreLine  } from 'react-icons/ri';
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { useNavigate } from 'react-router-dom';
 import { auth, database } from './firebaseConfig'; // Import Firebase config
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore'; // Import Firestore functions
+import { signOut } from 'firebase/auth';
 import './AddStaff.css';
 
 function AddStaff() {
@@ -82,6 +83,17 @@ function AddStaff() {
     }
   };
 
+  // Handle user logout
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log('User logged out');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error during logout:', error.message);
+    }
+  };
+
   return (
     <div className='admin-container'>
       <aside className="sidebar">
@@ -115,6 +127,15 @@ function AddStaff() {
               <RiAccountCircleLine className="icon" /> User Account Management
             </li>
           </Link>
+          <Link to="/pos" className='menu-link'>
+                        <li className="menu-item">
+                            <RiStoreLine className="icon" /> POS
+                        </li>
+                    </Link>
+                    <li onClick={handleLogout} className="menu-item">
+                        <RiLogoutBoxRLine className="icon" /> Logout
+                    </li>
+
         </ul>
         <Link to="/settings" className='menu-link'>
           <div className="settings-section">

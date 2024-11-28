@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { database } from "./firebaseConfig"; // Import Firestore instance
 import { collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import "./AdminInventory.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,7 +11,9 @@ import {
     FiTrash2,
 } from "react-icons/fi";
 import { AiOutlineDashboard } from "react-icons/ai";
-import { RiAccountCircleLine, RiBarChartLine } from "react-icons/ri";
+import { RiAccountCircleLine, RiBarChartLine, RiLogoutBoxRLine, RiStoreLine  } from 'react-icons/ri';
+import { auth, database } from './firebaseConfig';
+import { signOut } from 'firebase/auth';
 
 const AdminInventory = () => {
     const [products, setProducts] = useState([]);
@@ -117,6 +118,17 @@ const AdminInventory = () => {
         product.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    // Handle user logout
+    const handleLogout = async () => {
+        try {
+        await signOut(auth);
+        console.log('User logged out');
+        navigate('/login');
+        } catch (error) {
+        console.error('Error during logout:', error.message);
+        }
+    };
+
     return (
         <div className="admin-container">
             {/* Sidebar */}
@@ -151,6 +163,14 @@ const AdminInventory = () => {
                             <RiAccountCircleLine className="icon" /> User Account Management
                         </li>
                     </Link>
+                    <Link to="/pos" className='menu-link'>
+                        <li className="menu-item">
+                            <RiStoreLine className="icon" /> POS
+                        </li>
+                    </Link>
+                    <li onClick={handleLogout} className="menu-item">
+                        <RiLogoutBoxRLine className="icon" /> Logout
+                    </li>
                 </ul>
                 <Link to="/my-account" className='menu-link'>
                     <div className="settings-section">

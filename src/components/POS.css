@@ -10,7 +10,7 @@
     overflow-y: scroll;
     display: flex;
     padding: 20px;
-    padding-top: 100px;
+    /* padding-top: 100px; */
     gap: 20px;
 }
 
