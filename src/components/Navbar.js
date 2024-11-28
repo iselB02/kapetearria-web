@@ -280,7 +280,7 @@ function Navbar() {
                                   >
                                     +
                                   </button>
-                                  <h3 className="price">₱{item.price.toFixed(2)}</h3>
+                                  <h3 className="price">₱{item.price}</h3>
                                   <button
                                     className="remove-btn"
                                     onClick={(e) => handleRemoveQuantity(item, e)}
@@ -300,7 +300,7 @@ function Navbar() {
                           <div className='division'></div>
                           <div className='total-price'>
                             <h3 id='total-title'>Total</h3>
-                            <h3 id='total' >₱{totalPrice.toFixed(2)}</h3>
+                            <h3 id='total' >₱{totalPrice}</h3>
                           </div>
                           <button className='checkout-btn' onClick={handleCheckout}>Proceed to Checkout</button>
                         </div>
