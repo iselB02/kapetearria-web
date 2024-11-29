@@ -34,8 +34,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* background-color: #5C8F4C;
-            overflow-y: scroll; */
+            /* background-color: #5C8F4C;*/
+            overflow-y: scroll; 
         }
         
         .upload-btn {

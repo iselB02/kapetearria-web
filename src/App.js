@@ -171,7 +171,7 @@ const Content = () => {
           <Route path="/uam" element={user && role === 'admin' ? <AdminUAM /> : <Navigate to="/" />} />
 
           {/* Default redirect */}
-          <Route path="/"  element={user && (role === 'admin' || role === 'manager') ? <AdminDashboard /> : <Navigate to="/home" />} />
+          <Route path="/"  element={user && (role === 'admin' || role === 'manager' || role === 'staff') ? <AdminDashboard /> : <Navigate to="/home" />} />
         </Routes>
       </div>
 

@@ -43,7 +43,8 @@ const AdminStaff = () => {
     if (
       !editStaff.firstname.trim() ||
       !editStaff.surname.trim() ||
-      !editStaff.jobtitle.trim()
+      !editStaff.jobtitle.trim() ||
+      !editStaff.email.trim()
     ) {
       alert('Please fill out all required fields.');
       return;
@@ -55,6 +56,7 @@ const AdminStaff = () => {
         firstname: editStaff.firstname,
         surname: editStaff.surname,
         jobtitle: editStaff.jobtitle,
+        email: editStaff.email,
       };
   
       const staffRef = doc(database, 'user_info', editStaff.id);
@@ -206,7 +208,7 @@ const AdminStaff = () => {
                 <th>Image</th>
                 <th>Name</th>
                 <th>Job Title</th>
-                <th>Status</th>
+                <th>Email</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -247,11 +249,17 @@ const AdminStaff = () => {
                     )}
                   </td>
                   <td>
-                    <input
-                      type="checkbox"
-                      checked={staff.status || false}
-                      onChange={() => handleToggleStatus(staff.id, staff.status)}
-                    />
+                    {editStaff?.id === staff.id ? (
+                      <input
+                        type="text"
+                        value={editStaff.email}
+                        onChange={(e) =>
+                          setEditStaff({ ...editStaff, email: e.target.value })
+                        }
+                      />
+                    ) : (
+                      staff.email 
+                    )}
                   </td>
                   <td>
                     {editStaff?.id === staff.id ? (

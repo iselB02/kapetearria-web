@@ -106,7 +106,7 @@ function Login() {
       <div className="main-body">
         <div className="icon-side">
           <img src="image/singin-signup-logo.png" alt="signin-signup-logo" />
-          <button type="button" onClick={() => navigate('/home')}>Continue without signing in</button>
+          <button type="button" onClick={() => navigate('/')}>Continue without signing in</button>
         </div>
         <div className="login-side">
           <div className="login-form">
