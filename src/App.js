@@ -92,7 +92,13 @@ const Content = () => {
   const { user, role, loading } = useAuth(); // Use role and loading from context
   const location = useLocation();
 
-  const isAdminRoute = location.pathname.startsWith('/admin') || location.pathname === '/pos' || location.pathname === '/sales';
+   // Define routes where navbar should be hidden (Login, Signup, and Admin routes)
+   const hideNavbarRoutes = ['/login', '/signup'];
+   const isAdminRoute = role === 'admin';
+   const isStaffRoute = role === 'staff';
+   const isManagerRoute = role === 'manager';
+   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname) || isAdminRoute || isManagerRoute || isStaffRoute;
+
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -136,9 +142,12 @@ const Content = () => {
     );
   }
 
+
+
   return (
     <div className="full-page">
-      {user && role === 'customer' ? <Navbar /> : null}
+      {/* Only show Navbar if user is logged in and not on login/signup page */}
+      {!shouldHideNavbar && <Navbar />}
 
       <div className={`scrollable ${location.pathname === '/meals' ? 'normal-scroll' : ''}`}>
         <Routes>
@@ -175,6 +184,7 @@ const Content = () => {
         </Routes>
       </div>
 
+      {/* Uncomment and add ChatBot if needed */}
       {/* <ChatBot
         config={config}
         messageParser={messageParser}
@@ -183,6 +193,7 @@ const Content = () => {
     </div>
   );
 };
+
 
 
 export default App;

@@ -1,231 +1,237 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore"; 
-import { database } from './firebaseConfig';
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import "./AdminAdd.css";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiSettings, FiUser, FiShoppingCart, FiMessageSquare, FiCamera } from 'react-icons/fi';
+import { AiOutlineDashboard } from 'react-icons/ai';
+import { RiAccountCircleLine, RiBarChartLine, RiLogoutBoxRLine, RiStoreLine  } from 'react-icons/ri';
+import { BsArrowLeftCircleFill } from "react-icons/bs";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore'; // Import Firestore functions
+import { auth, database } from './firebaseConfig'; // Import Firebase config
+import './AddStaff.css';
 
-const AddProduct = () => {
-  const [product_name, setProductName] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [src, setImage] = useState(null);
-  const [sizes, setSizes] = useState("");
-  const [stock_number, setStockNumber] = useState("");
-  const [sugar_levels, setSugarLevels] = useState("");
-  const [add_ons, setAddons] = useState("");
-  const [type, setType] = useState("");
-  const [errors, setErrors] = useState({});
-  
+function AddStaff() {
   const navigate = useNavigate();
 
-  const validateFields = () => {
-    const newErrors = {};
-    if (!product_name.trim()) newErrors.product_name = "Product name is required!";
-    if (!category.trim()) newErrors.category = "Category is required!";
-    if (!price || price <= 0) newErrors.price = "Enter a valid price!";
-    if (!src) newErrors.src = "Product image is required!";
-    if (!sizes.trim()) newErrors.sizes = "Sizes are required!";
-    if (!stock_number.trim()) newErrors.stock_number = "Stock number is required!";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const [profileImage, setProfileImage] = useState("/image/person-circle.svg");
+  const [formData, setFormData] = useState({
+    firstname: '',
+    surname : '',
+    email: '',
+    phone: '',
+    password: '',
+    birthdate: '',
+    jobtitle: '',
+    gender: '',
+  });
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (!file.type.startsWith("image/")) {
-        alert("Only image files are allowed!");
-        return;
-      }
-      if (file.size > 25 * 1024 * 1024) {
-        alert("File size should be less than 25MB!");
-        return;
-      }
-
-      // Upload image to Firebase Storage
-      const storage = getStorage();
-      const imageRef = ref(storage, `${file.name}`);
-      uploadBytes(imageRef, file).then((snapshot) => {
-        console.log("Image uploaded successfully!");
-        // Get the image URL
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
-          setImage(downloadURL); // Store the image URL in state
-        });
-      });
+      const reader = new FileReader();
+      reader.onload = () => setProfileImage(reader.result);
+      reader.readAsDataURL(file);
     }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSave = async () => {
-    if (!validateFields()) return;
-  
-    const lowercaseType = type.trim().toLowerCase();
-    // Split the values entered for add_ons, sugarLevels, and sizes by commas
-    const parsedAddons = add_ons ? add_ons.split(",").map(item => item.trim()) : [];
-    const parsedSugarLevels = sugar_levels ? sugar_levels.split(",").map(item => item.trim()) : [];
-    const parsedSizes = sizes ? sizes.split(",").map(item => item.trim()) : [];
-  
-    const productData = {
-      product_name,
-      category,
-      add_ons: parsedAddons,
-      price,
-      description,
-      src,
-      sizes: parsedSizes,
-      stock_number,
-      sugar_levels: parsedSugarLevels,
-      type: lowercaseType,
-    };
-  
+    const { email, password, firstname, surname , phone, birthdate, jobtitle, gender } = formData;
+
+    if (!email || !password || !firstname || !surname || !phone || !birthdate || !jobtitle || !gender) {
+      alert('Please fill out all fields');
+      return;
+    }
+
     try {
-      // Add product data to Firebase Firestore
-      await addDoc(collection(database, "menu_info"), productData);
-      console.log("Product added successfully!");
-  
-      alert("Product added successfully!");
-  
-      // Clear form
-      setProductName("");
-      setCategory("");
-      setPrice("");
-      setDescription("");
-      setImage(null);
-      setSizes("");
-      setStockNumber("");
-      setSugarLevels("");
-      setAddons("");
-      setType("");
-  
-      // Navigate to Inventory Page after saving
-      navigate("/inventory");
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Save additional user info to Firestore using the uid as the document ID
+      const userInfo = {
+        uid: user.uid,
+        firstname,
+        surname,
+        email,
+        phone,
+        birthdate,
+        gender,
+        jobtitle,
+        role: jobtitle.toLowerCase(),
+        profileImage, // Include the uploaded image
+        createdAt: new Date(),
+      };
+
+      // Use setDoc with user.uid to set the doc ID
+      const userDocRef = doc(database, 'user_info', user.uid);
+      await setDoc(userDocRef, userInfo);
+
+      alert('Staff added successfully');
+      navigate('/staff'); // Redirect to the staff page without logging in
+
     } catch (error) {
-      console.error("Error adding product to Firestore: ", error);
-      alert("Error adding product. Please try again.");
+      console.error('Error adding staff:', error);
+      alert('Error adding staff: ' + error.message);
     }
   };
-  
 
-  const handleClose = () => {
-    navigate("/inventory");
+  // Handle user logout
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      console.log('User logged out');
+      navigate('/login');
+    } catch (error) {
+      console.error('Error during logout:', error.message);
+    }
   };
 
   return (
-    <div className="add-product-container">
-      <div className="add-product-header">
-        <h2>ADD NEW PRODUCT</h2>
-      </div>
-      <div className="add-product-form">
-        <div
-          className={`product-image-container ${errors.src ? "error-border" : ""}`}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => e.preventDefault()}
-        >
-          {src ? (
-            <img src={src} alt="Uploaded Preview" className="product-image-preview" />
-          ) : (
-            <div className="product-image-placeholder">
-              <label htmlFor="image-upload" className="upload-label">
-                Drag & Drop or <span className="browse-text">Browse</span>
-              </label>
-            </div>
-          )}
+    <div className='admin-container'>
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <img src="/image/logo.png" alt="Kape Tearria Admin" className="logo" />
+          <h6>ADMIN</h6>
+        </div>
+        <ul className="sidebar-menu">
+          <Link to="/admin" className="menu-link">
+            <li className="menu-item">
+              <AiOutlineDashboard className="icon" /> Dashboard
+            </li>
+          </Link>
+          <Link to="/inventory" className="menu-link">
+            <li className="menu-item">
+              <FiShoppingCart className="icon" /> Inventory
+            </li>
+          </Link>
+          <Link to="/sales" className="menu-link">
+            <li className="menu-item">
+              <RiBarChartLine className="icon" /> Sales Reports
+            </li>
+          </Link>
+          <Link to="/staff" className='menu-link'>
+            <li className="menu-item active">
+              <FiUser className="icon" /> Staff
+            </li>
+          </Link>
+          <Link to="/uam" className='menu-link'>
+            <li className="menu-item">
+              <RiAccountCircleLine className="icon" /> User Account Management
+            </li>
+          </Link>
+          <Link to="/pos" className='menu-link'>
+            <li className="menu-item">
+              <RiStoreLine className="icon" /> POS
+            </li>
+          </Link>
+          <li onClick={handleLogout} className="menu-item">
+            <RiLogoutBoxRLine className="icon" /> Logout
+          </li>
+        </ul>
+        <Link to="/settings" className='menu-link'>
+          <div className="settings-section">
+            <FiSettings className="icon" /> Settings
+          </div>
+        </Link>
+      </aside>
+
+      <div className='add-content'>
+        <div className='headest'>
+          <div className='header'>Add New Staff</div>
+        </div>
+
+        <div className='backStaff'>
+          <BsArrowLeftCircleFill size={30} onClick={() => navigate(-1)} />
+        </div>
+
+        <div className="profile-section">
+          <div className="profile-wrapper">
+            <img src={profileImage} alt="Profile" className="add-profile" />
+            <input
+              type="file"
+              id="upload"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={handleImageUpload}
+            />
+            <label htmlFor="upload" className="upload-btn">
+              <FiCamera/>
+            </label>
+          </div>
+        </div>
+
+        <div className='Add-Info'>
           <input
-            type="file"
-            id="image-upload"
-            accept="image/*"
-            onChange={handleImageUpload}
-            style={{ display: "none" }}
+            className='fname'
+            name="firstname"
+            placeholder='First Name'
+            value={formData.firstname}
+            onChange={handleInputChange}
+          />
+          <input
+            className='lname'
+            name="surname"
+            placeholder='Last Name'
+            value={formData.surname}
+            onChange={handleInputChange}
+          />
+          <input
+            className='em'
+            name="email"
+            placeholder='Email'
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+          <input
+            className='pnumber'
+            name="phone"
+            placeholder='Phone Number'
+            value={formData.phone}
+            onChange={handleInputChange}
+          />
+          <input
+            className='pnumber'
+            name="password"
+            type="password"
+            placeholder='Password'
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          <input
+            className='dob'
+            type='date'
+            name="birthdate"
+            placeholder='Date of Birth'
+            value={formData.birthdate}
+            onChange={handleInputChange}
+          />
+          <input
+            className='pnumber'
+            name="jobtitle"
+            placeholder='Job Title'
+            value={formData.jobtitle}
+            onChange={handleInputChange}
+          />
+          <input
+            className='gender'
+            name="gender"
+            placeholder='Gender'
+            value={formData.gender}
+            onChange={handleInputChange}
           />
         </div>
-        {errors.src && <p className="error-text">{errors.src}</p>}
 
-        <input
-          type="text"
-          placeholder="Product Name"
-          value={product_name}
-          onChange={(e) => setProductName(e.target.value)}
-          className={`input-field ${errors.product_name ? "error-border" : ""}`}
-        />
-        {errors.product_name && <p className="error-text">{errors.product_name}</p>}
-
-
-        <input
-          type="text"
-          placeholder="Category (e.g., Cake, Chocolate Frappe, Hot Coffee)"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className={`input-field ${errors.category ? "error-border" : ""}`}
-        />
-        {errors.category && <p className="error-text">{errors.category}</p>}
-
-        <input
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className={`input-field ${errors.price ? "error-border" : ""}`}
-        />
-        {errors.price && <p className="error-text">{errors.price}</p>}
-
-        <textarea
-          placeholder="Description (Optional)"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="textarea-field"
-        ></textarea>
-
-        <input
-          type="text"
-          placeholder="Sizes"
-          value={sizes}
-          onChange={(e) => setSizes(e.target.value)}
-          className={`input-field ${errors.sizes ? "error-border" : ""}`}
-        />
-        {errors.sizes && <p className="error-text">{errors.sizes}</p>}
-
-        <input
-          type="text"
-          placeholder="Stock Number"
-          value={stock_number}
-          onChange={(e) => setStockNumber(e.target.value)}
-          className={`input-field ${errors.stock_number ? "error-border" : ""}`}
-        />
-        {errors.stock_number && <p className="error-text">{errors.stock_number}</p>}
-
-        <input
-          type="text"
-          placeholder="Sugar Levels"
-          value={sugar_levels}
-          onChange={(e) => setSugarLevels(e.target.value)}
-          className="input-field"
-        />
-
-        <input
-          type="text"
-          placeholder="Add-ons"
-          value={add_ons}
-          onChange={(e) => setAddons(e.target.value)}
-          className="input-field"
-        />
-
-        <input
-          type="text"
-          placeholder="Type (e.g., Drink, Snack, Dessert)"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="input-field"
-        />
-
-        
-        <div className="prod-buttons">
-          <button onClick={handleSave} className="save-button">SAVE</button>
-          <button className="close-button" onClick={handleClose}>CANCEL</button>
-        </div>
+        <button className='savebtn' onClick={handleSave}>Save</button>
       </div>
     </div>
   );
-};
+}
 
-export default AddProduct;
+export default AddStaff;
