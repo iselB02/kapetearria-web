@@ -1,30 +1,33 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore"; 
+import { database } from './firebaseConfig';
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import "./AdminAdd.css";
 
 const AddProduct = () => {
-  const [productName, setProductName] = useState("");
+  const [product_name, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [description, setDescription] = useState(""); 
-  const [image, setImage] = useState(null);
-  const [sizes, setSizes] = useState(""); 
-  const [src, setSrc] = useState(""); 
-  const [stockNumber, setStockNumber] = useState(""); 
-  const [sugarLevels, setSugarLevels] = useState(""); 
-  const [type, setType] = useState(""); 
+  const [description, setDescription] = useState("");
+  const [src, setImage] = useState(null);
+  const [sizes, setSizes] = useState("");
+  const [stock_number, setStockNumber] = useState("");
+  const [sugar_levels, setSugarLevels] = useState("");
+  const [add_ons, setAddons] = useState("");
+  const [type, setType] = useState("");
   const [errors, setErrors] = useState({});
-
+  
   const navigate = useNavigate();
 
   const validateFields = () => {
     const newErrors = {};
-    if (!productName.trim()) newErrors.productName = "Product name is required!";
+    if (!product_name.trim()) newErrors.product_name = "Product name is required!";
     if (!category.trim()) newErrors.category = "Category is required!";
     if (!price || price <= 0) newErrors.price = "Enter a valid price!";
-    if (!image) newErrors.image = "Product image is required!";
+    if (!src) newErrors.src = "Product image is required!";
     if (!sizes.trim()) newErrors.sizes = "Sizes are required!";
-    if (!stockNumber.trim()) newErrors.stockNumber = "Stock number is required!";
+    if (!stock_number.trim()) newErrors.stock_number = "Stock number is required!";
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -32,50 +35,79 @@ const AddProduct = () => {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!file.type.startsWith("image/")) {
+        alert("Only image files are allowed!");
+        return;
+      }
       if (file.size > 25 * 1024 * 1024) {
         alert("File size should be less than 25MB!");
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      // Upload image to Firebase Storage
+      const storage = getStorage();
+      const imageRef = ref(storage, `${file.name}`);
+      uploadBytes(imageRef, file).then((snapshot) => {
+        console.log("Image uploaded successfully!");
+        // Get the image URL
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          setImage(downloadURL); // Store the image URL in state
+        });
+      });
     }
   };
 
-  const handleDragOver = (e) => e.preventDefault();
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file) handleImageUpload({ target: { files: [file] } });
-  };
-
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!validateFields()) return;
-
-    console.log({ productName, category, price, description, image, sizes, src, stockNumber, sugarLevels, type });
-    alert("Product added successfully!");
-
-    setProductName("");
-    setCategory("");
-    setPrice("");
-    setDescription("");
-    setImage(null);
-    setSizes("");
-    setSrc("");
-    setStockNumber("");
-    setSugarLevels("");
-    setType("");
-
-    // Navigate to Inventory Page after saving
-    navigate("/inventory");
+  
+    const lowercaseType = type.trim().toLowerCase();
+    // Split the values entered for add_ons, sugarLevels, and sizes by commas
+    const parsedAddons = add_ons ? add_ons.split(",").map(item => item.trim()) : [];
+    const parsedSugarLevels = sugar_levels ? sugar_levels.split(",").map(item => item.trim()) : [];
+    const parsedSizes = sizes ? sizes.split(",").map(item => item.trim()) : [];
+  
+    const productData = {
+      product_name,
+      category,
+      add_ons: parsedAddons,
+      price,
+      description,
+      src,
+      sizes: parsedSizes,
+      stock_number,
+      sugar_levels: parsedSugarLevels,
+      type: lowercaseType,
+    };
+  
+    try {
+      // Add product data to Firebase Firestore
+      await addDoc(collection(database, "menu_info"), productData);
+      console.log("Product added successfully!");
+  
+      alert("Product added successfully!");
+  
+      // Clear form
+      setProductName("");
+      setCategory("");
+      setPrice("");
+      setDescription("");
+      setImage(null);
+      setSizes("");
+      setStockNumber("");
+      setSugarLevels("");
+      setAddons("");
+      setType("");
+  
+      // Navigate to Inventory Page after saving
+      navigate("/inventory");
+    } catch (error) {
+      console.error("Error adding product to Firestore: ", error);
+      alert("Error adding product. Please try again.");
+    }
   };
+  
 
   const handleClose = () => {
-    // Navigate to Inventory Page when X button is clicked
     navigate("/inventory");
   };
 
@@ -86,12 +118,12 @@ const AddProduct = () => {
       </div>
       <div className="add-product-form">
         <div
-          className={`product-image-container ${errors.image ? "error-border" : ""}`}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
+          className={`product-image-container ${errors.src ? "error-border" : ""}`}
+          onDragOver={(e) => e.preventDefault()}
+          onDrop={(e) => e.preventDefault()}
         >
-          {image ? (
-            <img src={image} alt="Uploaded Preview" className="product-image-preview" />
+          {src ? (
+            <img src={src} alt="Uploaded Preview" className="product-image-preview" />
           ) : (
             <div className="product-image-placeholder">
               <label htmlFor="image-upload" className="upload-label">
@@ -107,20 +139,21 @@ const AddProduct = () => {
             style={{ display: "none" }}
           />
         </div>
-        {errors.image && <p className="error-text">{errors.image}</p>}
+        {errors.src && <p className="error-text">{errors.src}</p>}
 
         <input
           type="text"
           placeholder="Product Name"
-          value={productName}
+          value={product_name}
           onChange={(e) => setProductName(e.target.value)}
-          className={`input-field ${errors.productName ? "error-border" : ""}`}
+          className={`input-field ${errors.product_name ? "error-border" : ""}`}
         />
-        {errors.productName && <p className="error-text">{errors.productName}</p>}
+        {errors.product_name && <p className="error-text">{errors.product_name}</p>}
+
 
         <input
           type="text"
-          placeholder="Category"
+          placeholder="Category (e.g., Cake, Chocolate Frappe, Hot Coffee)"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           className={`input-field ${errors.category ? "error-border" : ""}`}
@@ -154,27 +187,26 @@ const AddProduct = () => {
 
         <input
           type="text"
-          placeholder="IMG SRC"
-          value={src}
-          onChange={(e) => setSrc(e.target.value)}
-          className={`input-field ${errors.src ? "error-border" : ""}`}
-        />
-        {errors.src && <p className="error-text">{errors.src}</p>}
-
-        <input
-          type="text"
           placeholder="Stock Number"
-          value={stockNumber}
+          value={stock_number}
           onChange={(e) => setStockNumber(e.target.value)}
-          className={`input-field ${errors.stockNumber ? "error-border" : ""}`}
+          className={`input-field ${errors.stock_number ? "error-border" : ""}`}
         />
-        {errors.stockNumber && <p className="error-text">{errors.stockNumber}</p>}
+        {errors.stock_number && <p className="error-text">{errors.stock_number}</p>}
 
         <input
           type="text"
           placeholder="Sugar Levels"
-          value={sugarLevels}
+          value={sugar_levels}
           onChange={(e) => setSugarLevels(e.target.value)}
+          className="input-field"
+        />
+
+        <input
+          type="text"
+          placeholder="Add-ons"
+          value={add_ons}
+          onChange={(e) => setAddons(e.target.value)}
           className="input-field"
         />
 
@@ -186,10 +218,9 @@ const AddProduct = () => {
           className="input-field"
         />
 
+        
         <div className="prod-buttons">
-          <button onClick={handleSave} className="save-button">
-            SAVE
-          </button>
+          <button onClick={handleSave} className="save-button">SAVE</button>
           <button className="close-button" onClick={handleClose}>CANCEL</button>
         </div>
       </div>
